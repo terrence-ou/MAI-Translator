@@ -9,7 +9,7 @@ function createWindow(): void {
     width: 900,
     height: 670,
     show: false,
-    autoHideMenuBar: true,
+    // autoHideMenuBar: true,
     vibrancy: "under-window",
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 15, y: 10 },
