@@ -12,11 +12,10 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
-        "@": resolve("src/renderer/src"),
-        "@renderer": resolve("/src/renderer/src"),
-        "@shared": resolve("/src/shared"),
-        "@/hooks": resolve("/src/renderer/src/hooks"),
-        "@/components": resolve("/src/renderer/src/components"),
+        "@renderer": resolve("src/renderer/src"),
+        "@shared": resolve("src/shared"),
+        "@/hooks": resolve("src/renderer/src/hooks"),
+        "@/components": resolve("src/renderer/src/components"),
       },
     },
     plugins: [react()],
