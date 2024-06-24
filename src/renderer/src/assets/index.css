@@ -74,3 +74,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+header {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+button {
+  -webkit-app-region: no-drag;
+}
