@@ -57,6 +57,9 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      strokeWidth: {
+        thin: "1.5px",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

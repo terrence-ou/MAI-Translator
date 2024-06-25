@@ -12,7 +12,7 @@ function createWindow(): void {
     // autoHideMenuBar: true,
     vibrancy: "under-window",
     titleBarStyle: "hidden",
-    trafficLightPosition: { x: 18, y: 12 },
+    trafficLightPosition: { x: 18, y: 20 },
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
