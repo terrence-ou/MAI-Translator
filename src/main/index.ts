@@ -3,6 +3,9 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 
+import type { ReadSettings } from "@shared/types";
+import { readSettings } from "@/lib";
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -57,6 +60,7 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on("ping", () => console.log("pong"));
+  ipcMain.handle("readSettings", (_, ...args: Parameters<ReadSettings>) => readSettings(...args));
 
   createWindow();
 

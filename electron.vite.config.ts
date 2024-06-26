@@ -5,6 +5,12 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
+    resolve: {
+      alias: {
+        "@/lib": resolve("src/main/lib"),
+        "@shared": resolve("src/shared"),
+      },
+    },
   },
   preload: {
     plugins: [externalizeDepsPlugin()],
@@ -16,6 +22,7 @@ export default defineConfig({
         "@shared": resolve("src/shared"),
         "@/hooks": resolve("src/renderer/src/hooks"),
         "@/components": resolve("src/renderer/src/components"),
+        "@/stroe": resolve("src/renderer/src/store"),
       },
     },
     plugins: [react()],

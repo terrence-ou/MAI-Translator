@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { STORAGE_KEY } from "@shared/consts";
+import { Theme } from "@shared/types";
 
 // reference: https://ui.shadcn.com/docs/dark-mode/vite
-type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
