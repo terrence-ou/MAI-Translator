@@ -5,7 +5,9 @@ import fs from "fs";
 import path from "path";
 
 export const readSettings: ReadSettings = async () => {
+  // check if setting.json file exists
   const filePath = path.join(app.getPath("userData"), "settings.json");
+  // if not, create one with the default values
   if (!fs.existsSync(filePath)) {
     writeSettings(defaultSettings);
   }

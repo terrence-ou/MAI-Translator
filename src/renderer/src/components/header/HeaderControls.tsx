@@ -1,5 +1,6 @@
-import { PanelLeftOpen, Settings } from "lucide-react";
-import IconButton from "./IconButton";
+import { PanelLeftOpen } from "lucide-react";
+import IconButton from "@/components/header/IconButton";
+import SettingDialog from "@/components/header/SettingDialog";
 
 const iconStyle = "stroke-foreground stroke-thin";
 
@@ -10,9 +11,7 @@ const HeaderControls = () => {
         <IconButton>
           <PanelLeftOpen className={iconStyle} />
         </IconButton>
-        <IconButton>
-          <Settings className={iconStyle} />
-        </IconButton>
+        <SettingDialog className={iconStyle} />
       </div>
     </div>
   );

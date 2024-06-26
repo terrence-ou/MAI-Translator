@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { STORAGE_KEY } from "@shared/consts";
+import { STORAGE_THEME_KEY } from "@shared/consts";
 import { Theme } from "@shared/types";
 
 // reference: https://ui.shadcn.com/docs/dark-mode/vite
@@ -26,7 +26,7 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 export const ThemeProvider = ({
   children,
   defaultTheme = "system",
-  storageKey = STORAGE_KEY,
+  storageKey = STORAGE_THEME_KEY,
   ...props
 }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(
