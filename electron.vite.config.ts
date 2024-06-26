@@ -23,6 +23,7 @@ export default defineConfig({
         "@/hooks": resolve("src/renderer/src/hooks"),
         "@/components": resolve("src/renderer/src/components"),
         "@/stroe": resolve("src/renderer/src/store"),
+        "@/utils": resolve("src/renderer/src/utils"),
       },
     },
     plugins: [react()],

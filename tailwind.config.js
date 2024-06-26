@@ -60,6 +60,12 @@ module.exports = {
       strokeWidth: {
         thin: "1.5px",
       },
+      height: {
+        header: "var(--header-height)",
+      },
+      margin: {
+        header: "var(--header-height)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

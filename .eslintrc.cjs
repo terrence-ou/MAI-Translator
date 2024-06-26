@@ -9,5 +9,6 @@ module.exports = {
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/quotes": [1, "double", { allowTemplateLiterals: true }],
+    "react/prop-types": "off",
   },
 };
