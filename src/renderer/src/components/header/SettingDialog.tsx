@@ -18,6 +18,9 @@ import APIInput from "../settings/APIInput";
 type SettingDialogProps = { className: string };
 const settingRowStyle = "flex justify-between items-center";
 
+/*
+  The A dialog that allows users to customize interface or provide APIs
+*/
 const SettingDialog = ({ className }: SettingDialogProps) => {
   return (
     <Dialog>
@@ -42,7 +45,6 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <h3 className="font-semibold mt-3">APIs</h3>
           <APIInput className={settingRowStyle} APIName="DeepL" />
         </div>
-
         <DialogFooter>
           <DialogClose asChild>
             <Button>Save changes</Button>

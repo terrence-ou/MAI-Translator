@@ -1,38 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { STORAGE_THEME_KEY } from "@shared/consts";
-import { Theme } from "@shared/types";
-
-// reference: https://ui.shadcn.com/docs/dark-mode/vite
+import { useEffect } from "react";
+import { useAppSelector } from "@/hooks";
+import { RootState } from "@/store";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
 };
 
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-};
-
-const initialState: ThemeProviderState = {
-  theme: "system",
-  setTheme: () => null,
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
-
-// The body of the ThemeProvider component
-export const ThemeProvider = ({
-  children,
-  defaultTheme = "system",
-  storageKey = STORAGE_THEME_KEY,
-  ...props
-}: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
-
+const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  const theme = useAppSelector((state: RootState) => state.settings.theme);
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
@@ -43,29 +18,9 @@ export const ThemeProvider = ({
       root.classList.add(systemTheme);
       return;
     }
-    root.classList.add(theme);
+    root.classList.add(theme!);
   }, [theme]);
-
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
-  };
-
-  return (
-    <ThemeProviderContext.Provider {...props} value={value}>
-      {children}
-    </ThemeProviderContext.Provider>
-  );
+  return <>{children}</>;
 };
 
-// useTheme hook - provide both theme and setTheme function
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
-};
+export default ThemeProvider;
