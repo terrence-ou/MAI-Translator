@@ -3,6 +3,7 @@ export type APIType = { name: "DeepL" | "openAI"; value: string };
 export interface editorSettingsType {
   editorFontSize?: number;
   theme?: Theme;
+  showPanel: boolean;
 }
 
 export type ReadSettings = () => Promise<editorSettingsType>;

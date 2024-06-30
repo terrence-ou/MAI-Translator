@@ -9,6 +9,7 @@ const localFontSize = localStorage.getItem(STORAGE_FONTSIZE_KEY);
 const initialState: editorSettingsType = {
   theme: localTheme ? (localTheme as Theme) : defaultSettings.theme,
   editorFontSize: localFontSize !== null ? parseInt(localFontSize) : defaultSettings.editorFontSize,
+  showPanel: true,
 };
 
 // Async Thunks -- Update interface settings
@@ -28,7 +29,11 @@ const updateSettings = createAsyncThunk(
 export const settingsSlice = createSlice({
   name: "settings",
   initialState,
-  reducers: {},
+  reducers: {
+    togglePanel: (state) => {
+      state.showPanel = state.showPanel ? false : true;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       updateSettings.fulfilled,
@@ -41,4 +46,5 @@ export const settingsSlice = createSlice({
 });
 
 export { updateSettings };
+export const { togglePanel } = settingsSlice.actions;
 export default settingsSlice.reducer;
