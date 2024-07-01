@@ -33,6 +33,9 @@ export const settingsSlice = createSlice({
     togglePanel: (state) => {
       state.showPanel = state.showPanel ? false : true;
     },
+    collapsePanel: (state) => {
+      state.showPanel = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -46,5 +49,5 @@ export const settingsSlice = createSlice({
 });
 
 export { updateSettings };
-export const { togglePanel } = settingsSlice.actions;
+export const { togglePanel, collapsePanel } = settingsSlice.actions;
 export default settingsSlice.reducer;
