@@ -3,8 +3,8 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 
-import type { ReadSettings } from "@shared/types";
-import { readSettings } from "@/lib";
+import type { ReadAPIsFn, WriteAPIsFn } from "@shared/types";
+import { readApis, writeApis } from "@/lib";
 
 function createWindow(): void {
   // Create the browser window.
@@ -58,9 +58,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
-  ipcMain.on("ping", () => console.log("pong"));
-  ipcMain.handle("readSettings", (_, ...args: Parameters<ReadSettings>) => readSettings(...args));
+  // IPCs
+  ipcMain.handle("readApis", (_, ...args: Parameters<ReadAPIsFn>) => readApis(...args));
+  ipcMain.handle("writeApis", (_, ...args: Parameters<WriteAPIsFn>) => writeApis(...args));
 
   createWindow();
 

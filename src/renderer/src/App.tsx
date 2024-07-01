@@ -11,9 +11,6 @@ const panelConfig = {
 };
 
 function App(): JSX.Element {
-  // useEffect(() => {
-  //   window.context.readSettings().then((data) => console.log(data));
-  // }, []);
   const panelRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {

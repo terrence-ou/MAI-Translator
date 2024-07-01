@@ -1,25 +1,26 @@
-import { editorSettingsType, ReadSettings, WriteSettings } from "@shared/types";
-import { defaultSettings } from "@shared/default";
+import { ReadAPIsFn, WriteAPIsFn, APIs } from "@shared/types";
+import { API_FILENAME } from "@shared/consts";
+// import { defaultSettings } from "@shared/default";
 import { app } from "electron";
 import fs from "fs";
 import path from "path";
 
-export const readSettings: ReadSettings = async () => {
+export const readApis: ReadAPIsFn = async () => {
   // check if setting.json file exists
-  const filePath = path.join(app.getPath("userData"), "settings.json");
+  const filePath = path.join(app.getPath("userData"), API_FILENAME);
   // if not, create one with the default values
   if (!fs.existsSync(filePath)) {
-    writeSettings(defaultSettings);
+    writeApis([] as APIs);
   }
   const file = fs.readFileSync(filePath, { encoding: "utf8" });
-  const settings = JSON.parse(file) as editorSettingsType;
-  return settings;
+  const apis = JSON.parse(file) as APIs;
+  return apis;
 };
 
-export const writeSettings: WriteSettings = async (settings) => {
-  const filePath = path.join(app.getPath("userData"), "settings.json");
+export const writeApis: WriteAPIsFn = async (apis) => {
+  const filePath = path.join(app.getPath("userData"), API_FILENAME);
   try {
-    fs.writeFileSync(filePath, JSON.stringify(settings, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(apis, null, 2));
   } catch (error) {
     console.error(error);
   }

@@ -1,4 +1,4 @@
-import { ReadSettings } from "@shared/types";
+import { ReadAPIsFn, WriteAPIsFn } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
 
@@ -8,8 +8,8 @@ if (!process.contextIsolated) {
 
 try {
   contextBridge.exposeInMainWorld("context", {
-    readSettings: (...args: Parameters<ReadSettings>) =>
-      ipcRenderer.invoke("readSettings", ...args),
+    readApis: (...args: Parameters<ReadAPIsFn>) => ipcRenderer.invoke("readApis", ...args),
+    writeApis: (...args: Parameters<WriteAPIsFn>) => ipcRenderer.invoke("writeApis", ...args),
   });
 } catch (error) {
   console.error(error);
