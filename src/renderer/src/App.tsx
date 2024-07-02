@@ -36,12 +36,13 @@ function App(): JSX.Element {
     <>
       <div className="h-screen flex flex-col">
         {/* Header: sidebar button, dictionary button, settings button */}
-        <Header className="bg-transparent h-header pl-24 pr-8 py-2" />
+        <Header className="bg-transparent h-header pl-24 pr-8 py-2" data-testid="header" />
         {/* Body: sidebar, translation interface */}
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel
             ref={panelRef}
             className="bg-muted"
+            data-testid="panel-left"
             defaultSize={panelConfig.defaultSize}
             maxSize={panelConfig.maxSize}
             minSize={panelConfig.minSize}
@@ -49,7 +50,10 @@ function App(): JSX.Element {
             onCollapse={handleOnCollapse}
           ></ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel defaultSize={100 - panelConfig.defaultSize}></ResizablePanel>
+          <ResizablePanel
+            data-testid="panel-right"
+            defaultSize={100 - panelConfig.defaultSize}
+          ></ResizablePanel>
         </ResizablePanelGroup>
       </div>
     </>
