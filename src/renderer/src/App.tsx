@@ -5,6 +5,7 @@ import Header from "./components/header/Header";
 import { ResizablePanel, ResizableHandle, ResizablePanelGroup } from "./components/ui/resizable";
 import { ImperativePanelHandle } from "react-resizable-panels";
 
+// default main interface panel configurations
 const panelConfig = {
   defaultSize: 25,
   maxSize: 35,
@@ -34,7 +35,9 @@ function App(): JSX.Element {
   return (
     <>
       <div className="h-screen flex flex-col">
+        {/* Header: sidebar button, dictionary button, settings button */}
         <Header className="bg-transparent h-header pl-24 pr-8 py-2" />
+        {/* Body: sidebar, translation interface */}
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel
             ref={panelRef}

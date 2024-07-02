@@ -4,8 +4,10 @@ import { STORAGE_FONTSIZE_KEY, STORAGE_THEME_KEY } from "@shared/consts";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { editorSettingsType, Theme } from "@shared/types";
 
+// Get theme and font size from localStorage
 const localTheme = localStorage.getItem(STORAGE_THEME_KEY);
 const localFontSize = localStorage.getItem(STORAGE_FONTSIZE_KEY);
+// Initial state from the settings slice
 const initialState: editorSettingsType = {
   theme: localTheme ? (localTheme as Theme) : defaultSettings.theme,
   editorFontSize: localFontSize !== null ? parseInt(localFontSize) : defaultSettings.editorFontSize,
@@ -26,6 +28,7 @@ const updateSettings = createAsyncThunk(
   }
 );
 
+// The body of settings slice
 export const settingsSlice = createSlice({
   name: "settings",
   initialState,
