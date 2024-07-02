@@ -11,7 +11,7 @@ const localFontSize = localStorage.getItem(STORAGE_FONTSIZE_KEY);
 const initialState: editorSettingsType = {
   theme: localTheme ? (localTheme as Theme) : defaultSettings.theme,
   editorFontSize: localFontSize !== null ? parseInt(localFontSize) : defaultSettings.editorFontSize,
-  showPanel: true,
+  showPanel: defaultSettings.showPanel,
 };
 
 // Async Thunks -- Update interface settings

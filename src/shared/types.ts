@@ -6,7 +6,7 @@ export type APIs = APIType[];
 export interface editorSettingsType {
   editorFontSize?: number;
   theme?: Theme;
-  showPanel: boolean;
+  showPanel?: boolean;
 }
 
 export type ReadAPIsFn = () => Promise<APIs>;
