@@ -13,14 +13,17 @@ const HeaderControls = () => {
   return (
     <div className="h-full flex flex-col justify-center">
       <div className="flex justify-between">
-        <IconButton onClick={() => dispatch(togglePanel())}>
+        <IconButton
+          onClick={() => dispatch(togglePanel())}
+          data-testid={panelStatus ? "button-panel-close" : "button-panel-open"}
+        >
           {panelStatus ? (
             <PanelLeftClose className={iconStyle} />
           ) : (
             <PanelLeftOpen className={iconStyle} />
           )}
         </IconButton>
-        <SettingDialog className={iconStyle} />
+        <SettingDialog className={iconStyle} data-testid="button-settings" />
       </div>
     </div>
   );
