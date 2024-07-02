@@ -13,3 +13,9 @@ out
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+.eslintrc.cjs
+.eslintignore
+.editorconfig
+.prettierignore
+.prettierrc.yaml
