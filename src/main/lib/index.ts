@@ -1,4 +1,4 @@
-import { ReadAPIsFn, WriteAPIsFn, APIs } from "@shared/types";
+import { ReadAPIsFn, WriteAPIsFn, APIType } from "@shared/types";
 import { API_FILENAME } from "@shared/consts";
 // import { defaultSettings } from "@shared/default";
 import { app } from "electron";
@@ -10,10 +10,10 @@ export const readApis: ReadAPIsFn = async () => {
   const filePath = path.join(app.getPath("userData"), API_FILENAME);
   // if not, create one with the default values
   if (!fs.existsSync(filePath)) {
-    writeApis([] as APIs);
+    writeApis({} as APIType);
   }
   const file = fs.readFileSync(filePath, { encoding: "utf8" });
-  const apis = JSON.parse(file) as APIs;
+  const apis = JSON.parse(file) as APIType;
   return apis;
 };
 

@@ -1,7 +1,15 @@
 export type Theme = "dark" | "light" | "system";
 
-export type APIType = { name: "DeepL" | "openAI"; value: string };
-export type APIs = APIType[];
+// types for IPC
+export type ReadAPIsFn = () => Promise<APIType>;
+export type WriteAPIsFn = (apis: APIType) => void;
+
+// Types for redux slices
+export type AISource = "DeepL" | "Google";
+// export type APIType = { name: AISource; value: string };
+export type APIType = {
+  [key in AISource]?: string;
+};
 
 export interface editorSettingsType {
   editorFontSize?: number;
@@ -9,5 +17,7 @@ export interface editorSettingsType {
   showPanel?: boolean;
 }
 
-export type ReadAPIsFn = () => Promise<APIs>;
-export type WriteAPIsFn = (apis: APIs) => void;
+export interface translationConfigType {
+  apis: APIType;
+  sourceText: string;
+}
