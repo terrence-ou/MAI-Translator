@@ -15,7 +15,7 @@ const matchMedia = Object.defineProperty(window, "matchMedia", {
 const context = Object.defineProperty(window, "context", {
   writable: true,
   value: {
-    readApis: jest.fn().mockImplementation(() => Promise.resolve([])),
+    readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
   },
 });
 

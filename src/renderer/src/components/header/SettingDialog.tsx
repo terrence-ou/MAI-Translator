@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { Settings } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -9,19 +11,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import ThemeSelector from "../settings/ThemeSelector";
-import FontSizeSelector from "../settings/FontSizeSelector";
-import { Button } from "../ui/button";
-import { Settings } from "lucide-react";
-import APIInput from "../settings/APIInput";
+import ThemeSelector from "@/components/settings/ThemeSelector";
+import FontSizeSelector from "@/components/settings/FontSizeSelector";
+import { Button } from "@/components/ui/button";
+import APIInput from "@/components/settings/APIInput";
 
 type SettingDialogProps = { className: string };
+export type InputHandle = { getValue: () => string | undefined };
 const settingRowStyle = "flex justify-between items-center";
 
 /*
   The A dialog that allows users to customize interface or provide APIs
 */
 const SettingDialog = ({ className }: SettingDialogProps) => {
+  // Refs
+  // const aiSource =
+  const deepLRef = useRef<InputHandle>(null);
+
   return (
     <Dialog>
       <DialogTrigger className="p-1 rounded-md hover:bg-border transition-colors duration-200">
@@ -39,15 +45,17 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
         </DialogHeader>
         {/* Settings */}
         <div className="flex flex-col gap-3 my-4 ">
+          {/* Interface Settings */}
           <h3 className="font-semibold">Interface</h3>
           <ThemeSelector className={settingRowStyle} />
           <FontSizeSelector className={settingRowStyle} />
           <h3 className="font-semibold mt-3">APIs</h3>
-          <APIInput className={settingRowStyle} source="DeepL" />
+          {/* API Settings */}
+          <APIInput ref={deepLRef} className={settingRowStyle} source="DeepL" />
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button>Save changes</Button>
+            <Button onClick={() => console.log(deepLRef.current?.getValue())}>Save changes</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

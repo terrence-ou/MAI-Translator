@@ -5,7 +5,8 @@ export type ReadAPIsFn = () => Promise<APIType>;
 export type WriteAPIsFn = (apis: APIType) => void;
 
 // Types for redux slices
-export type AISource = "DeepL" | "Google";
+export const aiList = ["DeepL", "Google", "OpenAI"] as const;
+export type AISource = (typeof aiList)[number];
 // export type APIType = { name: AISource; value: string };
 export type APIType = {
   [key in AISource]?: string;

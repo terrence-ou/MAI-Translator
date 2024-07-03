@@ -1,6 +1,6 @@
 import "@testing-library/dom";
 import "@testing-library/jest-dom";
-import "@/utils/matchMedia.mock";
+import "@/utils/window-apis.mock";
 import { render, screen } from "@/utils/test-utils";
 import Header from "@/components/header/Header";
 
