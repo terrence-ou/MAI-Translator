@@ -8,6 +8,7 @@ const loadApis = createAsyncThunk("translationConfig/loadApis", async () => {
 });
 
 const setApis = createAsyncThunk("translationConfig/saveApis", async (apis: APIType) => {
+  window.context.writeApis(apis);
   return apis;
 });
 
