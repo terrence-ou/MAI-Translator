@@ -7,12 +7,12 @@ const loadApis = createAsyncThunk("translationConfig/loadApis", async () => {
   return apis;
 });
 
-// const writeApis = createAsyncThunk("translationConfig/writeApis", async () => {
-
-// })
+const setApis = createAsyncThunk("translationConfig/saveApis", async (apis: APIType) => {
+  return apis;
+});
 
 const initialState: translationConfigType = {
-  apis: { DeepL: "" },
+  apis: {},
   sourceText: "",
 };
 
@@ -25,8 +25,12 @@ export const translationConfigSlice = createSlice({
       state.apis = action.payload;
       return state;
     });
+    builders.addCase(setApis.fulfilled, (state, action: PayloadAction<APIType>) => {
+      state.apis = action.payload;
+      return state;
+    });
   },
 });
 
-export { loadApis };
+export { loadApis, setApis };
 export default translationConfigSlice.reducer;

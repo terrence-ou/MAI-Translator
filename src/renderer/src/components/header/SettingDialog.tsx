@@ -1,5 +1,10 @@
 import { useRef } from "react";
 import { Settings } from "lucide-react";
+
+import { RootState } from "@/store";
+import { useAppSelector, useAppDispatch } from "@/hooks";
+import { setApis } from "@/store/translationConfigSlice";
+
 import {
   Dialog,
   DialogClose,
@@ -15,18 +20,38 @@ import ThemeSelector from "@/components/settings/ThemeSelector";
 import FontSizeSelector from "@/components/settings/FontSizeSelector";
 import { Button } from "@/components/ui/button";
 import APIInput from "@/components/settings/APIInput";
+import { APIType } from "@shared/types";
+import { AI_LIST } from "@shared/consts";
 
 type SettingDialogProps = { className: string };
 export type InputHandle = { getValue: () => string | undefined };
 const settingRowStyle = "flex justify-between items-center";
 
 /*
+  The body of the Setting Dialog component
   The A dialog that allows users to customize interface or provide APIs
 */
 const SettingDialog = ({ className }: SettingDialogProps) => {
+  const dispatch = useAppDispatch();
+  const apis = useAppSelector((state: RootState) => state.translationConfig.apis);
+
   // Refs
-  // const aiSource =
-  const deepLRef = useRef<InputHandle>(null);
+  const aiInputRefs = AI_LIST.map((aiName) => {
+    const currRef = useRef<InputHandle>(null);
+    return { source: aiName, ref: currRef, defaultValue: apis[aiName] };
+  });
+
+  // handle save apis
+  const handleSaveApis = () => {
+    const newApis = {} as APIType;
+    aiInputRefs.forEach(({ source, ref }) => {
+      const currApi = ref.current?.getValue();
+      if (currApi !== undefined && currApi.length > 0) {
+        newApis[source] = currApi;
+      }
+    });
+    dispatch(setApis(newApis));
+  };
 
   return (
     <Dialog>
@@ -51,11 +76,21 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <FontSizeSelector className={settingRowStyle} />
           <h3 className="font-semibold mt-3">APIs</h3>
           {/* API Settings */}
-          <APIInput ref={deepLRef} className={settingRowStyle} source="DeepL" />
+          {aiInputRefs.map(({ source, defaultValue, ref }) => {
+            return (
+              <APIInput
+                key={source}
+                ref={ref}
+                className={settingRowStyle}
+                source={source}
+                defaultValue={defaultValue}
+              />
+            );
+          })}
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={() => console.log(deepLRef.current?.getValue())}>Save changes</Button>
+            <Button onClick={handleSaveApis}>Save changes</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

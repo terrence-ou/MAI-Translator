@@ -5,7 +5,7 @@ import type { InputHandle } from "../header/SettingDialog";
 type APIInputProps = { source: AISource } & ComponentProps<"div">;
 
 const APIInput = forwardRef<InputHandle, APIInputProps>(function APIInput(
-  { source, ...props },
+  { source, defaultValue, ...props },
   ref
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -19,12 +19,13 @@ const APIInput = forwardRef<InputHandle, APIInputProps>(function APIInput(
 
   return (
     <div {...props}>
-      <span className="text-sm">{source} API</span>
+      <span className="text-sm">{source}</span>
       <Input
         ref={inputRef}
         className="w-[220px] h-[30px]"
         type="text"
         placeholder={`Paste your ${source} API here`}
+        defaultValue={defaultValue}
       />
     </div>
   );
