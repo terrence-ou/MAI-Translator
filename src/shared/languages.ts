@@ -1,7 +1,7 @@
 import { LanguageConfig } from "./types";
 
 const supportedLanguages: LanguageConfig[] = [
-  { language: "Detect Language", label: "Detect Language", value: null },
+  { language: "Detect Language", label: "Detect Language", value: "" },
   { language: "English", label: "English", value: "en" },
   { language: "Spanish", label: "Español", value: "es" },
   { language: "French", label: "Français", value: "fr" },

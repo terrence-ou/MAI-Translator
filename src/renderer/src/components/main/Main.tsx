@@ -4,6 +4,7 @@ import { collapsePanel } from "@/store/settingsSlice";
 import { ImperativePanelHandle } from "react-resizable-panels";
 import { ResizablePanel, ResizableHandle, ResizablePanelGroup } from "@/components/ui/resizable";
 import { RootState } from "@/store";
+import Combobox from "./Combobox";
 
 // default main interface panel configurations
 const panelConfig = {
@@ -38,10 +39,12 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
           onCollapse={handleOnCollapse}
         ></ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel
-          data-testid="panel-right"
-          defaultSize={100 - panelConfig.defaultSize}
-        ></ResizablePanel>
+        <ResizablePanel data-testid="panel-right" defaultSize={100 - panelConfig.defaultSize}>
+          <div className="mt-20">
+            <Combobox type="fromLanguage" />
+            <Combobox type="toLanguage" />
+          </div>
+        </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );

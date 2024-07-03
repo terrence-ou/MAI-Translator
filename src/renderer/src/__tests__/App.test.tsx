@@ -4,8 +4,8 @@ import "@/utils/window-apis.mock";
 import { render, screen } from "@/utils/test-utils";
 import App from "@/App";
 
-describe("Testing main interface", () => {
-  test("basic elementd", async () => {
+describe("Testing main interface layout", () => {
+  test("basic elements", async () => {
     render(<App />);
     const header = screen.queryByTestId("header");
     const main = screen.queryByTestId("main");
@@ -15,5 +15,14 @@ describe("Testing main interface", () => {
     expect(main).toBeInTheDocument();
     expect(panelLeft).toBeInTheDocument();
     expect(panelRight).toBeInTheDocument();
+  });
+});
+
+describe("Testing initial texts on the interface", () => {
+  test("language selector texts", async () => {
+    render(<App />);
+    expect(await screen.findByText("English")).toBeVisible();
+    expect(await screen.findByText("Detect Language")).toBeVisible();
+    expect(await screen.findByText("中文")).not.toBeVisible();
   });
 });

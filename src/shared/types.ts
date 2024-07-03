@@ -2,7 +2,7 @@ import { AI_LIST } from "./consts";
 
 export type Theme = "dark" | "light" | "system";
 export type AISource = (typeof AI_LIST)[number];
-export type LanguageConfig = { language: string; label: string; value: string | null };
+export type LanguageConfig = { language: string; label: string; value: string };
 
 // types for IPC
 export type ReadAPIsFn = () => Promise<APIType>;
@@ -23,4 +23,6 @@ export interface editorSettingsType {
 export interface translationConfigType {
   apis: APIType;
   sourceText: string;
+  fromLanguage: string | null;
+  toLanguage: string;
 }
