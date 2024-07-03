@@ -1,15 +1,16 @@
 import { ComponentProps } from "react";
 import { Input } from "../ui/input";
-type APIInputProps = { APIName: string } & ComponentProps<"div">;
+import { AISource } from "@shared/types";
+type APIInputProps = { source: AISource } & ComponentProps<"div">;
 
-const APIInput = ({ APIName, className }: APIInputProps) => {
+const APIInput = ({ source, className }: APIInputProps) => {
   return (
     <div className={className}>
-      <span className="text-sm">{APIName} API</span>
+      <span className="text-sm">{source} API</span>
       <Input
         className="w-[220px] h-[30px]"
         type="text"
-        placeholder={`Paste your ${APIName} API here`}
+        placeholder={`Paste your ${source} API here`}
       />
     </div>
   );

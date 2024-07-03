@@ -43,7 +43,7 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <ThemeSelector className={settingRowStyle} />
           <FontSizeSelector className={settingRowStyle} />
           <h3 className="font-semibold mt-3">APIs</h3>
-          <APIInput className={settingRowStyle} APIName="DeepL" />
+          <APIInput className={settingRowStyle} source="DeepL" />
         </div>
         <DialogFooter>
           <DialogClose asChild>

@@ -4,7 +4,7 @@ import { PanelLeftOpen, PanelLeftClose } from "lucide-react";
 import IconButton from "@/components/header/IconButton";
 import SettingDialog from "@/components/header/SettingDialog";
 
-const iconStyle = "stroke-foreground stroke-thin";
+const iconStyle = "stroke-primary stroke-thin w-5 h-5";
 
 const HeaderControls = () => {
   const dispatch = useAppDispatch();
