@@ -23,6 +23,6 @@ export interface editorSettingsType {
 export interface translationConfigType {
   apis: APIType;
   sourceText: string;
-  fromLanguage: string | null;
+  fromLanguage: string;
   toLanguage: string;
 }

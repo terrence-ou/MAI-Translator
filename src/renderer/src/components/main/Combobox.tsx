@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useAppSelector } from "@/hooks";
+import { useAppSelector, useAppDispatch } from "@/hooks";
+import { setFromLanguage, setToLanguage } from "@/store/translationConfigSlice";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 
@@ -25,6 +26,11 @@ type ComboboxProps = {
 */
 const Combobox = ({ type }: ComboboxProps) => {
   const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const setLanFn = (newLan: string) => {
+    type === "toLanguage" ? dispatch(setToLanguage(newLan)) : dispatch(setFromLanguage(newLan));
+    setOpen(false);
+  };
 
   // Get language list based on the combobox type
   const languageList =
@@ -47,7 +53,7 @@ const Combobox = ({ type }: ComboboxProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[250px] h-[35px] justify-between"
         >
           {label}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -60,7 +66,7 @@ const Combobox = ({ type }: ComboboxProps) => {
             <CommandEmpty>No language found.</CommandEmpty>
             <CommandGroup>
               {languageList.map(({ language, label, value }) => (
-                <CommandItem key={language} value={value}>
+                <CommandItem key={language} value={value} onSelect={() => setLanFn(value)}>
                   <Check
                     className={cn("mr-2 h-4 w-4", value === currLan ? "opacity-100" : "opacity-0")}
                   />

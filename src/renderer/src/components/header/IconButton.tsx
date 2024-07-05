@@ -1,11 +1,13 @@
 import { ComponentProps } from "react";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/utils";
 
-const IconButton = ({ className, children, onClick, ...props }: ComponentProps<"button">) => {
+const IconButton = ({ children, ...props }: ComponentProps<"button">) => {
+  const { className, onClick, disabled } = props;
   return (
     <button
-      className={twMerge(
-        "p-1 rounded-md hover:bg-border transition-colors duration-200",
+      className={cn(
+        "p-1 rounded-md",
+        disabled ? "opacity-30" : "hover:bg-border transition-colors duration-200",
         className
       )}
       onClick={onClick}
