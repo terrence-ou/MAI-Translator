@@ -3,15 +3,15 @@ import { ImperativePanelHandle } from "react-resizable-panels";
 import { useAppSelector, useAppDispatch, usePanelControl } from "@/hooks";
 import { collapsePanel } from "@/store/settingsSlice";
 import { RootState } from "@/store";
-import LanguagesBar from "@/components/main/LanguagesBar";
 import { ResizablePanel, ResizableHandle, ResizablePanelGroup } from "@/components/ui/resizable";
 
 import { cn } from "@/utils";
+import TranslationInterface from "./TranslationInterface";
 
 // default main interface panel configurations
 const panelConfig = {
   defaultSize: 25,
-  maxSize: 35,
+  maxSize: 25,
   minSize: 15,
   collapible: true,
 };
@@ -68,9 +68,7 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
           data-testid="panel-right"
           defaultSize={100 - panelConfig.defaultSize}
         >
-          <div className="mt-16">
-            <LanguagesBar />
-          </div>
+          <TranslationInterface className="box-border pt-16 pb-8 px-5 h-full" />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

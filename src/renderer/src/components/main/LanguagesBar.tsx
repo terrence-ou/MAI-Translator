@@ -7,14 +7,18 @@ import IconButton from "../header/IconButton";
 const LanguagesBar = () => {
   const dispatch = useAppDispatch();
   const currFromLan = useAppSelector((state) => state.translationConfig.fromLanguage);
+  const currToLan = useAppSelector((state) => state.translationConfig.toLanguage);
   const handleSwitchLanguages = () => {
     dispatch(switchLanguages());
   };
   return (
     <div className="flex justify-center items-center gap-3">
       <Combobox type="fromLanguage" />
-      <IconButton disabled={currFromLan === ""} onClick={handleSwitchLanguages}>
-        <ArrowLeftRight className="stroke-primary stroke-thin w-5 h-5" />
+      <IconButton
+        disabled={currFromLan === "" || currFromLan === currToLan}
+        onClick={handleSwitchLanguages}
+      >
+        <ArrowLeftRight className="stroke-primary stroke-thin w-4 h-4" />
       </IconButton>
       <Combobox type="toLanguage" />
     </div>

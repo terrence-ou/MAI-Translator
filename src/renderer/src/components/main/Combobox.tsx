@@ -53,7 +53,7 @@ const Combobox = ({ type }: ComboboxProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[250px] h-[35px] justify-between"
+          className="w-[200px] h-[30px] justify-between rounded-sm border-none bg-transparent"
         >
           {label}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

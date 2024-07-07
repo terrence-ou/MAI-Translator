@@ -3,6 +3,7 @@ import { togglePanel } from "@/store/settingsSlice";
 import { PanelLeftOpen, PanelLeftClose } from "lucide-react";
 import IconButton from "@/components/header/IconButton";
 import SettingDialog from "@/components/header/SettingDialog";
+import LanguagesBar from "../main/LanguagesBar";
 
 const iconStyle = "stroke-primary stroke-thin w-5 h-5";
 
@@ -23,6 +24,7 @@ const HeaderControls = () => {
             <PanelLeftOpen className={iconStyle} />
           )}
         </IconButton>
+        <LanguagesBar />
         <SettingDialog className={iconStyle} data-testid="button-settings" />
       </div>
     </div>
