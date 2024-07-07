@@ -11,6 +11,8 @@ function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 850,
+    minWidth: 800,
+    minHeight: 600,
     show: false,
     // autoHideMenuBar: true,
     vibrancy: "under-window",
