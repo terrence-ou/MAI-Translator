@@ -50,6 +50,7 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
   return (
     <div {...props}>
       <ResizablePanelGroup direction="horizontal">
+        {/* left panel, tranlation history */}
         <ResizablePanel
           ref={panelRef}
           id="panel-left"
@@ -63,6 +64,7 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
           onExpand={handleOnExpand}
         ></ResizablePanel>
         <ResizableHandle />
+        {/* right panel, translation interface */}
         <ResizablePanel
           id="panel-right"
           data-testid="panel-right"

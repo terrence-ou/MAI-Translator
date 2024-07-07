@@ -1,26 +1,31 @@
-import { ComponentProps } from "react";
+import { ComponentProps, forwardRef } from "react";
+import { useAppSelector } from "@/hooks";
 import { Textarea } from "../ui/textarea";
-import { cn } from "@/utils";
-import { Button } from "../ui/button";
 
-type TextFiledProps = { disabled?: boolean; content?: string } & ComponentProps<"div">;
+type TextFiledProps = { disabled?: boolean; content?: string } & ComponentProps<"textarea">;
 
-const TextField = ({ className, disabled, content, ...props }: TextFiledProps) => {
+// The body of TextField, forwarding the textare ref to the textarea
+const TextField = forwardRef<HTMLTextAreaElement, TextFiledProps>(function TextField(
+  { disabled, content, children, ...props },
+  ref
+) {
+  // read fontsize from the redux store
+  const fontSize = useAppSelector((state) => state.settings.editorFontSize);
   return (
-    <div className={cn("h-full w-full", className)} {...props}>
+    <div className="h-full w-full">
       <Textarea
-        className="h-full w-full resize-none text-base focus-visible:ring-offset-0 disabled:cursor-text"
+        ref={ref}
+        className="h-full w-full resize-none focus-visible:ring-offset-0 disabled:cursor-text text-[20px]"
         placeholder="Type your text here"
         defaultValue={content}
         disabled={disabled}
+        // tailwind does not support template literal, so we use style attribute
+        style={{ fontSize: `${fontSize}px` }}
+        {...props}
       />
-      <div className="-translate-y-12 p-2">
-        <Button variant="secondary" className="h-8 hover:bg-foreground hover:text-background">
-          Translate
-        </Button>
-      </div>
+      <div className="-translate-y-12 p-2">{children}</div>
     </div>
   );
-};
+});
 
 export default TextField;
