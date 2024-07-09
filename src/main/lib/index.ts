@@ -1,11 +1,11 @@
 import axios from "axios";
 import { ReadAPIsFn, WriteAPIsFn, APIType, GetDeepLFreeResultFn, DeepLResult } from "@shared/types";
 import { API_FILENAME } from "@shared/consts";
-// import { defaultSettings } from "@shared/default";
 import { app } from "electron";
 import fs from "fs";
 import path from "path";
 
+// read apis from the local file
 export const readApis: ReadAPIsFn = async () => {
   // check if setting.json file exists
   const filePath = path.join(app.getPath("userData"), API_FILENAME);
@@ -18,6 +18,7 @@ export const readApis: ReadAPIsFn = async () => {
   return apis;
 };
 
+// write apis to the local file
 export const writeApis: WriteAPIsFn = async (apis) => {
   const filePath = path.join(app.getPath("userData"), API_FILENAME);
   try {
@@ -27,10 +28,10 @@ export const writeApis: WriteAPIsFn = async (apis) => {
   }
 };
 
+// Get translation result from DeepL with free api
 export const getDeepLFreeResult: GetDeepLFreeResultFn = async (from, to, text) => {
-  const filePath = path.join(app.getPath("userData"), API_FILENAME);
-  const file = fs.readFileSync(filePath, { encoding: "utf8" });
-  const apis = JSON.parse(file) as APIType;
+  const apis = await readApis();
+  // Send translation request
   const response = await axios.post(
     "https://api-free.deepl.com/v2/translate",
     {
