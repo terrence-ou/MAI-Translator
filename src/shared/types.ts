@@ -7,6 +7,7 @@ export type LanguageConfig = { language: string; label: string; value: string };
 // types for IPC
 export type ReadAPIsFn = () => Promise<APIType>;
 export type WriteAPIsFn = (apis: APIType) => void;
+export type GetDeepLFreeResultFn = () => void;
 
 // Types for redux slices
 // export type APIType = { name: AISource; value: string };
