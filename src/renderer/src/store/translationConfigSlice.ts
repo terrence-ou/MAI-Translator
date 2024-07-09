@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { APIType, translationConfigType } from "@shared/types";
+import { APIType, DeepLResult, translationConfigType } from "@shared/types";
 import { RootState } from ".";
 
 // Async Thunks
@@ -18,7 +18,11 @@ const getDeepLFreeRes = createAsyncThunk(
   async (_, { getState }) => {
     const state = getState() as RootState;
     const { fromLanguage, toLanguage, sourceText } = state.translationConfig;
-    console.log(fromLanguage, toLanguage, sourceText);
+    if (sourceText.length !== 0) {
+      const result = await window.context.getDeepLFreeResult(fromLanguage, toLanguage, sourceText);
+      return result;
+    }
+    return null;
   }
 );
 
@@ -60,13 +64,24 @@ export const translationConfigSlice = createSlice({
       return state;
     });
     builders.addCase(getDeepLFreeRes.pending, (state) => {
+      state.results = state.results.filter(({ aiSource }) => aiSource !== "DeepL");
       state.loading = true;
-      return state;
     });
-    builders.addCase(getDeepLFreeRes.fulfilled, (state) => {
-      state.loading = false;
-      return state;
-    });
+    builders.addCase(
+      getDeepLFreeRes.fulfilled,
+      (state, action: PayloadAction<DeepLResult | null>) => {
+        if (action.payload !== null)
+          state.results = [
+            ...state.results,
+            {
+              aiSource: "DeepL",
+              detected_lan: action.payload.detected_source_language,
+              text: action.payload.text,
+            },
+          ];
+        state.loading = false;
+      }
+    );
   },
 });
 
