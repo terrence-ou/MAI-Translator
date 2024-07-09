@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { APIType, DeepLResult, translationConfigType } from "@shared/types";
 import { RootState } from ".";
 
-// Async Thunks
+/* Async Thunks */
 const loadApis = createAsyncThunk("translationConfig/loadApis", async () => {
   const apis = await window.context.readApis();
   return apis;
@@ -35,6 +35,7 @@ const initialState: translationConfigType = {
   results: [],
 };
 
+/* The body of translation config slice */
 export const translationConfigSlice = createSlice({
   name: "translationConfig",
   initialState,
@@ -63,6 +64,7 @@ export const translationConfigSlice = createSlice({
       state.apis = action.payload;
       return state;
     });
+    // set loading to true when fetching the data
     builders.addCase(getDeepLFreeRes.pending, (state) => {
       state.results = state.results.filter(({ aiSource }) => aiSource !== "DeepL");
       state.loading = true;
