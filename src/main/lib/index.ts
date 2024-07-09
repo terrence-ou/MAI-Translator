@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ReadAPIsFn, WriteAPIsFn, APIType, GetDeepLFreeResultFn } from "@shared/types";
+import { ReadAPIsFn, WriteAPIsFn, APIType, GetDeepLFreeResultFn, DeepLResult } from "@shared/types";
 import { API_FILENAME } from "@shared/consts";
 // import { defaultSettings } from "@shared/default";
 import { app } from "electron";
@@ -27,15 +27,16 @@ export const writeApis: WriteAPIsFn = async (apis) => {
   }
 };
 
-export const getDeepLFreeResult: GetDeepLFreeResultFn = async () => {
+export const getDeepLFreeResult: GetDeepLFreeResultFn = async (from, to, text) => {
   const filePath = path.join(app.getPath("userData"), API_FILENAME);
   const file = fs.readFileSync(filePath, { encoding: "utf8" });
   const apis = JSON.parse(file) as APIType;
   const response = await axios.post(
     "https://api-free.deepl.com/v2/translate",
     {
-      text: ["Hello, world!"],
-      target_lang: "DE",
+      text: [text],
+      target_lang: to.toUpperCase(),
+      source_lang: from.toUpperCase(),
     },
     {
       headers: {
@@ -44,6 +45,5 @@ export const getDeepLFreeResult: GetDeepLFreeResultFn = async () => {
       },
     }
   );
-
-  console.log("Translation:", response.data.translations[0]);
+  return response.data.translations[0] as DeepLResult;
 };
