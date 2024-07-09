@@ -15,6 +15,8 @@ export type APIType = {
   [key in AISource]?: string;
 };
 
+export type TranslationResult = { AISource: string };
+
 export interface editorSettingsType {
   editorFontSize?: number;
   theme?: Theme;
@@ -23,7 +25,9 @@ export interface editorSettingsType {
 
 export interface translationConfigType {
   apis: APIType;
+  loading: boolean;
   sourceText: string;
+  results: TranslationResult[];
   fromLanguage: string;
   toLanguage: string;
 }

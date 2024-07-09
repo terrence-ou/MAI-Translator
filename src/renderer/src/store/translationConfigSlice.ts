@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { APIType, translationConfigType } from "@shared/types";
+import { RootState } from ".";
 
 // Async Thunks
 const loadApis = createAsyncThunk("translationConfig/loadApis", async () => {
@@ -12,11 +13,22 @@ const setApis = createAsyncThunk("translationConfig/saveApis", async (apis: APIT
   return apis;
 });
 
+const getDeepLFreeRes = createAsyncThunk(
+  "translationConfig/getDeepLFreeRes",
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+    const { fromLanguage, toLanguage, sourceText } = state.translationConfig;
+    console.log(fromLanguage, toLanguage, sourceText);
+  }
+);
+
 const initialState: translationConfigType = {
   apis: {},
+  sourceText: "",
+  loading: false,
   fromLanguage: "",
   toLanguage: "en",
-  sourceText: "",
+  results: [],
 };
 
 export const translationConfigSlice = createSlice({
@@ -47,10 +59,18 @@ export const translationConfigSlice = createSlice({
       state.apis = action.payload;
       return state;
     });
+    builders.addCase(getDeepLFreeRes.pending, (state) => {
+      state.loading = true;
+      return state;
+    });
+    builders.addCase(getDeepLFreeRes.fulfilled, (state) => {
+      state.loading = false;
+      return state;
+    });
   },
 });
 
-export { loadApis, setApis };
+export { loadApis, setApis, getDeepLFreeRes };
 export const { setFromLanguage, setToLanguage, switchLanguages, setSourceText } =
   translationConfigSlice.actions;
 export default translationConfigSlice.reducer;
