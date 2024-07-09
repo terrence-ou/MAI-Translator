@@ -3,8 +3,8 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 
-import type { ReadAPIsFn, WriteAPIsFn } from "@shared/types";
-import { readApis, writeApis } from "@/lib";
+import type { GetDeepLFreeResultFn, ReadAPIsFn, WriteAPIsFn } from "@shared/types";
+import { readApis, writeApis, getDeepLFreeResult } from "@/lib";
 
 function createWindow(): void {
   // Create the browser window.
@@ -63,6 +63,9 @@ app.whenReady().then(() => {
   // IPCs
   ipcMain.handle("readApis", (_, ...args: Parameters<ReadAPIsFn>) => readApis(...args));
   ipcMain.handle("writeApis", (_, ...args: Parameters<WriteAPIsFn>) => writeApis(...args));
+  ipcMain.handle("getDeepLFreeResult", (_, ...args: Parameters<GetDeepLFreeResultFn>) =>
+    getDeepLFreeResult(...args)
+  );
 
   createWindow();
 
