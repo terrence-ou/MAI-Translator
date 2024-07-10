@@ -1,4 +1,4 @@
-import { GetDeepLFreeResultFn, ReadAPIsFn, WriteAPIsFn } from "@shared/types";
+import { GetClaudeResultFn, GetDeepLFreeResultFn, ReadAPIsFn, WriteAPIsFn } from "@shared/types";
 
 declare global {
   interface Window {
@@ -6,6 +6,7 @@ declare global {
       readApis: ReadAPIsFn;
       writeApis: WriteAPIsFn;
       getDeepLFreeResult: GetDeepLFreeResultFn;
+      getClaudeResult: GetClaudeResultFn;
     };
   }
 }

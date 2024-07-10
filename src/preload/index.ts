@@ -1,4 +1,4 @@
-import { ReadAPIsFn, WriteAPIsFn, GetDeepLFreeResultFn } from "@shared/types";
+import { ReadAPIsFn, WriteAPIsFn, GetDeepLFreeResultFn, GetClaudeResultFn } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
 
@@ -12,6 +12,8 @@ try {
     writeApis: (...args: Parameters<WriteAPIsFn>) => ipcRenderer.invoke("writeApis", ...args),
     getDeepLFreeResult: (...args: Parameters<GetDeepLFreeResultFn>) =>
       ipcRenderer.invoke("getDeepLFreeResult", ...args),
+    getClaudeResult: (...args: Parameters<GetClaudeResultFn>) =>
+      ipcRenderer.invoke("getClaudeResult", ...args),
   });
 } catch (error) {
   console.error(error);

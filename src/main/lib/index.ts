@@ -1,6 +1,13 @@
-import axios from "axios";
-import { ReadAPIsFn, WriteAPIsFn, APIType, GetDeepLFreeResultFn, DeepLResult } from "@shared/types";
+import {
+  ReadAPIsFn,
+  WriteAPIsFn,
+  APIType,
+  GetDeepLFreeResultFn,
+  TranslationOutput,
+  GetClaudeResultFn,
+} from "@shared/types";
 import { API_FILENAME } from "@shared/consts";
+import axios from "axios";
 import { app } from "electron";
 import fs from "fs";
 import path from "path";
@@ -46,5 +53,40 @@ export const getDeepLFreeResult: GetDeepLFreeResultFn = async (from, to, text) =
       },
     }
   );
-  return response.data.translations[0] as DeepLResult;
+
+  return response.data.translations[0] as TranslationOutput;
+};
+
+export const getClaudeResult: GetClaudeResultFn = async (from, to, text) => {
+  try {
+    const apis = await readApis();
+    const response = await axios.post(
+      "https://api.anthropic.com/v1/messages", // Replace with the correct Claude API endpoint
+      {
+        model: "claude-3-haiku-20240307",
+        max_tokens: 4096,
+        temperature: 0,
+        system:
+          "You are a professional translation capable of translating between multiple languages.",
+        messages: [
+          {
+            role: "user",
+            content: `Translate the following source text from {from_language: ${from.length === 0 ? "undetected" : from}} to {to_language: ${to}}. If the from_language is empty or null, just neglect that variable and auto detect the input language. Return result only. source text: ${text}. Please return the translated result only.`,
+          },
+        ],
+      },
+      {
+        headers: {
+          "x-api-key": `${apis.Claude}`,
+          "anthropic-version": "2023-06-01",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const outputText = response.data.content[0].text as string;
+    return { detected_source_language: "", text: outputText } as TranslationOutput;
+  } catch (error) {
+    console.error("Error calling Claude API", error);
+    throw error;
+  }
 };
