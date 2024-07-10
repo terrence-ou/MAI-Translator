@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { APIType, DeepLResult, translationConfigType } from "@shared/types";
+import type { APIType, translationConfigType, TranslationResult } from "@shared/types";
 import { RootState } from ".";
 
 /* Async Thunks */
@@ -13,16 +13,27 @@ const setApis = createAsyncThunk("translationConfig/saveApis", async (apis: APIT
   return apis;
 });
 
-const getDeepLFreeRes = createAsyncThunk(
-  "translationConfig/getDeepLFreeRes",
+const getTranslations = createAsyncThunk(
+  "translationConfig/getTranslations",
   async (_, { getState }) => {
     const state = getState() as RootState;
     const { fromLanguage, toLanguage, sourceText } = state.translationConfig;
     if (sourceText.length !== 0) {
-      const result = await window.context.getDeepLFreeResult(fromLanguage, toLanguage, sourceText);
-      return result;
-    }
-    return null;
+      const deeplOutput = await window.context.getDeepLFreeResult(
+        fromLanguage,
+        toLanguage,
+        sourceText
+      );
+      const claudeOutput = await window.context.getClaudeResult(
+        fromLanguage,
+        toLanguage,
+        sourceText
+      );
+      return [
+        { aiSource: "DeepL", ...deeplOutput },
+        { aiSource: "Claude", ...claudeOutput },
+      ] as TranslationResult[];
+    } else return null;
   }
 );
 
@@ -64,30 +75,21 @@ export const translationConfigSlice = createSlice({
       state.apis = action.payload;
       return state;
     });
-    // set loading to true when fetching the data
-    builders.addCase(getDeepLFreeRes.pending, (state) => {
-      state.results = state.results.filter(({ aiSource }) => aiSource !== "DeepL");
+    builders.addCase(getTranslations.pending, (state) => {
+      state.results = [];
       state.loading = true;
     });
     builders.addCase(
-      getDeepLFreeRes.fulfilled,
-      (state, action: PayloadAction<DeepLResult | null>) => {
-        if (action.payload !== null)
-          state.results = [
-            ...state.results,
-            {
-              aiSource: "DeepL",
-              detected_lan: action.payload.detected_source_language,
-              text: action.payload.text,
-            },
-          ];
+      getTranslations.fulfilled,
+      (state, action: PayloadAction<TranslationResult[] | null>) => {
+        if (action.payload !== null) state.results = action.payload;
         state.loading = false;
       }
     );
   },
 });
 
-export { loadApis, setApis, getDeepLFreeRes };
+export { loadApis, setApis, getTranslations };
 export const { setFromLanguage, setToLanguage, switchLanguages, setSourceText } =
   translationConfigSlice.actions;
 export default translationConfigSlice.reducer;

@@ -1,6 +1,6 @@
 import { ComponentProps, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setSourceText, getDeepLFreeRes } from "@/store/translationConfigSlice";
+import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
 import TextField from "./TextField";
 import AiIconTab from "./AiIconTab";
 import { Button } from "../ui/button";
@@ -23,12 +23,11 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
     if (sourceRef.current !== null) dispatch(setSourceText(sourceRef.current.value));
   };
   const handleTranslate = () => {
-    dispatch(getDeepLFreeRes());
+    dispatch(getTranslations());
   };
 
   const translations = useAppSelector((state) => state.translationConfig.results);
-  // TODO - use currAi state to control the translation result selections
-  const deepLResult = translations.filter(({ aiSource }) => aiSource === "DeepL")[0];
+  const displayResult = translations.filter(({ aiSource }) => aiSource === currAi)[0];
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>
@@ -48,7 +47,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           {/* Translated text */}
           <TextField
             disabled={true}
-            value={deepLResult === undefined ? "The result will appear here" : deepLResult.text}
+            value={displayResult === undefined ? "The result will appear here" : displayResult.text}
           >
             <Button variant="secondary" className="h-8 hover:bg-foreground hover:text-background">
               Save Results
