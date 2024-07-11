@@ -1,15 +1,9 @@
 import { ComponentProps } from "react";
+import IconWrapper from "./IconWrapper";
 
-const DeeplIcon = ({ width = 20, height = 20, fill = "black" }: ComponentProps<"svg">) => {
+const DeeplIcon = ({ width = 20, height = 20, ...props }: ComponentProps<"svg">) => {
   return (
-    <svg
-      fill={fill}
-      width={width}
-      height={height}
-      viewBox="0 0 192 192"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlSpace="preserve"
-    >
+    <IconWrapper width={width} height={height} viewBox="0 0 192 192" {...props}>
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
       <g id="SVGRepo_iconCarrier">
@@ -18,7 +12,7 @@ const DeeplIcon = ({ width = 20, height = 20, fill = "black" }: ComponentProps<"
           transform="translate(-424 -212)"
         />
       </g>
-    </svg>
+    </IconWrapper>
   );
 };
 

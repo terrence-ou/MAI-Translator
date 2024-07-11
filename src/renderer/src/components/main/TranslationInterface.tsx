@@ -1,12 +1,12 @@
 import { ComponentProps, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
-import TextField from "./TextField";
-import AiIconTab from "./AiIconTab";
-import { Button } from "../ui/button";
-import { cn } from "@/utils";
 import { AI_LIST } from "@shared/consts";
 import { AISource } from "@shared/types";
+import { cn } from "@/utils";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
+import TextField from "@/components/main/TextField";
+import AiIconTab from "@/components/main/AiIconTab";
+import { Button } from "@/components/ui/button";
 
 const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   // The currAi state controls the display of translation results
@@ -26,7 +26,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
     dispatch(getTranslations());
   };
 
-  const translations = useAppSelector((state) => state.translationConfig.results);
+  const translations = useAppSelector((state) => state.translationConfig.results.outputs);
   const displayResult = translations.filter(({ aiSource }) => aiSource === currAi)[0];
 
   return (
@@ -58,13 +58,13 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
         <div className="flex flex-col pt-3">
           {AI_LIST.map((ai) => {
             const variant = ai === currAi ? "default" : "secondary";
-            const iconFill = ai === currAi ? "white" : "black";
+            const active = ai === currAi;
             return (
               <AiIconTab
                 key={ai}
                 variant={variant}
                 icon={ai}
-                fill={iconFill}
+                active={active}
                 onClick={() => handleSetCurrAi(ai)}
               />
             );

@@ -7,17 +7,18 @@ import { ComponentProps } from "react";
 type AiIconTabProps = {
   variant: "default" | "outline" | "secondary" | "ghost" | undefined;
   icon: AISource;
-  fill: "white" | "black";
+  active?: boolean;
 } & ComponentProps<"button">;
 
 /* The body of AiIconTab component */
-const AiIconTab = ({ variant, icon, fill, ...props }: AiIconTabProps) => {
+const AiIconTab = ({ variant, icon, active, ...props }: AiIconTabProps) => {
+  const fillStyle = active ? "fill-white dark:fill-black" : "fill-black dark:fill-white";
   const getIcon = () => {
     switch (icon) {
       case "DeepL":
-        return <DeeplIcon fill={fill} />;
+        return <DeeplIcon className={fillStyle} />;
       case "Claude":
-        return <ClaudeIcon fill={fill} />;
+        return <ClaudeIcon className={fillStyle} />;
       default:
         return undefined;
     }

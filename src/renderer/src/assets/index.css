@@ -68,6 +68,9 @@
 }
 
 @layer base {
+  ::selection {
+    @apply text-muted bg-muted-foreground;
+  }
   * {
     @apply border-border;
   }

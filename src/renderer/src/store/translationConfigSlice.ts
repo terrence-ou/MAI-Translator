@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { APIType, translationConfigType, TranslationResult } from "@shared/types";
+import type { APIType, StoreTranslationResult, translationConfigType } from "@shared/types";
 import { RootState } from ".";
 
 /* Async Thunks */
@@ -25,14 +25,17 @@ const getTranslations = createAsyncThunk(
         sourceText
       );
       const claudeOutput = await window.context.getClaudeResult(
-        fromLanguage,
+        deeplOutput.detected_source_language, // This is a trick: deepl automatically returns a source language.
         toLanguage,
         sourceText
       );
-      return [
-        { aiSource: "DeepL", ...deeplOutput },
-        { aiSource: "Claude", ...claudeOutput },
-      ] as TranslationResult[];
+      return {
+        detected_source_language: deeplOutput.detected_source_language,
+        outputs: [
+          { aiSource: "DeepL", text: deeplOutput.text },
+          { aiSource: "Claude", text: claudeOutput },
+        ],
+      } as StoreTranslationResult;
     } else return null;
   }
 );
@@ -43,7 +46,7 @@ const initialState: translationConfigType = {
   loading: false,
   fromLanguage: "",
   toLanguage: "en",
-  results: [],
+  results: { detected_source_language: "", outputs: [] },
 };
 
 /* The body of translation config slice */
@@ -76,13 +79,15 @@ export const translationConfigSlice = createSlice({
       return state;
     });
     builders.addCase(getTranslations.pending, (state) => {
-      state.results = [];
+      state.results.outputs = [];
       state.loading = true;
     });
     builders.addCase(
       getTranslations.fulfilled,
-      (state, action: PayloadAction<TranslationResult[] | null>) => {
-        if (action.payload !== null) state.results = action.payload;
+      (state, action: PayloadAction<StoreTranslationResult | null>) => {
+        if (action.payload !== null) {
+          state.results = action.payload;
+        }
         state.loading = false;
       }
     );
