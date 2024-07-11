@@ -8,12 +8,13 @@ export type LanguageConfig = { language: string; label: string; value: string };
 export type ReadAPIsFn = () => Promise<APIType>;
 export type WriteAPIsFn = (apis: APIType) => void;
 
-export type TranslationOutput = { detected_source_language: string; text: string };
+export type DetectionTranslationOutput = { detected_source_language: string; text: string };
+export type TranslationOutput = string;
 export type GetDeepLFreeResultFn = (
   from: string,
   to: string,
   text: string
-) => Promise<TranslationOutput>;
+) => Promise<DetectionTranslationOutput>;
 export type GetClaudeResultFn = (
   from: string,
   to: string,
@@ -26,10 +27,12 @@ export type APIType = {
   [key in AISource]?: string;
 };
 
-export type TranslationResult = {
-  aiSource: AISource;
+export type StoreTranslationResult = {
   detected_source_language: string;
-  text: string;
+  outputs: {
+    aiSource: AISource;
+    text: string;
+  }[];
 };
 
 export interface editorSettingsType {
@@ -42,7 +45,7 @@ export interface translationConfigType {
   apis: APIType;
   loading: boolean;
   sourceText: string;
-  results: TranslationResult[];
+  results: StoreTranslationResult;
   fromLanguage: string;
   toLanguage: string;
 }

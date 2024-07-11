@@ -3,10 +3,11 @@ import {
   WriteAPIsFn,
   APIType,
   GetDeepLFreeResultFn,
-  TranslationOutput,
   GetClaudeResultFn,
+  DetectionTranslationOutput,
 } from "@shared/types";
-import { API_FILENAME } from "@shared/consts";
+import { API_FILENAME, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
+import { CLAUDE_PROMPTS } from "@shared/prompts";
 import axios from "axios";
 import { app } from "electron";
 import fs from "fs";
@@ -38,40 +39,44 @@ export const writeApis: WriteAPIsFn = async (apis) => {
 // Get translation result from DeepL with free api
 export const getDeepLFreeResult: GetDeepLFreeResultFn = async (from, to, text) => {
   const apis = await readApis();
-  // Send translation request
-  const response = await axios.post(
-    "https://api-free.deepl.com/v2/translate",
-    {
-      text: [text],
-      target_lang: to.toUpperCase(),
-      source_lang: from.toUpperCase(),
-    },
-    {
-      headers: {
-        Authorization: `DeepL-Auth-Key ${apis.DeepL}`,
-        "Content-Type": "application/json",
+  try {
+    // Send translation request
+    const response = await axios.post(
+      "https://api-free.deepl.com/v2/translate",
+      {
+        text: [text],
+        target_lang: to.toUpperCase(),
+        source_lang: from.toUpperCase(),
       },
-    }
-  );
-
-  return response.data.translations[0] as TranslationOutput;
+      {
+        headers: {
+          Authorization: `DeepL-Auth-Key ${apis.DeepL}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data.translations[0] as DetectionTranslationOutput;
+  } catch (error) {
+    console.log(error);
+  }
+  return { detected_source_language: "", text: TRANSLATION_FAIL_MESSAGE };
 };
 
+// Get translation result from claude api
 export const getClaudeResult: GetClaudeResultFn = async (from, to, text) => {
+  const apis = await readApis();
   try {
-    const apis = await readApis();
     const response = await axios.post(
-      "https://api.anthropic.com/v1/messages", // Replace with the correct Claude API endpoint
+      "https://api.anthropic.com/v1/messages",
       {
         model: "claude-3-haiku-20240307",
         max_tokens: 4096,
         temperature: 0,
-        system:
-          "You are a professional translation capable of translating between multiple languages.",
+        system: CLAUDE_PROMPTS.system,
         messages: [
           {
-            role: "user",
-            content: `Translate the following source text from {from_language: ${from.length === 0 ? "undetected" : from}} to {to_language: ${to}}. If the from_language is empty or null, just neglect that variable and auto detect the input language. Return result only. source text: ${text}. Please return the translated result only.`,
+            role: CLAUDE_PROMPTS.role,
+            content: CLAUDE_PROMPTS.content(from, to, text),
           },
         ],
       },
@@ -84,9 +89,9 @@ export const getClaudeResult: GetClaudeResultFn = async (from, to, text) => {
       }
     );
     const outputText = response.data.content[0].text as string;
-    return { detected_source_language: "", text: outputText } as TranslationOutput;
+    return outputText;
   } catch (error) {
     console.error("Error calling Claude API", error);
-    throw error;
   }
+  return TRANSLATION_FAIL_MESSAGE;
 };
