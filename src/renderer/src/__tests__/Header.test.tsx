@@ -3,10 +3,9 @@ import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
 import { render, screen } from "@/utils/test-utils";
 import { fireEvent } from "@/utils/test-utils";
-// import App from "@/App";
 import Header from "@/components/header/Header";
 
-describe("Testing header", () => {
+describe("Testing panel controls", () => {
   test("check default buttons", () => {
     render(<Header />);
     expect(getCloseBtn()).toBeInTheDocument();
@@ -28,10 +27,31 @@ describe("Testing header", () => {
   });
 });
 
+describe("testing setting controls", () => {
+  test("check setting button", () => {
+    render(<Header />);
+    expect(getSettingBtn()).toBeInTheDocument();
+  });
+
+  test("check toggling settings window", () => {
+    render(<Header />);
+    expect(screen.queryByTestId("dialog-window")).not.toBeInTheDocument();
+    const settingButton = getSettingBtn();
+    fireEvent.click(settingButton!);
+    expect(screen.queryByTestId("dialog-window")).toBeInTheDocument();
+    fireEvent.click(settingButton!);
+    expect(screen.queryByTestId("dialog-window")).not.toBeInTheDocument();
+  });
+});
+
 // Helper functions
 const getCloseBtn = () => {
   return screen.queryByTestId("button-panel-close");
 };
 const getOpenBtn = () => {
   return screen.queryByTestId("button-panel-open");
+};
+
+const getSettingBtn = () => {
+  return screen.queryByTestId("button-settings");
 };
