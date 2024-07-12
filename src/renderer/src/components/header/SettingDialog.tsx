@@ -55,12 +55,16 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="p-1 rounded-md hover:bg-border transition-colors duration-200">
+      <DialogTrigger
+        className="p-1 rounded-md hover:bg-border transition-colors duration-200"
+        data-testid="button-settings"
+      >
         <Settings className={className} />
       </DialogTrigger>
       <DialogContent
         className="sm:max-w-[425px] sm:max-h-[80vh] overflow-auto"
         onOpenAutoFocus={(event) => event.preventDefault()}
+        data-testid="dialog-window"
       >
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>

@@ -25,7 +25,7 @@ const HeaderControls = () => {
           )}
         </IconButton>
         <LanguagesBar />
-        <SettingDialog className={iconStyle} data-testid="button-settings" />
+        <SettingDialog className={iconStyle} />
       </div>
     </div>
   );
