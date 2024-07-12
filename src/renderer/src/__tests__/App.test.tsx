@@ -12,9 +12,12 @@ const renderApp = async () => {
   });
 };
 
+beforeEach(async () => {
+  await renderApp();
+});
+
 describe("Testing main interface layout", () => {
   test("basic elements", async () => {
-    await renderApp();
     const header = screen.queryByTestId("header");
     const main = screen.queryByTestId("main");
     const panelLeft = screen.queryByTestId("panel-left");
@@ -28,7 +31,6 @@ describe("Testing main interface layout", () => {
 
 describe("Testing initial texts on the interface", () => {
   test("language selector texts", async () => {
-    await renderApp();
     expect(await screen.findByText("English")).toBeVisible();
     expect(await screen.findByText("Detect Language")).toBeVisible();
     expect(screen.queryByText("中文")).toBeNull();

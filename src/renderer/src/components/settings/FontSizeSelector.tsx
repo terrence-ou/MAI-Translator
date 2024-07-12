@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from "@/hooks";
 import { RootState } from "@/store";
 import { updateSettings } from "@/store/settingsSlice";
 
-const FontSizeSelector = ({ className }: ComponentProps<"div">) => {
+const FontSizeSelector = ({ className, ...props }: ComponentProps<"div">) => {
   const dispatch = useAppDispatch();
   const currFontSize = useAppSelector((state: RootState) => state.settings.editorFontSize);
 
@@ -15,7 +15,7 @@ const FontSizeSelector = ({ className }: ComponentProps<"div">) => {
   };
 
   return (
-    <div className={className}>
+    <div className={className} {...props}>
       <span className="text-sm">Editor Font Size</span>
       <div className="flex items-center gap-2">
         <Input

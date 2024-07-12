@@ -12,7 +12,7 @@ import { updateSettings } from "@/store/settingsSlice";
 // import { useTheme } from "../ThemeProvider";
 import { Theme } from "@shared/types";
 
-const ThemeSelector = ({ className }: ComponentProps<"div">) => {
+const ThemeSelector = ({ className, ...props }: ComponentProps<"div">) => {
   const dispatch = useAppDispatch();
   const currTheme = useAppSelector((state: RootState) => state.settings.theme);
 
@@ -22,7 +22,7 @@ const ThemeSelector = ({ className }: ComponentProps<"div">) => {
   };
 
   return (
-    <div className={className}>
+    <div className={className} {...props}>
       <span className="text-sm">Theme</span>
       <Select onValueChange={(value) => handleSelectTheme(value as Theme)}>
         <SelectTrigger className="w-[120px] h-[30px]">

@@ -76,8 +76,8 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
         <div className="flex flex-col gap-3 my-4 ">
           {/* Interface Settings */}
           <h3 className="font-semibold">Interface</h3>
-          <ThemeSelector className={settingRowStyle} />
-          <FontSizeSelector className={settingRowStyle} />
+          <ThemeSelector className={settingRowStyle} data-testid="dialog-theme" />
+          <FontSizeSelector className={settingRowStyle} data-testid="dialog-font" />
           <h3 className="font-semibold mt-3">APIs</h3>
           {/* API Settings */}
           {aiInputRefs.map(({ source, defaultValue, ref }) => {
@@ -94,7 +94,9 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={handleSaveApis}>Save changes</Button>
+            <Button onClick={handleSaveApis} data-testid="dialog-save-btn">
+              Save changes
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
