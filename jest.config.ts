@@ -16,6 +16,10 @@ const config: JestConfigWithTsJest = {
     "^@/(.*)$": "<rootDir>/src/renderer/src/$1",
     "^@shared/(.*)$": "<rootDir>/src/shared/$1",
   },
+  coveragePathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/src/renderer/src/components/ui/",
+  ],
 };
 
 export default config;

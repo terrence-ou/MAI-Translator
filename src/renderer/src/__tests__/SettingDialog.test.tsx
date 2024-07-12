@@ -21,6 +21,7 @@ describe("Testing dialoging interface", () => {
     expect(screen.queryByText("Editor Font Size")).toBeVisible();
     expect(screen.queryByText("px")).toBeVisible();
     expect(screen.queryByText("DeepL")).toBeVisible();
+    expect(screen.queryByText("Claude")).toBeVisible();
   });
 
   test("check interactable elements", () => {
@@ -36,10 +37,4 @@ describe("Testing interactions", () => {
     await act(async () => fireEvent.click(saveButton!));
     expect(window.context.writeApis).toHaveBeenCalled();
   });
-
-  // Theme button problem haven't been solved
-  // test("click theme button", () => {
-  //   const themeSelector = screen.queryAllByRole("button");
-  //   console.log(themeSelector);
-  // });
 });
