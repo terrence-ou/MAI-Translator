@@ -6,6 +6,7 @@ out
 *.log*
 .vscode
 /test-results/
+/coverage/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
