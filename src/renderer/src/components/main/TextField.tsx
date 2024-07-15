@@ -15,7 +15,7 @@ const TextField = forwardRef<HTMLTextAreaElement, TextFiledProps>(function TextF
     <div className="h-full w-full">
       <Textarea
         ref={ref}
-        className="h-full w-full resize-none focus-visible:ring-offset-0 disabled:cursor-text text-[20px]"
+        className="h-full w-full resize-none focus-visible:ring-offset-0 disabled:cursor-text text-[20px] pb-7"
         placeholder="Type your text here"
         defaultValue={content}
         disabled={disabled}
@@ -23,7 +23,9 @@ const TextField = forwardRef<HTMLTextAreaElement, TextFiledProps>(function TextF
         style={{ fontSize: `${fontSize}px` }}
         {...props}
       />
-      <div className="-translate-y-12 p-2">{children}</div>
+      <div className="-translate-y-12 box-border py-2 px-4 flex justify-end items-center gap-2">
+        {children}
+      </div>
     </div>
   );
 });

@@ -1,4 +1,4 @@
-import { ComponentProps, useRef, useState } from "react";
+import { ComponentProps, useRef, useState, useEffect } from "react";
 import { AI_LIST } from "@shared/consts";
 import { AISource } from "@shared/types";
 import { cn } from "@/utils";
@@ -7,10 +7,18 @@ import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
 import TextField from "@/components/main/TextField";
 import AiIconTab from "@/components/main/AiIconTab";
 import { Button } from "@/components/ui/button";
+import { Copy, Eraser, Check, Loader2 } from "lucide-react";
+
+// constant styles for text filed buttons
+const iconStyle = "stroke-[1.5px] text-slate-300 hover:text-primary transition duration-150";
+const iconHeight = 18;
+const iconButtonStyle = "p-0 hover:bg-transparent h-5";
+const textButtonStyle = "h-7 hover:bg-foreground hover:text-background";
 
 const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   // The currAi state controls the display of translation results
   const [currAi, setCurrAi] = useState<AISource>("DeepL");
+  const [copied, setCopied] = useState<boolean>(false);
   const handleSetCurrAi = (aiSource: AISource) => {
     setCurrAi(aiSource);
   };
@@ -18,6 +26,9 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   const dispatch = useAppDispatch();
   const sourceRef = useRef<HTMLTextAreaElement>(null);
   const loading = useAppSelector((state) => state.translationConfig.loading);
+  const translations = useAppSelector((state) => state.translationConfig.results.outputs);
+  const displayResult = translations.filter(({ aiSource }) => aiSource === currAi)[0];
+
   // Set source text (input text)
   const handleSetSourceText = () => {
     if (sourceRef.current !== null) dispatch(setSourceText(sourceRef.current.value));
@@ -25,9 +36,26 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   const handleTranslate = () => {
     dispatch(getTranslations());
   };
+  // handles icon button clicks
+  const handleCopy = () => {
+    if (displayResult) navigator.clipboard.writeText(displayResult.text);
+    setCopied(true);
+  };
+  const handleClear = () => {
+    if (sourceRef.current !== null) {
+      sourceRef.current!.value = "";
+    }
+  };
 
-  const translations = useAppSelector((state) => state.translationConfig.results.outputs);
-  const displayResult = translations.filter(({ aiSource }) => aiSource === currAi)[0];
+  useEffect(() => {
+    if (copied) {
+      let timerId: NodeJS.Timeout | null = null;
+      timerId = setTimeout(() => {
+        setCopied(false);
+        return () => clearTimeout(timerId!);
+      }, 1000);
+    }
+  }, [copied]);
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>
@@ -36,12 +64,21 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           {/* Source text */}
           <TextField ref={sourceRef} onBlur={() => handleSetSourceText()}>
             <Button
+              variant="ghost"
+              disabled={loading}
+              className={iconButtonStyle}
+              onClick={handleClear}
+            >
+              <Eraser className={iconStyle} height={iconHeight} />
+            </Button>
+            <Button
               variant="secondary"
-              className="h-8 hover:bg-foreground hover:text-background"
+              className={textButtonStyle}
               onClick={handleTranslate}
               disabled={loading}
             >
-              {loading ? "Translating..." : "Translate"}
+              {loading && <Loader2 className="animate-spin" />}
+              {loading ? "Translating" : "Translate"}
             </Button>
           </TextField>
           {/* Translated text */}
@@ -49,7 +86,14 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             disabled={true}
             value={displayResult === undefined ? "The result will appear here" : displayResult.text}
           >
-            <Button variant="secondary" className="h-8 hover:bg-foreground hover:text-background">
+            <Button variant="ghost" className={iconButtonStyle} onClick={handleCopy}>
+              {copied ? (
+                <Check className={iconStyle} height={iconHeight} />
+              ) : (
+                <Copy className={iconStyle} height={iconHeight} />
+              )}
+            </Button>
+            <Button variant="secondary" className={textButtonStyle}>
               Save Results
             </Button>
           </TextField>
