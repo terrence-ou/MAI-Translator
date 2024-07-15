@@ -77,6 +77,15 @@
   body {
     @apply bg-background text-foreground h-screen;
   }
+  ::-webkit-scrollbar {
+    @apply w-[0.5rem];
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-md bg-muted hover:bg-primary/80;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-none;
+  }
 }
 
 header {
