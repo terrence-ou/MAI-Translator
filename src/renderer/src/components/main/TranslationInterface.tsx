@@ -10,9 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Copy, Eraser, Check, Loader2 } from "lucide-react";
 
 // constant styles for text filed buttons
-const iconStyle = "stroke-[1.5px] text-slate-300 hover:text-primary transition duration-150";
+const iconStyle =
+  "stroke-[1.5px] text-slate-300 dark:text-slate-600 hover:text-primary dark:hover:text-primary transition duration-150";
 const iconHeight = 18;
-const iconButtonStyle = "p-0 hover:bg-transparent h-5";
+const iconButtonStyle = "p-0 h-7 bg-background hover:bg-background";
 const textButtonStyle = "h-7 hover:bg-foreground hover:text-background";
 
 const TranslationInterface = ({ className }: ComponentProps<"div">) => {
@@ -58,62 +59,60 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   }, [copied]);
 
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
-      <div className="flex-1 flex gap-0">
-        <div className="flex-1 flex gap-4">
-          {/* Source text */}
-          <TextField ref={sourceRef} onBlur={() => handleSetSourceText()}>
-            <Button
-              variant="ghost"
-              disabled={loading}
-              className={iconButtonStyle}
-              onClick={handleClear}
-            >
-              <Eraser className={iconStyle} height={iconHeight} />
-            </Button>
-            <Button
-              variant="secondary"
-              className={textButtonStyle}
-              onClick={handleTranslate}
-              disabled={loading}
-            >
-              {loading && <Loader2 className="animate-spin" />}
-              {loading ? "Translating" : "Translate"}
-            </Button>
-          </TextField>
-          {/* Translated text */}
-          <TextField
-            disabled={true}
-            value={displayResult === undefined ? "The result will appear here" : displayResult.text}
+    <div className={cn("flex-1 flex gap-0", className)}>
+      <div className="flex-1 flex gap-4">
+        {/* Source text */}
+        <TextField ref={sourceRef} onBlur={() => handleSetSourceText()}>
+          <Button
+            variant="ghost"
+            disabled={loading}
+            className={iconButtonStyle}
+            onClick={handleClear}
           >
-            <Button variant="ghost" className={iconButtonStyle} onClick={handleCopy}>
-              {copied ? (
-                <Check className={iconStyle} height={iconHeight} />
-              ) : (
-                <Copy className={iconStyle} height={iconHeight} />
-              )}
-            </Button>
-            <Button variant="secondary" className={textButtonStyle}>
-              Save Results
-            </Button>
-          </TextField>
-        </div>
-        {/* AI source tabs */}
-        <div className="flex flex-col pt-3">
-          {AI_LIST.map((ai) => {
-            const variant = ai === currAi ? "default" : "secondary";
-            const active = ai === currAi;
-            return (
-              <AiIconTab
-                key={ai}
-                variant={variant}
-                icon={ai}
-                active={active}
-                onClick={() => handleSetCurrAi(ai)}
-              />
-            );
-          })}
-        </div>
+            <Eraser className={iconStyle} height={iconHeight} />
+          </Button>
+          <Button
+            variant="secondary"
+            className={textButtonStyle}
+            onClick={handleTranslate}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="animate-spin" />}
+            {loading ? "Translating" : "Translate"}
+          </Button>
+        </TextField>
+        {/* Translated text */}
+        <TextField
+          disabled={true}
+          value={displayResult === undefined ? "The result will appear here" : displayResult.text}
+        >
+          <Button variant="ghost" className={iconButtonStyle} onClick={handleCopy}>
+            {copied ? (
+              <Check className={iconStyle} height={iconHeight} />
+            ) : (
+              <Copy className={iconStyle} height={iconHeight} />
+            )}
+          </Button>
+          <Button variant="secondary" className={textButtonStyle}>
+            Save Results
+          </Button>
+        </TextField>
+      </div>
+      {/* AI source tabs */}
+      <div className="flex flex-col pt-3">
+        {AI_LIST.map((ai) => {
+          const variant = ai === currAi ? "default" : "secondary";
+          const active = ai === currAi;
+          return (
+            <AiIconTab
+              key={ai}
+              variant={variant}
+              icon={ai}
+              active={active}
+              onClick={() => handleSetCurrAi(ai)}
+            />
+          );
+        })}
       </div>
     </div>
   );

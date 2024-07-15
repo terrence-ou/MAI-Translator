@@ -1,4 +1,4 @@
-import { ComponentProps, forwardRef } from "react";
+import { ComponentProps, forwardRef, MutableRefObject } from "react";
 import { useAppSelector } from "@/hooks";
 import { Textarea } from "../ui/textarea";
 
@@ -15,7 +15,7 @@ const TextField = forwardRef<HTMLTextAreaElement, TextFiledProps>(function TextF
     <div className="h-full w-full">
       <Textarea
         ref={ref}
-        className="h-full w-full resize-none focus-visible:ring-offset-0 disabled:cursor-text text-[20px] pb-7"
+        className="h-full w-full resize-none focus-visible:ring-offset-0 disabled:cursor-text text-[20px] pb-12"
         placeholder="Type your text here"
         defaultValue={content}
         disabled={disabled}
