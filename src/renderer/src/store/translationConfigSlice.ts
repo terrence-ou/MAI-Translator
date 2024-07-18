@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { APIType, StoreTranslationResult, translationConfigType } from "@shared/types";
+import type { APIType, StoreTranslationResult, TranslationConfigType } from "@shared/types";
 import { RootState } from ".";
 
 /* Async Thunks */
@@ -40,7 +40,7 @@ const getTranslations = createAsyncThunk(
   }
 );
 
-const initialState: translationConfigType = {
+const initialState: TranslationConfigType = {
   apis: {},
   sourceText: "",
   loading: false,
@@ -72,11 +72,11 @@ export const translationConfigSlice = createSlice({
   extraReducers: (builders) => {
     builders.addCase(loadApis.fulfilled, (state, action: PayloadAction<APIType>) => {
       state.apis = action.payload;
-      return state;
+      // return state;
     });
     builders.addCase(setApis.fulfilled, (state, action: PayloadAction<APIType>) => {
       state.apis = action.payload;
-      return state;
+      // return state;
     });
     builders.addCase(getTranslations.pending, (state) => {
       state.results.outputs = [];

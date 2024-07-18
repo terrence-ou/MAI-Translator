@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { defaultSettings } from "@shared/default";
 import { STORAGE_FONTSIZE_KEY, STORAGE_THEME_KEY } from "@shared/consts";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { editorSettingsType, Theme } from "@shared/types";
+import type { EditorSettingsType, Theme } from "@shared/types";
 
 // Get theme and font size from localStorage
 const localTheme = localStorage.getItem(STORAGE_THEME_KEY);
 const localFontSize = localStorage.getItem(STORAGE_FONTSIZE_KEY);
 // Initial state from the settings slice
-const initialState: editorSettingsType = {
+const initialState: EditorSettingsType = {
   theme: localTheme ? (localTheme as Theme) : defaultSettings.theme,
   editorFontSize: localFontSize !== null ? parseInt(localFontSize) : defaultSettings.editorFontSize,
   showPanel: defaultSettings.showPanel,
@@ -17,7 +17,7 @@ const initialState: editorSettingsType = {
 // Async Thunks -- Update interface settings
 const updateSettings = createAsyncThunk(
   "settings/updateSettings",
-  async (newSetting: editorSettingsType) => {
+  async (newSetting: EditorSettingsType) => {
     if (newSetting["theme"] !== undefined) {
       localStorage.setItem(STORAGE_THEME_KEY, newSetting.theme);
     }
@@ -43,7 +43,7 @@ export const settingsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       updateSettings.fulfilled,
-      (state, action: PayloadAction<editorSettingsType>) => {
+      (state, action: PayloadAction<EditorSettingsType>) => {
         state = { ...state, ...action.payload };
         return state;
       }
