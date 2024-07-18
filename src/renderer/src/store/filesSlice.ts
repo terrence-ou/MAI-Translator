@@ -14,7 +14,7 @@ const saveRecord = createAsyncThunk("files/saveRecord", async (_, { getState }) 
   } as Record;
   console.log(content);
   try {
-    // await window.context.writeHistory(content);
+    await window.context.writeHistory(content);
     // create some mock delays to avoid saving files too quick
     await new Promise((resolve) => setTimeout(resolve, 1000));
   } catch (error) {

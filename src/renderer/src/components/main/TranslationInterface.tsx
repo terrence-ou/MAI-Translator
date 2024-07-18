@@ -4,6 +4,7 @@ import { AISource } from "@shared/types";
 import { cn } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
+import { saveRecord } from "@/store/filesSlice";
 import TextField from "@/components/main/TextField";
 import AiIconTab from "@/components/main/AiIconTab";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   const dispatch = useAppDispatch();
   const sourceRef = useRef<HTMLTextAreaElement>(null);
   const loading = useAppSelector((state) => state.translationConfig.loading);
+  const saving = useAppSelector((state) => state.files.saving);
   const translations = useAppSelector((state) => state.translationConfig.results.outputs);
   const displayResult = translations.filter(({ aiSource }) => aiSource === currAi)[0];
 
@@ -46,6 +48,10 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
     if (sourceRef.current !== null) {
       sourceRef.current!.value = "";
     }
+  };
+  // handles file management
+  const handleSave = () => {
+    dispatch(saveRecord());
   };
 
   useEffect(() => {
@@ -93,8 +99,14 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
               <Copy className={iconStyle} height={iconHeight} />
             )}
           </Button>
-          <Button variant="secondary" className={textButtonStyle}>
-            Save Results
+          <Button
+            variant="secondary"
+            className={textButtonStyle}
+            onClick={handleSave}
+            disabled={saving}
+          >
+            {saving && <Loader2 className="animate-spin" />}
+            {saving ? "Saving..." : "Save Result"}
           </Button>
         </TextField>
       </div>
