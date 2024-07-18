@@ -17,6 +17,7 @@ export const getHistories = async () => {
 
 export const writeHistory: WriteHistoryFn = async (content) => {
   const folderDir = getFolderDir();
+  await ensureDir(folderDir);
   const filename = getTimeString();
   return writeFile(`${folderDir}/${filename}.txt`, JSON.stringify(content));
 };
