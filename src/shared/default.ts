@@ -1,6 +1,6 @@
-import { editorSettingsType } from "@shared/types";
+import { EditorSettingsType } from "@shared/types";
 
-export const defaultSettings: editorSettingsType = {
+export const defaultSettings: EditorSettingsType = {
   theme: "system",
   editorFontSize: 10,
   showPanel: true,

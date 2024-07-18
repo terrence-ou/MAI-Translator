@@ -8,8 +8,9 @@ import type {
   GetDeepLFreeResultFn,
   ReadAPIsFn,
   WriteAPIsFn,
+  WriteHistoryFn,
 } from "@shared/types";
-import { readApis, writeApis, getDeepLFreeResult, getClaudeResult } from "@/lib";
+import { readApis, writeApis, getDeepLFreeResult, getClaudeResult, writeHistory } from "@/lib";
 
 function createWindow(): void {
   // Create the browser window.
@@ -66,6 +67,7 @@ app.whenReady().then(() => {
   });
 
   // IPCs
+  // curd ipcs
   ipcMain.handle("readApis", (_, ...args: Parameters<ReadAPIsFn>) => readApis(...args));
   ipcMain.handle("writeApis", (_, ...args: Parameters<WriteAPIsFn>) => writeApis(...args));
   ipcMain.handle("getDeepLFreeResult", (_, ...args: Parameters<GetDeepLFreeResultFn>) =>
@@ -74,6 +76,8 @@ app.whenReady().then(() => {
   ipcMain.handle("getClaudeResult", (_, ...args: Parameters<GetClaudeResultFn>) =>
     getClaudeResult(...args)
   );
+  // fs ipcs
+  ipcMain.handle("writeHistory", (_, ...args: Parameters<WriteHistoryFn>) => writeHistory(...args));
 
   createWindow();
 

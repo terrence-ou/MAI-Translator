@@ -2,7 +2,9 @@ import { AI_LIST } from "./consts";
 
 export type Theme = "dark" | "light" | "system";
 export type AISource = (typeof AI_LIST)[number];
+
 export type LanguageConfig = { language: string; label: string; value: string };
+export type Result = { aiSource: AISource; text: string };
 
 // types for IPC
 export type ReadAPIsFn = () => Promise<APIType>;
@@ -21,6 +23,9 @@ export type GetClaudeResultFn = (
   text: string
 ) => Promise<TranslationOutput>;
 
+export type Record = { from: string; to: string; source: string; translations: Result[] };
+export type WriteHistoryFn = (content: Record) => Promise<void>;
+
 // Types for redux slices
 // export type APIType = { name: AISource; value: string };
 export type APIType = {
@@ -29,23 +34,24 @@ export type APIType = {
 
 export type StoreTranslationResult = {
   detected_source_language: string;
-  outputs: {
-    aiSource: AISource;
-    text: string;
-  }[];
+  outputs: Result[];
 };
 
-export interface editorSettingsType {
+export interface EditorSettingsType {
   editorFontSize?: number;
   theme?: Theme;
   showPanel?: boolean;
 }
 
-export interface translationConfigType {
+export interface TranslationConfigType {
   apis: APIType;
   loading: boolean;
   sourceText: string;
   results: StoreTranslationResult;
   fromLanguage: string;
   toLanguage: string;
+}
+
+export interface FileSliceType {
+  saving: boolean;
 }
