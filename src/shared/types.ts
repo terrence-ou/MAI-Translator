@@ -23,8 +23,16 @@ export type GetClaudeResultFn = (
   text: string
 ) => Promise<TranslationOutput>;
 
-export type Record = { from: string; to: string; source: string; translations: Result[] };
+export type Record = {
+  from: string;
+  to: string;
+  source: string;
+  translations?: Result[];
+  filename?: string;
+};
+export type FilePreview = { [key: string]: Record[] };
 export type WriteHistoryFn = (content: Record) => Promise<void>;
+export type GetHistoriesFn = () => Promise<FilePreview>;
 
 // Types for redux slices
 // export type APIType = { name: AISource; value: string };

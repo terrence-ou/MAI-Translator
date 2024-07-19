@@ -1,6 +1,7 @@
 import {
   GetClaudeResultFn,
   GetDeepLFreeResultFn,
+  GetHistoriesFn,
   ReadAPIsFn,
   WriteAPIsFn,
   writeHistoryFn,
@@ -16,6 +17,7 @@ declare global {
       getClaudeResult: GetClaudeResultFn;
       // fs
       writeHistory: writeHistoryFn;
+      getHistories: GetHistoriesFn;
     };
   }
 }

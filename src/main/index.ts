@@ -6,11 +6,19 @@ import icon from "../../resources/icon.png?asset";
 import type {
   GetClaudeResultFn,
   GetDeepLFreeResultFn,
+  GetHistoriesFn,
   ReadAPIsFn,
   WriteAPIsFn,
   WriteHistoryFn,
 } from "@shared/types";
-import { readApis, writeApis, getDeepLFreeResult, getClaudeResult, writeHistory } from "@/lib";
+import {
+  readApis,
+  writeApis,
+  getDeepLFreeResult,
+  getClaudeResult,
+  writeHistory,
+  getHistories,
+} from "@/lib";
 
 function createWindow(): void {
   // Create the browser window.
@@ -78,6 +86,7 @@ app.whenReady().then(() => {
   );
   // fs ipcs
   ipcMain.handle("writeHistory", (_, ...args: Parameters<WriteHistoryFn>) => writeHistory(...args));
+  ipcMain.handle("getHistories", (_, ...args: Parameters<GetHistoriesFn>) => getHistories(...args));
 
   createWindow();
 
@@ -96,6 +105,3 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
