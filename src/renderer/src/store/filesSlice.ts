@@ -12,11 +12,18 @@ const saveRecord = createAsyncThunk("files/saveRecord", async (_, { getState }) 
     source,
     translations: results.outputs,
   } as Record;
-  console.log(content);
   try {
     await window.context.writeHistory(content);
     // create some mock delays to avoid saving files too quick
     await new Promise((resolve) => setTimeout(resolve, 1000));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+const loadFiles = createAsyncThunk("files/loadFiles", async () => {
+  try {
+    await window.context.getHistories();
   } catch (error) {
     console.log(error);
   }
@@ -40,5 +47,5 @@ export const filesSlice = createSlice({
   },
 });
 
-export { saveRecord };
+export { saveRecord, loadFiles };
 export default filesSlice.reducer;
