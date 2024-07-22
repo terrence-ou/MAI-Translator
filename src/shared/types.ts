@@ -26,7 +26,7 @@ export type GetClaudeResultFn = (
 export type Record = {
   from: string;
   to: string;
-  source: string;
+  brief: string;
   translations?: Result[];
   filename?: string;
 };

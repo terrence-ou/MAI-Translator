@@ -4,12 +4,12 @@ import { RootState } from ".";
 
 const saveRecord = createAsyncThunk("files/saveRecord", async (_, { getState }) => {
   const state = getState() as RootState;
-  const { toLanguage: to, sourceText: source, results } = state.translationConfig;
+  const { toLanguage: to, sourceText: brief, results } = state.translationConfig;
   if (results.outputs.length === 0) return;
   const content = {
     from: results.detected_source_language,
     to,
-    source,
+    brief,
     translations: results.outputs,
   } as Record;
   try {
