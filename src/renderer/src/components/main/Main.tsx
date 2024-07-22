@@ -7,6 +7,7 @@ import { ResizablePanel, ResizableHandle, ResizablePanelGroup } from "@/componen
 
 import { cn } from "@/utils";
 import TranslationInterface from "./TranslationInterface";
+import SideBar from "./Sidebar";
 
 // default main interface panel configurations
 const panelConfig = {
@@ -62,7 +63,9 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
           collapsible={panelConfig.collapible}
           onCollapse={handleOnCollapse}
           onExpand={handleOnExpand}
-        ></ResizablePanel>
+        >
+          <SideBar />
+        </ResizablePanel>
         <ResizableHandle />
         {/* right panel, translation interface */}
         <ResizablePanel

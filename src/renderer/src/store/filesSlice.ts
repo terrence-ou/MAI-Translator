@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { FileSliceType, Record } from "@shared/types";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { FilePreview, FileSliceType, Record } from "@shared/types";
 import { RootState } from ".";
 
 const saveRecord = createAsyncThunk("files/saveRecord", async (_, { getState }) => {
@@ -23,14 +23,17 @@ const saveRecord = createAsyncThunk("files/saveRecord", async (_, { getState }) 
 
 const loadFiles = createAsyncThunk("files/loadFiles", async () => {
   try {
-    await window.context.getHistories();
+    const filelist = await window.context.getHistories();
+    return filelist;
   } catch (error) {
     console.log(error);
   }
+  return {};
 });
 
 const initialState: FileSliceType = {
   saving: false,
+  filePreview: {},
 };
 
 export const filesSlice = createSlice({
@@ -43,6 +46,9 @@ export const filesSlice = createSlice({
     });
     builders.addCase(saveRecord.fulfilled, (state) => {
       state.saving = false;
+    });
+    builders.addCase(loadFiles.fulfilled, (state, action: PayloadAction<FilePreview>) => {
+      state.filePreview = action.payload;
     });
   },
 });
