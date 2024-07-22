@@ -7,8 +7,6 @@ const SideBar = () => {
   const fileDates = useMemo(() => {
     return Object.keys(filePreview).sort((a, b) => parseInt(b) - parseInt(a));
   }, [filePreview]);
-
-  console.log(filePreview);
   return (
     <div className="h-full px-5 pt-20 pb-8 overflow-y-auto">
       {fileDates.length === 0 && <p>No translation history</p>}
