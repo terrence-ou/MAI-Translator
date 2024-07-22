@@ -1,5 +1,5 @@
 import { ensureDir, readdir, writeFile, readFile } from "fs-extra";
-import { APP_HISTORY_DIR, FILE_ENCODING } from "@shared/consts";
+import { APP_HISTORY_DIR, BRIEF_DISPLAY_LENGTH, FILE_ENCODING } from "@shared/consts";
 import { homedir } from "os";
 import { GetHistoriesFn, WriteHistoryFn, Record, FilePreview } from "@shared/types";
 
@@ -25,7 +25,7 @@ export const getHistories: GetHistoriesFn = async () => {
         filename,
         from: from.toUpperCase(),
         to: to.toUpperCase(),
-        brief: source.slice(0, 100),
+        brief: source!.slice(0, BRIEF_DISPLAY_LENGTH),
       });
     })
   );
@@ -36,7 +36,13 @@ export const writeHistory: WriteHistoryFn = async (content) => {
   const folderDir = getFolderDir();
   await ensureDir(folderDir);
   const filename = getTimeString();
-  return writeFile(`${folderDir}/${filename}.txt`, JSON.stringify(content));
+  try {
+    await writeFile(`${folderDir}/${filename}.txt`, JSON.stringify(content));
+    return filename;
+  } catch (error) {
+    console.error(error);
+  }
+  return undefined;
 };
 
 // Helper functions

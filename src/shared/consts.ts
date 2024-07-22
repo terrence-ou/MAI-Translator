@@ -8,3 +8,5 @@ export const FILE_ENCODING = "utf-8";
 
 export const TRANSLATION_FAIL_MESSAGE =
   "Failed to fetch the result, please check the API or AI service status.";
+
+export const BRIEF_DISPLAY_LENGTH = 100;

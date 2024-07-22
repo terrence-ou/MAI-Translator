@@ -26,12 +26,13 @@ export type GetClaudeResultFn = (
 export type Record = {
   from: string;
   to: string;
-  brief: string;
+  brief?: string;
+  source?: string;
   translations?: Result[];
   filename?: string;
 };
 export type FilePreview = { [key: string]: Record[] };
-export type WriteHistoryFn = (content: Record) => Promise<void>;
+export type WriteHistoryFn = (content: Record) => Promise<string | undefined>;
 export type GetHistoriesFn = () => Promise<FilePreview>;
 
 // Types for redux slices
