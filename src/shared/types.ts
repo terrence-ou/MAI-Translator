@@ -62,4 +62,5 @@ export interface TranslationConfigType {
 
 export interface FileSliceType {
   saving: boolean;
+  filePreview: FilePreview;
 }
