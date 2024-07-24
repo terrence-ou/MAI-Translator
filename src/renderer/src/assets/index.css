@@ -81,7 +81,7 @@
     @apply w-[0.5rem];
   }
   ::-webkit-scrollbar-thumb {
-    @apply rounded-md bg-muted hover:bg-primary/80;
+    @apply rounded-md bg-primary/10 hover:bg-primary/70;
   }
   ::-webkit-scrollbar-track {
     @apply bg-none;

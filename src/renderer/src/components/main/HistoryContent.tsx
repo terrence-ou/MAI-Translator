@@ -9,7 +9,8 @@ import {
 
 import { Record } from "@shared/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const filenameToDate = (filename: string): string => {
   const year = filename.slice(0, 4);
@@ -42,15 +43,15 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
   }
 
   return (
-    <DialogContent className="min-w-[70%] max-h-[90%]">
+    <DialogContent className="min-w-[70%] max-h-[90%] gap-3">
       <DialogHeader>
         <DialogTitle>Translation Record</DialogTitle>
         <DialogDescription className="flex flex-col">
           {fileContent === null && "Failed to load the file, please check is the file exists"}
           {fileContent !== null && (
             <>
-              <span>{`Date: ${filenameToDate(filename!)}`}</span>
-              <span>{`From: ${fileContent.from.toUpperCase()} To: ${fileContent.to.toUpperCase()}`}</span>
+              <span className="italic">{`Date: ${filenameToDate(filename!)}`}</span>
+              <span className="italic">{`From: ${fileContent.from.toUpperCase()} To: ${fileContent.to.toUpperCase()}`}</span>
             </>
           )}
         </DialogDescription>
@@ -63,7 +64,7 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
         />
         <Tabs
           defaultValue={fileContent.translations![0].aiSource}
-          className="flex-1 flex flex-col-reverse"
+          className="flex-1 flex flex-col-reverse gap-1"
         >
           <TabsList>
             {fileContent!.translations!.map(({ aiSource }) => (
@@ -78,6 +79,11 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
             </TabsContent>
           ))}
         </Tabs>
+      </div>
+      <div className="w-full text-right">
+        <Button variant="destructive" className="w-16 h-7">
+          Delete
+        </Button>
       </div>
     </DialogContent>
   );

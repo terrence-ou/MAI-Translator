@@ -19,7 +19,7 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
     <div className="flex flex-col gap-1 justify-start min-w-[150px] mt-2 mb-4">
       {sortedRecords.map((record) => {
         const { from, to, filename, brief } = record;
-        const sliceSize = from === "ZH" || from === "JP" || from === "KR" ? 30 : 60;
+        const sliceSize = from === "ZH" || from === "JP" || from === "KR" ? 50 : 90;
         return (
           <Dialog key={filename}>
             <DialogTrigger asChild>
