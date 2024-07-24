@@ -5,6 +5,7 @@ import {
   GetClaudeResultFn,
   WriteHistoryFn,
   GetHistoriesFn,
+  GetFileContentFn,
 } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
@@ -25,6 +26,8 @@ try {
       ipcRenderer.invoke("writeHistory", ...args),
     getHistories: (...args: Parameters<GetHistoriesFn>) =>
       ipcRenderer.invoke("getHistories", ...args),
+    getFileContent: (...args: Parameters<GetFileContentFn>) =>
+      ipcRenderer.invoke("getFileContent", ...args),
   });
 } catch (error) {
   console.error(error);

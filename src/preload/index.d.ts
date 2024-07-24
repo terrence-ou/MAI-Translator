@@ -1,6 +1,7 @@
 import {
   GetClaudeResultFn,
   GetDeepLFreeResultFn,
+  GetFileContentFn,
   GetHistoriesFn,
   ReadAPIsFn,
   WriteAPIsFn,
@@ -18,6 +19,7 @@ declare global {
       // fs
       writeHistory: writeHistoryFn;
       getHistories: GetHistoriesFn;
+      getFileContent: GetFileContentFn;
     };
   }
 }

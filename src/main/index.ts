@@ -7,6 +7,7 @@ import type {
   GetClaudeResultFn,
   GetDeepLFreeResultFn,
   GetHistoriesFn,
+  GetFileContentFn,
   ReadAPIsFn,
   WriteAPIsFn,
   WriteHistoryFn,
@@ -18,6 +19,7 @@ import {
   getClaudeResult,
   writeHistory,
   getHistories,
+  getFileContent,
 } from "@/lib";
 
 function createWindow(): void {
@@ -87,6 +89,9 @@ app.whenReady().then(() => {
   // fs ipcs
   ipcMain.handle("writeHistory", (_, ...args: Parameters<WriteHistoryFn>) => writeHistory(...args));
   ipcMain.handle("getHistories", (_, ...args: Parameters<GetHistoriesFn>) => getHistories(...args));
+  ipcMain.handle("getFileContent", (_, ...args: Parameters<GetFileContentFn>) =>
+    getFileContent(...args)
+  );
 
   createWindow();
 
