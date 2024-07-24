@@ -18,7 +18,7 @@ function App(): JSX.Element {
       {/* Header: sidebar button, dictionary button, settings button */}
       <Header className="bg-transparent h-header pl-24 pr-8 py-2" data-testid="header" />
       {/* Body: sidebar, translation interface */}
-      <Main className="flex-1" data-testid="main" />
+      <Main className="flex-1 max-h-[100%]" data-testid="main" />
     </div>
   );
 }
