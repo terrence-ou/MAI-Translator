@@ -43,6 +43,11 @@ const loadFiles = createAsyncThunk("files/loadFiles", async () => {
   return {};
 });
 
+const deleteFile = createAsyncThunk("files/deleteFile", async (filename: string) => {
+  const response = await window.context.deleteFile(filename);
+  return { response, filename };
+});
+
 const initialState: FileSliceType = {
   saving: false,
   filePreview: {},
@@ -70,8 +75,20 @@ export const filesSlice = createSlice({
     builders.addCase(loadFiles.fulfilled, (state, action: PayloadAction<FilePreview>) => {
       state.filePreview = action.payload;
     });
+    builders.addCase(
+      deleteFile.fulfilled,
+      (state, action: PayloadAction<{ response: boolean; filename: string }>) => {
+        if (action.payload && action.payload.response === true) {
+          const { filename } = action.payload;
+          console.log("delete", filename);
+          state.filePreview[filename.slice(0, 8)] = state.filePreview[filename.slice(0, 8)].filter(
+            (file) => file.filename !== filename
+          );
+        }
+      }
+    );
   },
 });
 
-export { saveRecord, loadFiles };
+export { saveRecord, loadFiles, deleteFile };
 export default filesSlice.reducer;

@@ -1,4 +1,6 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
+import { useAppDispatch } from "@/hooks";
+import { deleteFile } from "@/store/filesSlice";
 
 import {
   DialogContent,
@@ -23,6 +25,12 @@ type HistoryContentProps = { filename: string | undefined };
 
 const HistoryContent = ({ filename }: HistoryContentProps) => {
   const [fileContent, setFileContent] = useState<Record | null>(null);
+  const dispatch = useAppDispatch();
+  const ref = useRef(null);
+
+  const handleDeleteFile = (filename: string) => {
+    dispatch(deleteFile(filename));
+  };
 
   useLayoutEffect(() => {
     (async () => {
@@ -31,7 +39,7 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
     })();
   }, []);
 
-  if (fileContent === null) {
+  if (fileContent === null || filename === undefined) {
     return (
       <DialogContent className="min-w-[80%]">
         <DialogHeader>
@@ -43,7 +51,7 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
   }
 
   return (
-    <DialogContent className="min-w-[70%] max-h-[90%] gap-3">
+    <DialogContent ref={ref} className="min-w-[70%] max-h-[93%] gap-3">
       <DialogHeader>
         <DialogTitle>Translation Record</DialogTitle>
         <DialogDescription className="flex flex-col">
@@ -81,7 +89,11 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
         </Tabs>
       </div>
       <div className="w-full text-right">
-        <Button variant="destructive" className="w-16 h-7">
+        <Button
+          variant="destructive"
+          className="w-16 h-7"
+          onClick={() => handleDeleteFile(filename)}
+        >
           Delete
         </Button>
       </div>
