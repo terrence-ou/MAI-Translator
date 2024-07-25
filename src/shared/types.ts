@@ -35,6 +35,7 @@ export type FilePreview = { [key: string]: Record[] };
 export type WriteHistoryFn = (content: Record) => Promise<string | undefined>;
 export type GetHistoriesFn = () => Promise<FilePreview>;
 export type GetFileContentFn = (filename: string) => Promise<Record | null>;
+export type DeleteFileFn = (filename: string) => Promise<boolean>;
 
 // Types for redux slices
 // export type APIType = { name: AISource; value: string };

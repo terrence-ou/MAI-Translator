@@ -11,6 +11,7 @@ import type {
   ReadAPIsFn,
   WriteAPIsFn,
   WriteHistoryFn,
+  DeleteFileFn,
 } from "@shared/types";
 import {
   readApis,
@@ -20,6 +21,7 @@ import {
   writeHistory,
   getHistories,
   getFileContent,
+  deleteFile,
 } from "@/lib";
 
 function createWindow(): void {
@@ -92,6 +94,7 @@ app.whenReady().then(() => {
   ipcMain.handle("getFileContent", (_, ...args: Parameters<GetFileContentFn>) =>
     getFileContent(...args)
   );
+  ipcMain.handle("deleteFile", (_, ...args: Parameters<DeleteFileFn>) => deleteFile(...args));
 
   createWindow();
 

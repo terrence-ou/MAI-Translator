@@ -1,4 +1,5 @@
 import {
+  DeleteFileFn,
   GetClaudeResultFn,
   GetDeepLFreeResultFn,
   GetFileContentFn,
@@ -20,6 +21,7 @@ declare global {
       writeHistory: writeHistoryFn;
       getHistories: GetHistoriesFn;
       getFileContent: GetFileContentFn;
+      deleteFile: DeleteFileFn;
     };
   }
 }

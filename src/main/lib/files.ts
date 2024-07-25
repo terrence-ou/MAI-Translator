@@ -1,12 +1,14 @@
+import { homedir } from "os";
+import { dialog } from "electron";
 import { ensureDir, readdir, writeFile, readFile } from "fs-extra";
 import { APP_HISTORY_DIR, BRIEF_DISPLAY_LENGTH, FILE_ENCODING } from "@shared/consts";
-import { homedir } from "os";
 import {
   GetHistoriesFn,
   WriteHistoryFn,
   Record,
   FilePreview,
   GetFileContentFn,
+  DeleteFileFn,
 } from "@shared/types";
 
 export const getFolderDir = () => {
@@ -62,6 +64,19 @@ export const getFileContent: GetFileContentFn = async (filename) => {
     console.error(error);
   }
   return null;
+};
+
+export const deleteFile: DeleteFileFn = async (filename) => {
+  // TODO: delete file when user confirmed
+  const { response } = await dialog.showMessageBox({
+    type: "warning",
+    title: "Delete Record",
+    message: "Are you sure you want to delete this record?",
+    buttons: ["Delete", "Cancel"],
+    defaultId: 1,
+    cancelId: 1,
+  });
+  return response === 0;
 };
 
 // Helper functions

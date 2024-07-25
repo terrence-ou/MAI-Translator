@@ -6,6 +6,7 @@ import {
   WriteHistoryFn,
   GetHistoriesFn,
   GetFileContentFn,
+  DeleteFileFn,
 } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
@@ -28,6 +29,7 @@ try {
       ipcRenderer.invoke("getHistories", ...args),
     getFileContent: (...args: Parameters<GetFileContentFn>) =>
       ipcRenderer.invoke("getFileContent", ...args),
+    deleteFile: (...args: Parameters<DeleteFileFn>) => ipcRenderer.invoke("deleteFile", ...args),
   });
 } catch (error) {
   console.error(error);
