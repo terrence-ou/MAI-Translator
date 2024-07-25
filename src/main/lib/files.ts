@@ -1,6 +1,6 @@
 import { homedir } from "os";
 import { dialog } from "electron";
-import { ensureDir, readdir, writeFile, readFile } from "fs-extra";
+import { ensureDir, readdir, writeFile, readFile, remove } from "fs-extra";
 import { APP_HISTORY_DIR, BRIEF_DISPLAY_LENGTH, FILE_ENCODING } from "@shared/consts";
 import {
   GetHistoriesFn,
@@ -15,6 +15,7 @@ export const getFolderDir = () => {
   return `${homedir()}/${APP_HISTORY_DIR}`;
 };
 
+// load local files
 export const getHistories: GetHistoriesFn = async () => {
   const folderDir = getFolderDir();
   await ensureDir(folderDir);
@@ -40,19 +41,21 @@ export const getHistories: GetHistoriesFn = async () => {
   return output as FilePreview;
 };
 
+// write the current translation data to a local file
 export const writeHistory: WriteHistoryFn = async (content) => {
   const folderDir = getFolderDir();
   await ensureDir(folderDir);
-  const filename = getTimeString();
+  const filename = `${getTimeString()}.txt`;
   try {
-    await writeFile(`${folderDir}/${filename}.txt`, JSON.stringify(content));
+    await writeFile(`${folderDir}/${filename}`, JSON.stringify(content));
     return filename;
   } catch (error) {
     console.error(error);
+    return undefined;
   }
-  return undefined;
 };
 
+// get file content based on the filename provided
 export const getFileContent: GetFileContentFn = async (filename) => {
   try {
     const file = await readFile(`${homedir()}/${APP_HISTORY_DIR}/${filename}`, {
@@ -66,8 +69,8 @@ export const getFileContent: GetFileContentFn = async (filename) => {
   return null;
 };
 
+// delete the file
 export const deleteFile: DeleteFileFn = async (filename) => {
-  // TODO: delete file when user confirmed
   const { response } = await dialog.showMessageBox({
     type: "warning",
     title: "Delete Record",
@@ -76,7 +79,17 @@ export const deleteFile: DeleteFileFn = async (filename) => {
     defaultId: 1,
     cancelId: 1,
   });
-  return response === 0;
+
+  if (response === 0) {
+    try {
+      await remove(`${getFolderDir()}/${filename}`);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+  return false;
 };
 
 // Helper functions
