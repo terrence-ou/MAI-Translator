@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useAppDispatch } from "@/hooks";
 import { deleteFile } from "@/store/filesSlice";
 
@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-
 import { Record } from "@shared/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,15 +22,14 @@ const filenameToDate = (filename: string): string => {
 
 type HistoryContentProps = { filename: string | undefined };
 
+/* The body of the HistoryContent component */
 const HistoryContent = ({ filename }: HistoryContentProps) => {
   const [fileContent, setFileContent] = useState<Record | null>(null);
   const dispatch = useAppDispatch();
-  const ref = useRef(null);
-
   const handleDeleteFile = (filename: string) => {
     dispatch(deleteFile(filename));
   };
-
+  // using useLayoutEffect to make the content ready before component being rendered
   useLayoutEffect(() => {
     (async () => {
       const content = await window.context.getFileContent(filename!);
@@ -39,6 +37,7 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
     })();
   }, []);
 
+  // If filename not provided or file not existed, display the following content
   if (fileContent === null || filename === undefined) {
     return (
       <DialogContent className="min-w-[80%]">
@@ -49,9 +48,10 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
       </DialogContent>
     );
   }
-
+  // If the file exists, render out the content
   return (
-    <DialogContent ref={ref} className="min-w-[70%] max-h-[93%] gap-3">
+    <DialogContent className="min-w-[70%] max-h-[93%] gap-3">
+      {/* Header */}
       <DialogHeader>
         <DialogTitle>Translation Record</DialogTitle>
         <DialogDescription className="flex flex-col">
@@ -64,12 +64,14 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
           )}
         </DialogDescription>
       </DialogHeader>
+      {/* Source text */}
       <div className="flex gap-4">
         <Textarea
           disabled={true}
           value={fileContent.source}
           className="flex-1 h-full resize-none"
         />
+        {/* Translated contents displayed by ai source */}
         <Tabs
           defaultValue={fileContent.translations![0].aiSource}
           className="flex-1 flex flex-col-reverse gap-1"

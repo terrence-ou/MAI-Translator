@@ -8,8 +8,10 @@ type HistoryCardProps = {
   records: Record[];
 } & ComponentProps<"div">;
 
+/* The body of the HistoryCard content */
 const HistoryCard = ({ records }: HistoryCardProps) => {
   let sortedRecords = [...records];
+  // using useMemo to avoid sorting the array at every rendering
   sortedRecords = useMemo(
     () => sortedRecords.sort((a, b) => parseInt(b.filename!) - parseInt(a.filename!)),
     [records]
@@ -19,6 +21,7 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
     <div className="flex flex-col gap-1 justify-start min-w-[150px] mt-2 mb-4">
       {sortedRecords.map((record) => {
         const { from, to, filename, brief } = record;
+        // for the block-based languages, we display less characters in preview
         const sliceSize = from === "ZH" || from === "JP" || from === "KR" ? 50 : 90;
         return (
           <Dialog key={filename}>
