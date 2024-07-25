@@ -1,10 +1,10 @@
 import { storeRender } from "@/utils/test-utils";
 import ThemeProvider from "@/components/ThemeProvider";
 import { act } from "react";
-import "@/utils/window-theme-apis.mock";
+import "@/utils/window-apis.mock";
 import { useAppDispatch } from "@/hooks";
 import { updateSettings } from "@/store/settingsSlice";
-import { matchMedia } from "@/utils/window-theme-apis.mock";
+import { themedMatchMedia } from "@/utils/window-apis.mock";
 
 const MockComponent = ({ theme }: { theme: "light" | "dark" | "system" }) => {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ const renderThemeProvider = async (
   theme: "light" | "dark" | "system",
   matches: boolean = false
 ) => {
-  matchMedia(matches);
+  themedMatchMedia(matches);
   return await act(async () =>
     storeRender(
       <ThemeProvider>

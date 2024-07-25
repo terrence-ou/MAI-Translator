@@ -17,6 +17,7 @@ const iconHeight = 18;
 const iconButtonStyle = "p-0 h-7 bg-background hover:bg-background";
 const textButtonStyle = "h-7 hover:bg-foreground hover:text-background";
 
+/* The body of Translation Interface */
 const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   // The currAi state controls the display of translation results
   const [currAi, setCurrAi] = useState<AISource>("DeepL");
@@ -68,12 +69,17 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
     <div className={cn("flex-1 flex gap-0", className)}>
       <div className="flex-1 flex gap-4">
         {/* Source text */}
-        <TextField ref={sourceRef} onBlur={() => handleSetSourceText()}>
+        <TextField
+          ref={sourceRef}
+          onBlur={() => handleSetSourceText()}
+          data-testid="textarea-source"
+        >
           <Button
             variant="ghost"
             disabled={loading}
             className={iconButtonStyle}
             onClick={handleClear}
+            data-testid="button-erase"
           >
             <Eraser className={iconStyle} height={iconHeight} />
           </Button>
@@ -91,8 +97,14 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
         <TextField
           disabled={true}
           value={displayResult === undefined ? "The result will appear here" : displayResult.text}
+          data-testid="textarea-result"
         >
-          <Button variant="ghost" className={iconButtonStyle} onClick={handleCopy}>
+          <Button
+            variant="ghost"
+            className={iconButtonStyle}
+            onClick={handleCopy}
+            data-testid="button-copy"
+          >
             {copied ? (
               <Check className={iconStyle} height={iconHeight} />
             ) : (
@@ -111,7 +123,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
         </TextField>
       </div>
       {/* AI source tabs */}
-      <div className="flex flex-col pt-3">
+      <div className="flex flex-col pt-3" data-testid="main-aisources-tab">
         {AI_LIST.map((ai) => {
           const variant = ai === currAi ? "default" : "secondary";
           const active = ai === currAi;
