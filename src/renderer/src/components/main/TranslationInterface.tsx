@@ -56,13 +56,13 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   };
 
   useEffect(() => {
+    let timerId: NodeJS.Timeout | null = null;
     if (copied) {
-      let timerId: NodeJS.Timeout | null = null;
       timerId = setTimeout(() => {
         setCopied(false);
-        return () => clearTimeout(timerId!);
       }, 1000);
     }
+    return () => (timerId ? clearTimeout(timerId!) : undefined);
   }, [copied]);
 
   return (
@@ -124,7 +124,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
       </div>
       {/* AI source tabs */}
       <div className="flex flex-col pt-3" data-testid="main-aisources-tab">
-        {AI_LIST.map((ai) => {
+        {AI_LIST.map((ai, i) => {
           const variant = ai === currAi ? "default" : "secondary";
           const active = ai === currAi;
           return (
@@ -133,6 +133,8 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
               variant={variant}
               icon={ai}
               active={active}
+              id={active ? "aisource-active" : undefined}
+              data-testid={`aisource-${i}`}
               onClick={() => handleSetCurrAi(ai)}
             />
           );

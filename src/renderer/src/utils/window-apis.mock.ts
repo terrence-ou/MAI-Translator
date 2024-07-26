@@ -29,8 +29,16 @@ const context = Object.defineProperty(window, "context", {
     readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     getHistories: jest.fn().mockImplementation(() => Promise.resolve({})),
-    // getDeepLFreeResult: jest.fn().mockImplementation(() => Promise.resolve)
+    getClaudeResult: jest.fn().mockImplementation(() => Promise.resolve({})),
+    getDeepLFreeResult: jest.fn().mockImplementation(() => Promise.resolve({})),
   },
 });
 
-export { matchMedia, themedMatchMedia, context };
+const clipboard = Object.defineProperty(navigator, "clipboard", {
+  writable: true,
+  value: {
+    writeText: jest.fn().mockImplementation(() => Promise.resolve("Text copied!")),
+  },
+});
+
+export { matchMedia, themedMatchMedia, context, clipboard };
