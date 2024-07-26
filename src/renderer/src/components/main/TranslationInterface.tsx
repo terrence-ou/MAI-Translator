@@ -88,6 +88,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             className={textButtonStyle}
             onClick={handleTranslate}
             disabled={loading}
+            data-testid="button-translate"
           >
             {loading && <Loader2 className="animate-spin" />}
             {loading ? "Translating" : "Translate"}
@@ -116,6 +117,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             className={textButtonStyle}
             onClick={handleSave}
             disabled={saving}
+            data-testid="button-save-result"
           >
             {saving && <Loader2 className="animate-spin" />}
             {saving ? "Saving..." : "Save Result"}

@@ -8,13 +8,16 @@ beforeEach(() => {
   render(<TranslationInterface />);
 });
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 const sourceText1 = "testing source textarea";
 const resultText1 = "testing source textarea";
 
 describe("Testing interface components", () => {
   test("check text areas", () => {
-    const sourceTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-source");
-    const resultTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-result");
+    const { sourceTextarea, resultTextarea } = getComponents();
     expect(sourceTextarea).toBeInTheDocument();
     expect(resultTextarea).toBeInTheDocument();
     fireEvent.change(sourceTextarea, { target: { value: sourceText1 } });
@@ -25,31 +28,31 @@ describe("Testing interface components", () => {
   });
 
   test("check textarea buttons", () => {
-    expect(screen.getByRole("button", { name: "Save Result" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Translate" })).toBeInTheDocument();
-    expect(screen.getByTestId("button-erase")).toBeInTheDocument();
-    expect(screen.getByTestId("button-copy")).toBeInTheDocument();
+    const { saveResultButton, translateButton, eraseButton, copyButton } = getComponents();
+    expect(saveResultButton).toBeInTheDocument();
+    expect(translateButton).toBeInTheDocument();
+    expect(eraseButton).toBeInTheDocument();
+    expect(copyButton).toBeInTheDocument();
   });
 
   test("check tab buttons", () => {
-    const tabs = screen.getByTestId("main-aisources-tab");
+    const { tabs } = getComponents();
     // Here we only check if there are >= 2 tabs, as the number of ai source will change
     // we want to keep them at least two
     expect(tabs.children.length).toBeGreaterThan(1);
   });
 });
 
-describe("Testing buttons interactions", () => {
+describe("Testing textarea buttons interactions", () => {
   test("click translate button without input text", async () => {
-    const translateButton = screen.getByRole("button", { name: "Translate" });
+    const { translateButton } = getComponents();
     await act(async () => fireEvent.click(translateButton));
     expect(window.context.getClaudeResult).not.toHaveBeenCalled();
     expect(window.context.getDeepLFreeResult).not.toHaveBeenCalled();
   });
 
   test("click translate button with text", async () => {
-    const translateButton = screen.getByRole("button", { name: "Translate" });
-    const sourceTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-source");
+    const { translateButton, sourceTextarea } = getComponents();
     expect(sourceTextarea).toBeInTheDocument();
     fireEvent.change(sourceTextarea, { target: { value: sourceText1 } });
     fireEvent.blur(sourceTextarea);
@@ -59,8 +62,7 @@ describe("Testing buttons interactions", () => {
   });
 
   test("translate button display text change", async () => {
-    const translateButton = screen.getByRole("button", { name: "Translate" });
-    const sourceTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-source");
+    const { sourceTextarea, resultTextarea, translateButton } = getComponents();
     fireEvent.change(sourceTextarea, { target: { value: sourceText1 } });
     fireEvent.blur(sourceTextarea);
     fireEvent.click(translateButton);
@@ -70,11 +72,19 @@ describe("Testing buttons interactions", () => {
       expect(screen.queryByText(/Translating/i)).toBeVisible();
     });
     expect(screen.queryByText(/Translate/i)).toBeVisible();
+    expect(resultTextarea.value).toBe("mock result");
+  });
+
+  test("click result button", async () => {
+    const { saveResultButton } = getComponents();
+    fireEvent.click(saveResultButton);
+    await act(() => fireEvent.click(saveResultButton));
+    // The following one shouldn't be true, need some debugging
+    expect(window.context.writeHistory).toHaveBeenCalled();
   });
 
   test("click erase icon button action", () => {
-    const eraseButton = screen.getByTestId("button-erase");
-    const sourceTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-source");
+    const { sourceTextarea, eraseButton } = getComponents();
     fireEvent.change(sourceTextarea, { target: { value: sourceText1 } });
     expect(sourceTextarea.value).toBe(sourceText1);
     fireEvent.click(eraseButton);
@@ -82,8 +92,50 @@ describe("Testing buttons interactions", () => {
   });
 
   test("click copy icon button action", async () => {
-    const copyButton = screen.getByTestId("button-copy");
+    const { copyButton } = getComponents();
     await act(async () => fireEvent.click(copyButton));
     expect(navigator.clipboard.writeText).toHaveBeenCalled();
   });
 });
+
+describe("Testing aisource tab buttons interactions", () => {
+  test("default active tab", () => {
+    const { firstTab, secondTab } = getComponents();
+    expect(firstTab.id).toBe("aisource-active");
+    expect(secondTab.id).not.toBe("aisource-active");
+  });
+
+  test("switch tab", () => {
+    const { firstTab, secondTab } = getComponents();
+    fireEvent.click(secondTab);
+    expect(firstTab.id).not.toBe("aisource-active");
+    expect(secondTab.id).toBe("aisource-active");
+    fireEvent.click(firstTab);
+    expect(firstTab.id).toBe("aisource-active");
+    expect(secondTab.id).not.toBe("aisource-active");
+  });
+});
+
+// Helper function(s)
+const getComponents = () => {
+  const sourceTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-source");
+  const resultTextarea: HTMLTextAreaElement = screen.getByTestId("textarea-result");
+  const translateButton = screen.getByTestId("button-translate");
+  const saveResultButton = screen.getByTestId("button-save-result");
+  const eraseButton = screen.getByTestId("button-erase");
+  const copyButton = screen.getByTestId("button-copy");
+  const tabs = screen.getByTestId("main-aisources-tab");
+  const firstTab = screen.getByTestId("aisource-0");
+  const secondTab = screen.getByTestId("aisource-1");
+  return {
+    sourceTextarea,
+    resultTextarea,
+    translateButton,
+    saveResultButton,
+    eraseButton,
+    copyButton,
+    tabs,
+    firstTab,
+    secondTab,
+  };
+};
