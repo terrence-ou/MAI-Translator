@@ -42,7 +42,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   };
   // handles icon button clicks
   const handleCopy = () => {
-    if (displayResult) navigator.clipboard.writeText(displayResult.text);
+    navigator.clipboard.writeText(displayResult ? displayResult.text : "");
     setCopied(true);
   };
   const handleClear = () => {

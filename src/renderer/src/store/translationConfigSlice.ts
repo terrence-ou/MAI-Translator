@@ -68,6 +68,9 @@ export const translationConfigSlice = createSlice({
     setSourceText: (state, action: PayloadAction<string>) => {
       state.sourceText = action.payload;
     },
+    resetResult: (state) => {
+      state.results = { detected_source_language: "", outputs: [] };
+    },
   },
   extraReducers: (builders) => {
     builders.addCase(loadApis.fulfilled, (state, action: PayloadAction<APIType>) => {
@@ -95,6 +98,6 @@ export const translationConfigSlice = createSlice({
 });
 
 export { loadApis, setApis, getTranslations };
-export const { setFromLanguage, setToLanguage, switchLanguages, setSourceText } =
+export const { setFromLanguage, setToLanguage, switchLanguages, setSourceText, resetResult } =
   translationConfigSlice.actions;
 export default translationConfigSlice.reducer;

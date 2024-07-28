@@ -1,11 +1,25 @@
 import "@testing-library/dom";
 import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
-import { render, screen, fireEvent, act } from "@/utils/test-utils";
+import { storeRender as render, screen, fireEvent, act } from "@/utils/test-utils";
 import TranslationInterface from "@/components/main/TranslationInterface";
 
+import { useAppDispatch } from "@/hooks";
+import { resetResult } from "@/store/translationConfigSlice";
+
+// This mock component helps clear part of the redux state
+const CleanUpComponent = ({ children }) => {
+  const dispatch = useAppDispatch();
+  dispatch(resetResult());
+  return <div>{children}</div>;
+};
+
 beforeEach(() => {
-  render(<TranslationInterface />);
+  render(
+    <CleanUpComponent>
+      <TranslationInterface />
+    </CleanUpComponent>
+  );
 });
 
 afterEach(() => {
@@ -43,7 +57,7 @@ describe("Testing interface components", () => {
   });
 });
 
-describe("Testing textarea buttons interactions", () => {
+describe("Testing translation field buttons interactions", () => {
   test("click translate button without input text", async () => {
     const { translateButton } = getComponents();
     await act(async () => fireEvent.click(translateButton));
@@ -75,20 +89,35 @@ describe("Testing textarea buttons interactions", () => {
     expect(resultTextarea.value).toBe("mock result");
   });
 
-  test("click result button", async () => {
-    const { saveResultButton } = getComponents();
-    fireEvent.click(saveResultButton);
-    await act(() => fireEvent.click(saveResultButton));
-    // The following one shouldn't be true, need some debugging
-    expect(window.context.writeHistory).toHaveBeenCalled();
-  });
-
   test("click erase icon button action", () => {
     const { sourceTextarea, eraseButton } = getComponents();
     fireEvent.change(sourceTextarea, { target: { value: sourceText1 } });
     expect(sourceTextarea.value).toBe(sourceText1);
     fireEvent.click(eraseButton);
     expect(sourceTextarea.value).toBe("");
+  });
+});
+
+describe("Testing result field button interactions", () => {
+  test("click Save Results button without results available", async () => {
+    const { saveResultButton } = getComponents();
+    fireEvent.click(saveResultButton);
+    await act(() => fireEvent.click(saveResultButton));
+    expect(window.context.writeHistory).not.toHaveBeenCalled();
+  });
+
+  test("translate button display text change", async () => {
+    const { sourceTextarea, saveResultButton, translateButton } = getComponents();
+    fireEvent.change(sourceTextarea, { target: { value: sourceText1 } });
+    fireEvent.blur(sourceTextarea);
+    fireEvent.click(translateButton);
+    await act(async () => {
+      fireEvent.click(translateButton);
+    });
+    await act(async () => {
+      fireEvent.click(saveResultButton);
+    });
+    expect(window.context.writeHistory).toHaveBeenCalled();
   });
 
   test("click copy icon button action", async () => {

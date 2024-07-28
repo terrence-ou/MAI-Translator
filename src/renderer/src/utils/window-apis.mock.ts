@@ -30,12 +30,12 @@ const context = Object.defineProperty(window, "context", {
     writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     getHistories: jest.fn().mockImplementation(() => Promise.resolve({})),
     writeHistory: jest.fn().mockImplementation(() => Promise.resolve("20240101.txt")),
-    getClaudeResult: jest
-      .fn()
-      .mockImplementation(() => Promise.resolve({ from: "ZH", to: "EN", text: "mock result" })),
     getDeepLFreeResult: jest
       .fn()
-      .mockImplementation(() => Promise.resolve({ from: "ZH", to: "EN", text: "mock result" })),
+      .mockImplementation(() =>
+        Promise.resolve({ detected_source_language: "EN", text: "mock result" })
+      ),
+    getClaudeResult: jest.fn().mockImplementation(() => Promise.resolve("mock result")),
   },
 });
 
