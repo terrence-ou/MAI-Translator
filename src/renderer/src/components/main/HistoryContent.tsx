@@ -50,7 +50,10 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
   }
   // If the file exists, render out the content
   return (
-    <DialogContent className="min-w-[70%] max-h-[93%] gap-3 transition-none">
+    <DialogContent
+      className="min-w-[70%] max-h-[93%] gap-3 transition-none"
+      data-testid="modal-history-content"
+    >
       {/* Header */}
       <DialogHeader>
         <DialogTitle>Translation Record</DialogTitle>

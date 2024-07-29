@@ -46,7 +46,7 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
             </DialogTrigger>
           );
         })}
-        {currFile && <HistoryContent filename={currFile} data-testid="modal-history-content" />}
+        {currFile && <HistoryContent filename={currFile} />}
       </Dialog>
     </div>
   );

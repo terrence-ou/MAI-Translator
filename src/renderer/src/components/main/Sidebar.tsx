@@ -8,7 +8,7 @@ const SideBar = () => {
     return Object.keys(filePreview).sort((a, b) => parseInt(b) - parseInt(a));
   }, [filePreview]);
   return (
-    <div className="h-full pt-16 pb-8">
+    <div className="h-full pt-16 pb-8" data-testid="sidebar">
       <div className="h-full mx-1 px-4 overflow-y-auto">
         {fileDates.length === 0 && <p>No translation history</p>}
         {fileDates.map((key) => (

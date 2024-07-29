@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
-import { render, screen, act } from "@/utils/test-utils";
+import { render, screen, act, fireEvent } from "@/utils/test-utils";
 import App from "@/App";
 import SideBar from "@/components/main/Sidebar";
 
@@ -29,5 +29,22 @@ describe("Testing sidebar display with histories", () => {
     expect((await screen.findAllByText(/ZH/i)).length).toBeGreaterThan(0);
     expect((await screen.findAllByText(/EN/i)).length).toBeGreaterThan(0);
     expect((await screen.findAllByText(/hello world/i)).length).toBeGreaterThan(0);
+  });
+});
+
+describe("Testing the content modal", () => {
+  beforeEach(async () => await renderApp());
+  test("modal is invisible", () => {
+    const modal = screen.queryByTestId("modal-history-content");
+    expect(modal).not.toBeInTheDocument();
+  });
+
+  test("file-reading function get triggered and the modal appears", async () => {
+    const sidebar = screen.getByTestId("sidebar");
+    const button = sidebar.querySelector("button");
+    await act(async () => fireEvent.click(button!));
+    expect(window.context.getFileContent).toHaveBeenCalled();
+    const modal = screen.queryByTestId("modal-history-content");
+    expect(modal).toBeInTheDocument();
   });
 });

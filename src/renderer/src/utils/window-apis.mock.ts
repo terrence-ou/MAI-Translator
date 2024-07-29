@@ -30,14 +30,14 @@ const context = Object.defineProperty(window, "context", {
     writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     getHistories: jest.fn().mockImplementation(() =>
       Promise.resolve({
-        "20240729": [{ from: "ZH", to: "EN", brief: "hello world", filename: "202407290000.txt" }],
-        "20240730": [{ from: "ZH", to: "EN", brief: "hello world", filename: "202407300000.txt" }],
+        "20240729": [{ from: "EN", to: "ZH", brief: "hello world", filename: "202407290000.txt" }],
+        "20240730": [{ from: "ZH", to: "EN", brief: "测试边栏", filename: "202407300000.txt" }],
       })
     ),
     getFileContent: jest.fn().mockImplementation((filename: string) =>
       Promise.resolve({
-        from: "ZH",
-        to: "EN",
+        from: "EN",
+        to: "ZH",
         translations: [{ aiSource: "DeepL", text: "hello world" }],
         filename: filename,
       })
