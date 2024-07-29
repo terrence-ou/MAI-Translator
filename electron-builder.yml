@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: multiai-translator
+productName: MAI Translator
 directories:
   buildResources: build
 files:

@@ -1,7 +1,7 @@
 {
-  "name": "multiai-translator",
+  "name": "multiai_translator",
   "version": "1.0.0",
-  "description": "a multiai-supported translator",
+  "description": "A Multiai-supported Translator",
   "main": "./out/main/index.js",
   "author": "Terrence Ou",
   "homepage": "https://electron-vite.org",

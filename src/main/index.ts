@@ -1,7 +1,7 @@
-import { app, shell, BrowserWindow, ipcMain } from "electron";
+import { app, shell, BrowserWindow, ipcMain, nativeImage } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
-import icon from "../../resources/icon.png?asset";
+import iconPath from "../../resources/icon.png?asset";
 
 import type {
   GetClaudeResultFn,
@@ -26,6 +26,9 @@ import {
 
 function createWindow(): void {
   // Create the browser window.
+  const icon = nativeImage.createFromPath(iconPath);
+  icon.setTemplateImage(true);
+  // const tray = new Tray(nativeImage.createFromPath(iconPath));
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 850,
@@ -33,10 +36,13 @@ function createWindow(): void {
     minHeight: 600,
     show: false,
     // autoHideMenuBar: true,
+    icon: icon,
     vibrancy: "under-window",
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 18, y: 20 },
-    ...(process.platform === "linux" ? { icon } : {}),
+    // ...(process.platform === "linux"
+    // ? { icon }
+    // : { icon: join(__dirname, "resources", "icon.icns") }),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: true,
@@ -44,7 +50,9 @@ function createWindow(): void {
     },
   });
 
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  app.dock.setIcon(icon);
+
+  // mainWindow.webContents.openDevTools({ mode: "detach" });
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
