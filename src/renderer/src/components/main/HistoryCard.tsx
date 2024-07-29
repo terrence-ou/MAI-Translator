@@ -1,4 +1,4 @@
-import { ComponentProps, useMemo, useState } from "react";
+import { ComponentProps, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Record } from "@shared/types";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -18,12 +18,21 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
   );
 
   const [currFile, setCurrFile] = useState<string | undefined>(undefined);
+  const [dialogState, setDialogState] = useState<false | undefined>(undefined);
   const handleSetCurrFile = (filename: string) => {
     setCurrFile(filename);
   };
+
+  // Once a file been deleted, close the modal immediately then restore the modal's default status
+  useEffect(() => {
+    setDialogState(false);
+    const timerId = setTimeout(() => setDialogState(undefined), 10);
+    return () => clearTimeout(timerId);
+  }, [records]);
+
   return (
     <div className="flex flex-col gap-1 justify-start min-w-[150px] mt-2 mb-4">
-      <Dialog>
+      <Dialog open={dialogState}>
         {sortedRecords.map((record) => {
           const { from, to, filename, brief } = record;
           // for the block-based languages, we display less characters in preview
