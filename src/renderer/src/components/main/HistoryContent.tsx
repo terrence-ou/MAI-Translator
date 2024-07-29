@@ -35,7 +35,7 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
       const content = await window.context.getFileContent(filename!);
       setFileContent(content!);
     })();
-  }, []);
+  }, [filename]);
 
   // If filename not provided or file not existed, display the following content
   if (fileContent === null || filename === undefined) {
@@ -50,7 +50,7 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
   }
   // If the file exists, render out the content
   return (
-    <DialogContent className="min-w-[70%] max-h-[93%] gap-3">
+    <DialogContent className="min-w-[70%] max-h-[93%] gap-3 transition-none">
       {/* Header */}
       <DialogHeader>
         <DialogTitle>Translation Record</DialogTitle>
