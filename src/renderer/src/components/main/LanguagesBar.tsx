@@ -17,6 +17,7 @@ const LanguagesBar = () => {
       <IconButton
         disabled={currFromLan === "" || currFromLan === currToLan}
         onClick={handleSwitchLanguages}
+        data-testid="button-lan-switch"
       >
         <ArrowLeftRight className="stroke-primary stroke-thin w-4 h-4" />
       </IconButton>

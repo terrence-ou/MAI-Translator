@@ -80,7 +80,6 @@ export const filesSlice = createSlice({
       (state, action: PayloadAction<{ response: boolean; filename: string }>) => {
         if (action.payload && action.payload.response === true) {
           const { filename } = action.payload;
-          console.log("delete", filename);
           state.filePreview[filename.slice(0, 8)] = state.filePreview[filename.slice(0, 8)].filter(
             (file) => file.filename !== filename
           );

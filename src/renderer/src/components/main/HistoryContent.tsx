@@ -40,9 +40,9 @@ const HistoryContent = ({ filename }: HistoryContentProps) => {
   // If filename not provided or file not existed, display the following content
   if (fileContent === null || filename === undefined) {
     return (
-      <DialogContent className="min-w-[80%]">
+      <DialogContent className="min-w-[80%]" data-testid="modal-history-invalid">
         <DialogHeader>
-          <DialogTitle>Translation History</DialogTitle>
+          <DialogTitle>Translation Record</DialogTitle>
           <DialogDescription className="flex flex-col">Failed to load the file.</DialogDescription>
         </DialogHeader>
       </DialogContent>

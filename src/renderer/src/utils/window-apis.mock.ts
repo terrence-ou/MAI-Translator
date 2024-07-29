@@ -26,22 +26,9 @@ const themedMatchMedia = (maches: boolean) =>
 const context = Object.defineProperty(window, "context", {
   writable: true,
   value: {
+    // translation config functions
     readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
-    getHistories: jest.fn().mockImplementation(() =>
-      Promise.resolve({
-        "20240729": [{ from: "EN", to: "ZH", brief: "hello world", filename: "202407290000.txt" }],
-        "20240730": [{ from: "ZH", to: "EN", brief: "测试边栏", filename: "202407300000.txt" }],
-      })
-    ),
-    getFileContent: jest.fn().mockImplementation((filename: string) =>
-      Promise.resolve({
-        from: "EN",
-        to: "ZH",
-        translations: [{ aiSource: "DeepL", text: "hello world" }],
-        filename: filename,
-      })
-    ),
     writeHistory: jest.fn().mockImplementation(() => Promise.resolve("20240101.txt")),
     getDeepLFreeResult: jest
       .fn()
@@ -49,6 +36,28 @@ const context = Object.defineProperty(window, "context", {
         Promise.resolve({ detected_source_language: "EN", text: "mock result" })
       ),
     getClaudeResult: jest.fn().mockImplementation(() => Promise.resolve("mock result")),
+    // file management functions
+    getHistories: jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        "20240729": [{ from: "EN", to: "ZH", brief: "hello world", filename: "202407290000.txt" }],
+        "20240730": [{ from: "ZH", to: "EN", brief: "测试边栏", filename: "202407300000.txt" }],
+      })
+    ),
+    getFileContent: jest.fn().mockImplementation((filename: string) => {
+      if (filename === "202407290000.txt" || filename === "202407300000.txt") {
+        return Promise.resolve({
+          from: "EN",
+          to: "ZH",
+          translations: [{ aiSource: "DeepL", text: "hello world" }],
+          filename: filename,
+        });
+      } else return null;
+    }),
+    deleteFile: jest.fn().mockImplementation((filename: string) => {
+      if (filename === "202407290000.txt" || filename === "202407300000.txt") {
+        return true;
+      } else return false;
+    }),
   },
 });
 
