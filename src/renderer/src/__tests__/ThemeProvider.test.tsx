@@ -1,10 +1,10 @@
-import { storeRender } from "@/utils/test-utils";
-import ThemeProvider from "@/components/ThemeProvider";
-import { act } from "react";
 import "@/utils/window-apis.mock";
+import { act } from "react";
+import { storeRender } from "@/utils/test-utils";
+import { themedMatchMedia } from "@/utils/window-apis.mock";
 import { useAppDispatch } from "@/hooks";
 import { updateSettings } from "@/store/settingsSlice";
-import { themedMatchMedia } from "@/utils/window-apis.mock";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const MockComponent = ({ theme }: { theme: "light" | "dark" | "system" }) => {
   const dispatch = useAppDispatch();

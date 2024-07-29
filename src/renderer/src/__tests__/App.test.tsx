@@ -1,6 +1,4 @@
-import "@testing-library/dom";
 import "@testing-library/jest-dom";
-import "@/utils/window-apis.mock";
 import { act } from "react";
 import { render, screen } from "@/utils/test-utils";
 import App from "@/App";

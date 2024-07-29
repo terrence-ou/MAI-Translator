@@ -28,7 +28,20 @@ const context = Object.defineProperty(window, "context", {
   value: {
     readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
-    getHistories: jest.fn().mockImplementation(() => Promise.resolve({})),
+    getHistories: jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        "20240729": [{ from: "ZH", to: "EN", brief: "hello world", filename: "202407290000.txt" }],
+        "20240730": [{ from: "ZH", to: "EN", brief: "hello world", filename: "202407300000.txt" }],
+      })
+    ),
+    getFileContent: jest.fn().mockImplementation((filename: string) =>
+      Promise.resolve({
+        from: "ZH",
+        to: "EN",
+        translations: [{ aiSource: "DeepL", text: "hello world" }],
+        filename: filename,
+      })
+    ),
     writeHistory: jest.fn().mockImplementation(() => Promise.resolve("20240101.txt")),
     getDeepLFreeResult: jest
       .fn()

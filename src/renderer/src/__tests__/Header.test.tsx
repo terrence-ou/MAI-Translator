@@ -1,4 +1,3 @@
-import "@testing-library/dom";
 import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
 import { render, screen } from "@/utils/test-utils";

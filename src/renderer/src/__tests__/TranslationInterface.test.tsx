@@ -1,4 +1,3 @@
-import "@testing-library/dom";
 import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
 import { storeRender as render, screen, fireEvent, act } from "@/utils/test-utils";

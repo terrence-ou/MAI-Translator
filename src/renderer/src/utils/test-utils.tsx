@@ -23,4 +23,6 @@ const storeRender = (ui: ReactElement, options?: Omit<RenderOptions, "wrapper">)
   render(ui, { wrapper: StoreProvider, ...options });
 
 export * from "@testing-library/react";
+export * from "@testing-library/dom";
+export * from "@/utils/window-apis.mock";
 export { customRender as render, storeRender };
