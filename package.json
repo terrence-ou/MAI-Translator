@@ -1,6 +1,6 @@
 {
   "name": "multiai_translator",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A Multiai-supported Translator",
   "main": "./out/main/index.js",
   "author": "Terrence Ou",
