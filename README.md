@@ -1,7 +1,5 @@
-
-<image src="./public/cover.png" width="100%"/>
-
 <h1 align="center"> MAI Translator - a multi-ai supported translator </h1>
+<image src="./public/cover.png" width="100%"/>
 <p align="center">A multi-ai-supported translator helps getting and managing translations with confidence.</p>
 <p align="center">
   <a href="https://www.gnu.org/licenses/gpl-3.0">
