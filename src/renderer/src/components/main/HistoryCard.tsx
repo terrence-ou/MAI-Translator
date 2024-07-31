@@ -26,7 +26,7 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
   // Once a file been deleted, close the modal immediately then restore the modal's default status
   useEffect(() => {
     setDialogState(false);
-    const timerId = setTimeout(() => setDialogState(undefined), 10);
+    const timerId = setTimeout(() => setDialogState(undefined), 500);
     return () => clearTimeout(timerId);
   }, [records]);
 
