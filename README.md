@@ -16,19 +16,12 @@ The MAI Translator helps to retrieve translation results from popular language m
 ## Features
 
 1. Fetching translation results from multiple language model providers:
-<p>
-  <image src="./public/translate.gif" width="500px"/>
-</p>
-
 2. Manage translation records locally:
-<p>
-  <image src="./public/local_file.gif" width="500px"/>
+3. Light / Dark theme:
+<p align="center">
+  <image src="./public/demo.gif" width="500px"/>
 </p>
 
-3. Light / Dark theme:
-<p>
-  <image src="./public/themes.gif" width="500px"/>
-</p>
 
 ## Preparation
 
