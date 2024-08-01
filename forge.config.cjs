@@ -7,6 +7,18 @@ module.exports = {
     ],
   },
   rebuildConfig: {},
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "terrence-ou",
+          name: "MAI-Translator",
+        },
+        prerelease: true,
+      },
+    },
+  ],
   makers: [
     // {
     //   name: "@electron-forge/maker-squirrel",

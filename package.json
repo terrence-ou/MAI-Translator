@@ -1,5 +1,6 @@
 {
   "name": "multiai_translator",
+  "productName": "MAI Translator",
   "version": "0.1.0",
   "description": "A Multiai-supported Translator",
   "main": "./dist/main/index.js",
@@ -15,6 +16,7 @@
     "dev": "electron-vite dev --outDir=dist",
     "package": "electron-vite build --outDir=dist && electron-forge package",
     "make": "electron-vite build --outDir=dist && electron-forge make",
+    "publish": "electron-forge publish",
     "test": "npm run test:unit",
     "coverage": "npm run coverage:unit",
     "test:unit": "jest",
@@ -47,6 +49,7 @@
     "@electron-forge/maker-rpm": "^6.2.1",
     "@electron-forge/maker-squirrel": "^6.2.1",
     "@electron-forge/maker-zip": "^6.2.1",
+    "@electron-forge/publisher-github": "^7.4.0",
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
     "@electron-toolkit/eslint-config-ts": "^1.0.1",
     "@electron-toolkit/tsconfig": "^1.0.1",
