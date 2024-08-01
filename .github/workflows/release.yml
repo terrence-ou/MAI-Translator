@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - name: Build app
+        run: npm run make
+      - name: List out directory contents
+        run: ls -la out
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
