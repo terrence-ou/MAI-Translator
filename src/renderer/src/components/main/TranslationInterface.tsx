@@ -125,7 +125,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
         </TextField>
       </div>
       {/* AI source tabs */}
-      <div className="flex flex-col pt-3" data-testid="main-aisources-tab">
+      <div className="flex flex-col pt-3 gap-[1px]" data-testid="main-aisources-tab">
         {AI_LIST.map((ai, i) => {
           const variant = ai === currAi ? "default" : "secondary";
           const active = ai === currAi;
