@@ -36,6 +36,7 @@ const context = Object.defineProperty(window, "context", {
         Promise.resolve({ detected_source_language: "EN", text: "mock result" })
       ),
     getClaudeResult: jest.fn().mockImplementation(() => Promise.resolve("mock result")),
+    getOpenAIResult: jest.fn().mockImplementation(() => Promise.resolve("mock result")),
     // file management functions
     getHistories: jest.fn().mockImplementation(() =>
       Promise.resolve({
