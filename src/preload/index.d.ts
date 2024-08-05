@@ -1,9 +1,9 @@
 import {
   DeleteFileFn,
-  GetClaudeResultFn,
-  GetDeepLFreeResultFn,
+  GetDetectionTranslationResultFn,
   GetFileContentFn,
   GetHistoriesFn,
+  GetTranslationResultFn,
   ReadAPIsFn,
   WriteAPIsFn,
   writeHistoryFn,
@@ -15,8 +15,9 @@ declare global {
       // curd
       readApis: ReadAPIsFn;
       writeApis: WriteAPIsFn;
-      getDeepLFreeResult: GetDeepLFreeResultFn;
-      getClaudeResult: GetClaudeResultFn;
+      getDeepLFreeResult: GetDetectionTranslationResultFn;
+      getClaudeResult: GetTranslationResultFn;
+      getOpenAIResult: GetTranslationResultFn;
       // fs
       writeHistory: writeHistoryFn;
       getHistories: GetHistoriesFn;

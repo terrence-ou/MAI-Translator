@@ -4,14 +4,14 @@ import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import iconPath from "../../resources/icon.png?asset";
 
 import type {
-  GetClaudeResultFn,
-  GetDeepLFreeResultFn,
   GetHistoriesFn,
   GetFileContentFn,
   ReadAPIsFn,
   WriteAPIsFn,
   WriteHistoryFn,
   DeleteFileFn,
+  GetDetectionTranslationResultFn,
+  GetTranslationResultFn,
 } from "@shared/types";
 import {
   readApis,
@@ -22,6 +22,7 @@ import {
   getHistories,
   getFileContent,
   deleteFile,
+  getOpenAIResult,
 } from "@/lib";
 
 function createWindow(): void {
@@ -90,11 +91,14 @@ app.whenReady().then(() => {
   // curd ipcs
   ipcMain.handle("readApis", (_, ...args: Parameters<ReadAPIsFn>) => readApis(...args));
   ipcMain.handle("writeApis", (_, ...args: Parameters<WriteAPIsFn>) => writeApis(...args));
-  ipcMain.handle("getDeepLFreeResult", (_, ...args: Parameters<GetDeepLFreeResultFn>) =>
+  ipcMain.handle("getDeepLFreeResult", (_, ...args: Parameters<GetDetectionTranslationResultFn>) =>
     getDeepLFreeResult(...args)
   );
-  ipcMain.handle("getClaudeResult", (_, ...args: Parameters<GetClaudeResultFn>) =>
+  ipcMain.handle("getClaudeResult", (_, ...args: Parameters<GetTranslationResultFn>) =>
     getClaudeResult(...args)
+  );
+  ipcMain.handle("getOpenAIResult", (_, ...args: Parameters<GetTranslationResultFn>) =>
+    getOpenAIResult(...args)
   );
   // fs ipcs
   ipcMain.handle("writeHistory", (_, ...args: Parameters<WriteHistoryFn>) => writeHistory(...args));

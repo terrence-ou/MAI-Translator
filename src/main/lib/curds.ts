@@ -2,12 +2,12 @@ import {
   ReadAPIsFn,
   WriteAPIsFn,
   APIType,
-  GetDeepLFreeResultFn,
-  GetClaudeResultFn,
+  GetDetectionTranslationResultFn,
+  GetTranslationResultFn,
   DetectionTranslationOutput,
 } from "@shared/types";
-import { API_FILENAME, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
-import { CLAUDE_PROMPTS } from "@shared/prompts";
+import { API_FILENAME, MAX_TOKENS, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
+import { PROMPTS } from "@shared/prompts";
 import axios from "axios";
 import { app } from "electron";
 import fs from "fs";
@@ -37,7 +37,7 @@ export const writeApis: WriteAPIsFn = async (apis) => {
 };
 
 // Get translation result from DeepL with free api
-export const getDeepLFreeResult: GetDeepLFreeResultFn = async (from, to, text) => {
+export const getDeepLFreeResult: GetDetectionTranslationResultFn = async (from, to, text) => {
   const apis = await readApis();
   try {
     // Send translation request
@@ -63,20 +63,20 @@ export const getDeepLFreeResult: GetDeepLFreeResultFn = async (from, to, text) =
 };
 
 // Get translation result from claude api
-export const getClaudeResult: GetClaudeResultFn = async (from, to, text) => {
+export const getClaudeResult: GetTranslationResultFn = async (from, to, text) => {
   const apis = await readApis();
   try {
     const response = await axios.post(
       "https://api.anthropic.com/v1/messages",
       {
         model: "claude-3-haiku-20240307",
-        max_tokens: 4096,
+        max_tokens: MAX_TOKENS,
         temperature: 0,
-        system: CLAUDE_PROMPTS.system,
+        system: PROMPTS.system,
         messages: [
           {
-            role: CLAUDE_PROMPTS.role,
-            content: CLAUDE_PROMPTS.content(from, to, text),
+            role: PROMPTS.role,
+            content: PROMPTS.content(from, to, text),
           },
         ],
       },
@@ -92,6 +92,45 @@ export const getClaudeResult: GetClaudeResultFn = async (from, to, text) => {
     return outputText;
   } catch (error) {
     console.error("Error calling Claude API", error);
+  }
+  return TRANSLATION_FAIL_MESSAGE;
+};
+
+// Get translation result from openai api
+export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) => {
+  const apis = await readApis();
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4o-mini",
+        max_tokens: 4096,
+        temperature: 1,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+        messages: [
+          {
+            role: "system",
+            content: [{ type: "text", text: PROMPTS.system + PROMPTS.content(from, to) }],
+          },
+          {
+            role: PROMPTS.role,
+            content: [{ type: "text", text }],
+          },
+        ],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apis.OpenAI}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const outputText = response.data.choices[0].message.content as string;
+    return outputText;
+  } catch (error) {
+    console.error("Error calling OpenAI API", error);
   }
   return TRANSLATION_FAIL_MESSAGE;
 };

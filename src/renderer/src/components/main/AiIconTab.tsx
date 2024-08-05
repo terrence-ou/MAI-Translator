@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
-import DeeplIcon from "@/components/ui/icons/deeplIcon";
-import ClaudeIcon from "../ui/icons/claudeIcon";
 import { AISource } from "@shared/types";
 import { ComponentProps } from "react";
+import DeeplIcon from "@/components/ui/icons/deeplIcon";
+import ClaudeIcon from "../ui/icons/claudeIcon";
+import OpenaiIcon from "../ui/icons/openaiIcon";
 
 type AiIconTabProps = {
   variant: "default" | "outline" | "secondary" | "ghost" | undefined;
@@ -19,6 +20,8 @@ const AiIconTab = ({ variant, icon, active, ...props }: AiIconTabProps) => {
         return <DeeplIcon className={fillStyle} />;
       case "Claude":
         return <ClaudeIcon className={fillStyle} />;
+      case "OpenAI":
+        return <OpenaiIcon className={fillStyle} />;
       default:
         return undefined;
     }
@@ -27,7 +30,7 @@ const AiIconTab = ({ variant, icon, active, ...props }: AiIconTabProps) => {
   return (
     <Button
       variant={variant}
-      className="w-7 h-12 rounded-none rounded-tr-md rounded-br-md p-0"
+      className="w-7 h-12 rounded-none rounded-tr-md rounded-br-md p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
       {...props}
     >
       {getIcon()}
