@@ -29,11 +29,17 @@ const getTranslations = createAsyncThunk(
         toLanguage,
         sourceText
       );
+      const openAIOutput = await window.context.getOpenAIResult(
+        deeplOutput.detected_source_language, // This is a trick: deepl automatically returns a source language.
+        toLanguage,
+        sourceText
+      );
       return {
         detected_source_language: deeplOutput.detected_source_language,
         outputs: [
           { aiSource: "DeepL", text: deeplOutput.text },
           { aiSource: "Claude", text: claudeOutput },
+          { aiSource: "OpenAI", text: openAIOutput },
         ],
       } as StoreTranslationResult;
     } else return null;

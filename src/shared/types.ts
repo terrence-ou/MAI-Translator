@@ -12,12 +12,14 @@ export type WriteAPIsFn = (apis: APIType) => void;
 
 export type DetectionTranslationOutput = { detected_source_language: string; text: string };
 export type TranslationOutput = string;
-export type GetDeepLFreeResultFn = (
+
+export type GetDetectionTranslationResultFn = (
   from: string,
   to: string,
   text: string
 ) => Promise<DetectionTranslationOutput>;
-export type GetClaudeResultFn = (
+
+export type GetTranslationResultFn = (
   from: string,
   to: string,
   text: string

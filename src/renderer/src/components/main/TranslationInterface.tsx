@@ -29,8 +29,8 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
   const dispatch = useAppDispatch();
   const sourceRef = useRef<HTMLTextAreaElement>(null);
   const loading = useAppSelector((state) => state.translationConfig.loading);
-  const saving = useAppSelector((state) => state.files.saving);
   const translations = useAppSelector((state) => state.translationConfig.results.outputs);
+  const saving = useAppSelector((state) => state.files.saving);
   const displayResult = translations.filter(({ aiSource }) => aiSource === currAi)[0];
 
   // Set source text (input text)
