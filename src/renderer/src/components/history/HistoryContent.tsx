@@ -7,7 +7,6 @@ import { deleteFile } from "@/store/filesSlice";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { setCurrFilename } from "@/store/settingsSlice";
 
 const filenameToDate = (filename: string): string => {
   const year = filename.slice(0, 4);
@@ -33,7 +32,6 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
 
   const handleDeleteFile = (filename: string) => {
     dispatch(deleteFile(filename));
-    dispatch(setCurrFilename(undefined));
   };
 
   return (
