@@ -3,7 +3,7 @@ import { useAppSelector } from "@/hooks";
 import type { Record } from "@shared/types";
 import { useAppDispatch } from "@/hooks";
 import { deleteFile } from "@/store/filesSlice";
-// import supportedLanguages from "@shared/languages";
+import supportedLanguages from "@shared/languages";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ const filenameToDate = (filename: string): string => {
   return `${year}-${month}-${date}`;
 };
 
+// The body of the HistoryContent component
 const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const [fileContent, setFileContent] = useState<Record | null>(null);
   const dispatch = useAppDispatch();
@@ -34,6 +35,16 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
     dispatch(deleteFile(filename));
   };
 
+  const fromLan = supportedLanguages.filter((language) => {
+    if (!fileContent) return undefined;
+    return language.value === fileContent.from.toLowerCase();
+  });
+
+  const toLan = supportedLanguages.filter((language) => {
+    if (!fileContent) return undefined;
+    return language.value === fileContent.to.toLowerCase();
+  });
+
   return (
     <div {...props}>
       {currFilename === undefined && (
@@ -45,10 +56,18 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
       )}
       {currFilename && fileContent && (
         <div className="h-full flex flex-col">
-          <p className="flex mt-1 mb-2 gap-4 px-2 text-sm text-primary/70 font-medium">
-            <span>{`Date: ${filenameToDate(currFilename)}`}</span>
-            <span>{`From: ${fileContent.from.toUpperCase()} To: ${fileContent.to.toUpperCase()}`}</span>
-          </p>
+          <div className="flex mt-1 mb-3 gap-4 px-2 text-sm text-primary/70 font-normal">
+            <p>
+              Date: <span>{filenameToDate(currFilename)}</span>
+            </p>
+            <p>
+              From:{" "}
+              <span className="font-bold">{fromLan ? fromLan[0].label : "Failed to detect"}</span>
+            </p>
+            <p>
+              To: <span className="font-bold">{toLan ? toLan[0].label : "Failed to detect"}</span>
+            </p>
+          </div>
           <div className="flex-1 grid grid-cols-2 gap-4">
             {/* Source text */}
             <Textarea

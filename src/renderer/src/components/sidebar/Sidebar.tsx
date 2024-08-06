@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/hooks";
 import { useMemo } from "react";
-import HistoryCard from "@/components/sidebar/HistoryCard";
+import HistoryCards from "@/components/sidebar/HistoryCards";
 import Nav from "@/components/sidebar/Nav";
 import { RootState } from "@/store";
 import { cn } from "@/utils";
@@ -25,7 +25,7 @@ const SideBar = () => {
         {fileDates.map((key) => (
           <div key={key}>
             <p className="text-xs italic text-slate-400 px-2">{`${key.slice(0, 4)}-${key.slice(4, 6)}-${key.slice(6)}`}</p>
-            <HistoryCard records={filePreview[key]} />
+            <HistoryCards records={filePreview[key]} />
           </div>
         ))}
       </div>

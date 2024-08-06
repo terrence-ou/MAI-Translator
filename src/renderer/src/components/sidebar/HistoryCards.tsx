@@ -1,6 +1,7 @@
 import { ComponentProps, useMemo } from "react";
 import type { Record } from "@shared/types";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { cn } from "@/utils";
 import { setCurrFilename, route } from "@/store/settingsSlice";
 import { Button } from "@/components/ui/button";
 
@@ -9,7 +10,7 @@ type HistoryCardProps = {
 } & ComponentProps<"div">;
 
 /* The body of the HistoryCard content */
-const HistoryCard = ({ records }: HistoryCardProps) => {
+const HistoryCards = ({ records }: HistoryCardProps) => {
   let sortedRecords = [...records];
   const dispatch = useAppDispatch();
   // using useMemo to avoid sorting the array at every rendering
@@ -21,7 +22,7 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
     dispatch(route("history"));
     dispatch(setCurrFilename(filename));
   };
-
+  const selectedFilename = useAppSelector((state) => state.settings.currentFilename);
   return (
     <div className="flex flex-col gap-1 justify-start min-w-[150px] mt-2 mb-4">
       {sortedRecords.map((record) => {
@@ -31,7 +32,10 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
           <Button
             key={filename}
             variant="secondary"
-            className="h-fit flex flex-col text-slate-700 dark:text-slate-300 whitespace-normal gap-1 hover:dark:bg-primary-foreground hover:bg-slate-300 p-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className={cn(
+              "h-fit flex flex-col text-slate-700 dark:text-slate-300 whitespace-normal gap-1 hover:dark:bg-primary-foreground hover:bg-slate-300 p-2 focus-visible:ring-0 focus-visible:ring-offset-0",
+              selectedFilename === filename ? "bg-slate-200 dark:bg-primary-foreground/50" : ""
+            )}
             onClick={() => handleSetCurrFilename(filename)}
           >
             <span className="w-full text-left text-xs font-normal">
@@ -48,4 +52,4 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
   );
 };
 
-export default HistoryCard;
+export default HistoryCards;
