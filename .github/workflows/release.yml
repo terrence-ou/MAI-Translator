@@ -1,5 +1,4 @@
-# .github/workflows/release.yml
-name: Release app
+name: CD
 on:
   workflow_dispatch:
 jobs:

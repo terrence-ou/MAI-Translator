@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
 import { storeRender as render, act, screen, fireEvent } from "@/utils/test-utils";
-import HistoryContent from "@/components/main/HistoryContent";
+import HistoryContent from "@/components/sidebar/HistoryContent";
 import { Dialog } from "@/components/ui/dialog";
 import { useAppDispatch } from "@/hooks";
 import { loadFiles } from "@/store/filesSlice";

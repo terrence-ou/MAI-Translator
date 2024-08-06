@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
 import { render, screen, act, fireEvent } from "@/utils/test-utils";
 import App from "@/App";
-import SideBar from "@/components/main/Sidebar";
+import SideBar from "@/components/sidebar/Sidebar";
 
 // we need to use act because we have a useEffect running when mounting the app
 const renderApp = async () => {
