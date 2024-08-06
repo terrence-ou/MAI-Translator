@@ -6,8 +6,8 @@ import { RootState } from "@/store";
 import { ResizablePanel, ResizableHandle, ResizablePanelGroup } from "@/components/ui/resizable";
 
 import { cn } from "@/utils";
-import TranslationInterface from "./TranslationInterface";
-import SideBar from "./Sidebar";
+import TranslationInterface from "@/components/main/TranslationInterface";
+import SideBar from "@/components/sidebar/Sidebar";
 
 // default main interface panel configurations
 const panelConfig = {
