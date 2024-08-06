@@ -13,6 +13,7 @@ const initialState: EditorSettingsType = {
   theme: localTheme ? (localTheme as Theme) : defaultSettings.theme,
   editorFontSize: localFontSize !== null ? parseInt(localFontSize) : defaultSettings.editorFontSize,
   showPanel: defaultSettings.showPanel,
+  currentFilename: undefined,
 };
 
 // Async Thunks -- Update interface settings

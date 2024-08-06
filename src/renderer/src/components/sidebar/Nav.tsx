@@ -15,14 +15,14 @@ const Nav = ({ ...props }: ComponentProps<"div">) => {
         className="flex gap-2 px-2 py-[2px] items-center text-sm font-medium text-primary/70 hover:dark:bg-primary-foreground hover:bg-slate-300 rounded-md hover:cursor-pointer"
         onClick={() => handleRoute("main")}
       >
-        <House className="w-[18px] stroke-[1.5px]" />
+        <House className="w-[18px] min-w-[18px] stroke-[1.5px]" />
         Home
       </div>
       <div
         className="flex gap-2 px-2 py-[2px] items-center text-sm font-medium text-primary/70 hover:dark:bg-primary-foreground hover:bg-slate-300 rounded-md hover:cursor-pointer"
         onClick={() => handleRoute("history")}
       >
-        <Notebook className="w-[18px] stroke-[1.5px]" />
+        <Notebook className="w-[18px] min-w-[18px] stroke-[1.5px]" />
         Histories
       </div>
     </div>

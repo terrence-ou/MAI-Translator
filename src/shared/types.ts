@@ -57,6 +57,7 @@ export interface EditorSettingsType {
   editorFontSize?: number;
   theme?: Theme;
   showPanel?: boolean;
+  currentFilename?: string | undefined;
 }
 
 export interface TranslationConfigType {
