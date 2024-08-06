@@ -41,6 +41,8 @@ export type DeleteFileFn = (filename: string) => Promise<boolean>;
 
 // Types for redux slices
 // export type APIType = { name: AISource; value: string };
+export type Routes = "main" | "history" | "upload";
+
 export type APIType = {
   [key in AISource]?: string;
 };
@@ -51,6 +53,7 @@ export type StoreTranslationResult = {
 };
 
 export interface EditorSettingsType {
+  currentRoute?: Routes;
   editorFontSize?: number;
   theme?: Theme;
   showPanel?: boolean;

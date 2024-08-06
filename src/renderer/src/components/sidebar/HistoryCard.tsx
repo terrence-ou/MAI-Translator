@@ -41,7 +41,7 @@ const HistoryCard = ({ records }: HistoryCardProps) => {
             <DialogTrigger asChild key={filename}>
               <Button
                 variant="secondary"
-                className="h-fit flex flex-col text-slate-700 dark:text-slate-300 whitespace-normal gap-1 hover:dark:bg-primary-foreground hover:bg-slate-300 p-2"
+                className="h-fit flex flex-col text-slate-700 dark:text-slate-300 whitespace-normal gap-1 hover:dark:bg-primary-foreground hover:bg-slate-300 p-2 focus-visible:ring-0 focus-visible:ring-offset-0"
                 onClick={() => handleSetCurrFile(filename!)}
               >
                 <span className="w-full text-left text-xs font-normal">

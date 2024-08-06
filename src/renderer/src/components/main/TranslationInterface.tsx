@@ -28,6 +28,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
 
   const dispatch = useAppDispatch();
   const sourceRef = useRef<HTMLTextAreaElement>(null);
+  const sourceText = useAppSelector((state) => state.translationConfig.sourceText);
   const loading = useAppSelector((state) => state.translationConfig.loading);
   const translations = useAppSelector((state) => state.translationConfig.results.outputs);
   const saving = useAppSelector((state) => state.files.saving);
@@ -72,6 +73,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
         <TextField
           ref={sourceRef}
           onBlur={() => handleSetSourceText()}
+          defaultValue={sourceText}
           data-testid="textarea-source"
         >
           <Button
