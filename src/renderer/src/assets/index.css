@@ -80,10 +80,19 @@
   ::-webkit-scrollbar {
     @apply w-[0.5rem];
   }
-  ::-webkit-scrollbar-thumb {
+
+  ::-webkit-scrollbar:horizontal {
+    @apply h-[0.5rem];
+  }
+
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:horizontal {
     @apply rounded-md bg-primary/10 hover:bg-primary/70;
   }
-  ::-webkit-scrollbar-track {
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-track:horizontal,
+  ::-webkit-scrollbar-corner {
     @apply bg-none;
   }
 }

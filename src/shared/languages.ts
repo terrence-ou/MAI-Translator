@@ -19,7 +19,6 @@ const supportedLanguages: LanguageConfig[] = [
   { language: "Finnish", label: "Suomi", value: "fi" },
   { language: "Polish", label: "Polski", value: "pl" },
   { language: "Czech", label: "Čeština", value: "cs" },
-  { language: "Hungarian", label: "Magyar", value: "hu" },
   { language: "Indonesian", label: "Bahasa Indonesia", value: "id" },
 ];
 

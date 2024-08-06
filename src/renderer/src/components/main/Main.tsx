@@ -8,6 +8,7 @@ import { ResizablePanel, ResizableHandle, ResizablePanelGroup } from "@/componen
 import { cn } from "@/utils";
 import TranslationInterface from "@/components/main/TranslationInterface";
 import SideBar from "@/components/sidebar/Sidebar";
+import HistoryContent from "../history/HistoryContent";
 
 // default main interface panel configurations
 const panelConfig = {
@@ -34,6 +35,7 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
 
   // Control panel on/off using state
   const dispatch = useAppDispatch();
+  const currentRoute = useAppSelector((state: RootState) => state.settings.currentRoute);
   const showPanel = useAppSelector((state: RootState) => state.settings.showPanel)!;
   const panelRef = useRef<ImperativePanelHandle>(null);
   usePanelControl(showPanel, panelRef, panelConfig.defaultSize);
@@ -47,6 +49,9 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
   const handleOnExpand = () => {
     setSliding(true);
   };
+
+  // The style for the main interface
+  const mainInterfaceStyle = "box-border pt-16 pb-8 px-5 h-full";
 
   return (
     <div {...props}>
@@ -73,7 +78,8 @@ const Main = ({ ...props }: ComponentProps<"div">) => {
           data-testid="panel-right"
           defaultSize={100 - panelConfig.defaultSize}
         >
-          <TranslationInterface className="box-border pt-16 pb-8 px-5 h-full" />
+          {currentRoute === "main" && <TranslationInterface className={mainInterfaceStyle} />}
+          {currentRoute === "history" && <HistoryContent className={mainInterfaceStyle} />}
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
