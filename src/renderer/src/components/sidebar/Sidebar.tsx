@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/hooks";
 import { useMemo } from "react";
-import HistoryCard from "./HistoryCard";
+import HistoryCard from "@/components/sidebar/HistoryCard";
 
 const SideBar = () => {
   const filePreview = useAppSelector((state) => state.files.filePreview);

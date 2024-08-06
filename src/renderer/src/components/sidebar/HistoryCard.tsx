@@ -2,7 +2,7 @@ import { ComponentProps, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Record } from "@shared/types";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import HistoryContent from "./HistoryContent";
+import HistoryContent from "@/components/sidebar/HistoryContent";
 
 type HistoryCardProps = {
   records: Record[];
