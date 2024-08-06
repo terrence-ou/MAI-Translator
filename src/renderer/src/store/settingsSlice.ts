@@ -44,6 +44,9 @@ export const settingsSlice = createSlice({
     route: (state, action: PayloadAction<Routes>) => {
       state.currentRoute = action.payload;
     },
+    setCurrFilename: (state, action: PayloadAction<string | undefined>) => {
+      state.currentFilename = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -57,5 +60,5 @@ export const settingsSlice = createSlice({
 });
 
 export { updateSettings };
-export const { togglePanel, collapsePanel, route } = settingsSlice.actions;
+export const { togglePanel, collapsePanel, route, setCurrFilename } = settingsSlice.actions;
 export default settingsSlice.reducer;

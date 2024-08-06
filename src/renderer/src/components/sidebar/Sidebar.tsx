@@ -14,7 +14,7 @@ const SideBar = () => {
   return (
     <div
       className={cn(
-        "h-full flex flex-col pt-20 pb-8",
+        "h-full flex flex-col pt-[4.5rem] pb-8",
         showPanel ? "opacity-100 duration-150" : "opacity-0 duration-150a"
       )}
       data-testid="sidebar"
