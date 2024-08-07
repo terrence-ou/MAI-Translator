@@ -24,6 +24,12 @@ The MAI Translator helps to retrieve translation results from popular language m
   <image src="./public/demo.gif" width="500px"/>
 </p>
 
+## Updates
+
+- *v-0.2.0*
+  - Added a navigation menu.
+  - Updated translation record interface, displaying the record on a whole page instead of a modal now.
+  - Added OpenAI support.
 
 ## Preparation
 
