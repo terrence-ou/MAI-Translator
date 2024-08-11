@@ -4,6 +4,7 @@ import { loadApis } from "@/store/translationConfigSlice";
 import { loadFiles } from "@/store/filesSlice";
 import Header from "@/components/header/Header";
 import Main from "@/components/main/Main";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,10 +16,12 @@ function App(): JSX.Element {
 
   return (
     <div className="h-screen flex flex-col">
-      {/* Header: sidebar button, dictionary button, settings button */}
-      <Header className="bg-transparent h-header pl-24 pr-8 py-2" data-testid="header" />
-      {/* Body: sidebar, translation interface */}
-      <Main className="flex-1 max-h-[100%]" data-testid="main" />
+      <TooltipProvider delayDuration={100} skipDelayDuration={50}>
+        {/* Header: sidebar button, dictionary button, settings button */}
+        <Header className="bg-transparent h-header pl-24 pr-8 py-2" data-testid="header" />
+        {/* Body: sidebar, translation interface */}
+        <Main className="flex-1 max-h-[100%]" data-testid="main" />
+      </TooltipProvider>
     </div>
   );
 }

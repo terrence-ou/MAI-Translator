@@ -21,6 +21,8 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const dispatch = useAppDispatch();
   const currFilename = useAppSelector((state) => state.settings.currentFilename);
   const fontSize = useAppSelector((state) => state.settings.editorFontSize);
+  const filePreview = useAppSelector((state) => state.files.filePreview);
+  const hasFile = Object.keys(filePreview).length;
 
   // using useLayoutEffect to make the content ready before component being rendered
   useLayoutEffect(() => {
@@ -50,7 +52,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
       {currFilename === undefined && (
         <div className="h-full flex justify-center items-center">
           <p className="text-center text-xl italic text-primary/40">
-            The translation record is currently unvavilable.
+            {hasFile ? "Please select a translation record." : "No translation history available"}
           </p>
         </div>
       )}

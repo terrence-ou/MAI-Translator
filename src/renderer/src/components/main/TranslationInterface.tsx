@@ -8,6 +8,7 @@ import { saveRecord } from "@/store/filesSlice";
 import TextField from "@/components/main/TextField";
 import AiIconTab from "@/components/main/AiIconTab";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Copy, Eraser, Check, Loader2 } from "lucide-react";
 
 // constant styles for text filed buttons
@@ -76,15 +77,22 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           defaultValue={sourceText}
           data-testid="textarea-source"
         >
-          <Button
-            variant="ghost"
-            disabled={loading}
-            className={iconButtonStyle}
-            onClick={handleClear}
-            data-testid="button-erase"
-          >
-            <Eraser className={iconStyle} height={iconHeight} />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                disabled={loading}
+                className={iconButtonStyle}
+                onClick={handleClear}
+                data-testid="button-erase"
+              >
+                <Eraser className={iconStyle} height={iconHeight} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left" sideOffset={4}>
+              <p className="text-xs">Clear</p>
+            </TooltipContent>
+          </Tooltip>
           <Button
             variant="secondary"
             className={textButtonStyle}
@@ -102,18 +110,25 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           value={displayResult === undefined ? "The result will appear here" : displayResult.text}
           data-testid="textarea-result"
         >
-          <Button
-            variant="ghost"
-            className={iconButtonStyle}
-            onClick={handleCopy}
-            data-testid="button-copy"
-          >
-            {copied ? (
-              <Check className={iconStyle} height={iconHeight} />
-            ) : (
-              <Copy className={iconStyle} height={iconHeight} />
-            )}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className={iconButtonStyle}
+                onClick={handleCopy}
+                data-testid="button-copy"
+              >
+                {copied ? (
+                  <Check className={iconStyle} height={iconHeight} />
+                ) : (
+                  <Copy className={iconStyle} height={iconHeight} />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left" sideOffset={4}>
+              <p className="text-xs">{copied ? "Copied" : "Copy"}</p>
+            </TooltipContent>
+          </Tooltip>
           <Button
             variant="secondary"
             className={textButtonStyle}

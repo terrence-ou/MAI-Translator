@@ -3,7 +3,8 @@ import { togglePanel } from "@/store/settingsSlice";
 import { PanelLeftOpen, PanelLeftClose } from "lucide-react";
 import IconButton from "@/components/header/IconButton";
 import SettingDialog from "@/components/header/SettingDialog";
-import LanguagesBar from "../main/LanguagesBar";
+import LanguagesBar from "@/components/main/LanguagesBar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const iconStyle = "stroke-primary stroke-thin w-5 h-5";
 
@@ -14,16 +15,23 @@ const HeaderControls = () => {
   return (
     <div className="h-full flex flex-col justify-center">
       <div className="flex justify-between">
-        <IconButton
-          onClick={() => dispatch(togglePanel())}
-          data-testid={panelStatus ? "button-panel-close" : "button-panel-open"}
-        >
-          {panelStatus ? (
-            <PanelLeftClose className={iconStyle} />
-          ) : (
-            <PanelLeftOpen className={iconStyle} />
-          )}
-        </IconButton>
+        <Tooltip>
+          <IconButton
+            onClick={() => dispatch(togglePanel())}
+            data-testid={panelStatus ? "button-panel-close" : "button-panel-open"}
+          >
+            <TooltipTrigger asChild>
+              {panelStatus ? (
+                <PanelLeftClose className={iconStyle} />
+              ) : (
+                <PanelLeftOpen className={iconStyle} />
+              )}
+            </TooltipTrigger>
+          </IconButton>
+          <TooltipContent side="right" sideOffset={8}>
+            <p className="text-xs">{panelStatus ? "Close Sidebar" : "Open Sidebar"}</p>
+          </TooltipContent>
+        </Tooltip>
         <LanguagesBar />
         <SettingDialog className={iconStyle} />
       </div>
