@@ -24,10 +24,10 @@ const HistoryCards = ({ records }: HistoryCardProps) => {
   };
   const selectedFilename = useAppSelector((state) => state.settings.currentFilename);
   return (
-    <div className="flex flex-col gap-1 justify-start min-w-[150px] mt-2 mb-4">
+    <div className="flex flex-col gap-1 justify-start min-w-[150px] mb-4">
       {sortedRecords.map((record) => {
         const { from, to, filename, brief } = record;
-        const sliceSize = from === "ZH" || from === "JP" || from === "KR" ? 50 : 90;
+        const sliceSize = from === "ZH" || from === "JA" || from === "KR" ? 50 : 90;
         return (
           <Button
             key={filename}

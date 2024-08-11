@@ -2,7 +2,7 @@ import { cn } from "@/utils";
 import { ComponentProps } from "react";
 
 const IconButton = ({ children, ...props }: ComponentProps<"button">) => {
-  const { className, onClick, disabled } = props;
+  const { className, onClick, disabled, ...restProps } = props;
   return (
     <button
       className={cn(
@@ -11,7 +11,7 @@ const IconButton = ({ children, ...props }: ComponentProps<"button">) => {
         className
       )}
       onClick={onClick}
-      {...props}
+      {...restProps}
     >
       {children}
     </button>
