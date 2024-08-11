@@ -3,17 +3,24 @@ import { render, RenderOptions } from "@testing-library/react";
 import { Provider as ReduxProvider } from "react-redux";
 import ThemeProvider from "@/components/ThemeProvider";
 import { store } from "@/store";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <ReduxProvider store={store}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        <TooltipProvider>{children}</TooltipProvider>
+      </ThemeProvider>
     </ReduxProvider>
   );
 };
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
-  return <ReduxProvider store={store}>{children}</ReduxProvider>;
+  return (
+    <ReduxProvider store={store}>
+      <TooltipProvider>{children}</TooltipProvider>
+    </ReduxProvider>
+  );
 };
 
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, "wrapper">) =>

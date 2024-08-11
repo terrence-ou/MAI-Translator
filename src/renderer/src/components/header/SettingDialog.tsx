@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import APIInput from "@/components/settings/APIInput";
 import { APIType } from "@shared/types";
 import { AI_LIST } from "@shared/consts";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 type SettingDialogProps = { className: string };
 export type InputHandle = { getValue: () => string | undefined };
@@ -59,7 +60,14 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
         className="p-1 rounded-md hover:bg-border transition-colors duration-200"
         data-testid="button-settings"
       >
-        <Settings className={className} />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Settings className={className} />
+          </TooltipTrigger>
+          <TooltipContent side="left" sideOffset={8}>
+            <p className="text-xs">Settings</p>
+          </TooltipContent>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent
         className="sm:max-w-[425px] sm:max-h-[80vh] overflow-auto"
