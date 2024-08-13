@@ -1,7 +1,7 @@
 {
   "name": "multiai_translator",
   "productName": "MAI Translator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Multiai-supported Translator",
   "main": "./dist/main/index.js",
   "author": "Terrence Ou",
@@ -25,6 +25,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "@radix-ui/react-collapsible": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.1.1",
