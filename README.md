@@ -26,6 +26,9 @@ The MAI Translator helps to retrieve translation results from popular language m
 
 ## Updates
 
+- *v-0.2.1 & v-0.2.2*
+  - Tooltips added.
+  - Translation history becomes expandable by date
 - *v-0.2.0*
   - Added a navigation menu.
   - Updated translation record interface, displaying the record on a whole page instead of a modal now.
