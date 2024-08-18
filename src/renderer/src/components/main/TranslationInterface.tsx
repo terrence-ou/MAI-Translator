@@ -5,18 +5,14 @@ import { cn } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
 import { saveRecord } from "@/store/filesSlice";
-import TextField from "@/components/main/TextField";
+import TextField from "@/components/ui/TextField";
 import AiIconTab from "@/components/main/AiIconTab";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Copy, Eraser, Check, Loader2 } from "lucide-react";
 
-// constant styles for text filed buttons
-const iconStyle =
-  "stroke-[1.5px] text-slate-300 dark:text-slate-600 hover:text-primary dark:hover:text-primary transition duration-150";
+// icon height constant
 const iconHeight = 18;
-const iconButtonStyle = "p-0 h-7 bg-background hover:bg-background";
-const textButtonStyle = "h-7 hover:bg-foreground hover:text-background";
 
 /* The body of Translation Interface */
 const TranslationInterface = ({ className }: ComponentProps<"div">) => {
@@ -82,11 +78,11 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
               <Button
                 variant="ghost"
                 disabled={loading}
-                className={iconButtonStyle}
+                className="icon-button"
                 onClick={handleClear}
                 data-testid="button-erase"
               >
-                <Eraser className={iconStyle} height={iconHeight} />
+                <Eraser className="textfield-icon" height={iconHeight} />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="left" sideOffset={4}>
@@ -95,7 +91,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           </Tooltip>
           <Button
             variant="secondary"
-            className={textButtonStyle}
+            className="text-button"
             onClick={handleTranslate}
             disabled={loading}
             data-testid="button-translate"
@@ -114,14 +110,14 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
-                className={iconButtonStyle}
+                className="icon-button"
                 onClick={handleCopy}
                 data-testid="button-copy"
               >
                 {copied ? (
-                  <Check className={iconStyle} height={iconHeight} />
+                  <Check className="textfield-icon" height={iconHeight} />
                 ) : (
-                  <Copy className={iconStyle} height={iconHeight} />
+                  <Copy className="textfield-icon" height={iconHeight} />
                 )}
               </Button>
             </TooltipTrigger>
@@ -131,7 +127,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           </Tooltip>
           <Button
             variant="secondary"
-            className={textButtonStyle}
+            className="text-button"
             onClick={handleSave}
             disabled={saving}
             data-testid="button-save-result"

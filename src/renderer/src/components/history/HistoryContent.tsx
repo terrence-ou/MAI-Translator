@@ -1,12 +1,14 @@
-import { useState, useLayoutEffect, ComponentProps } from "react";
+import { useState, useEffect, ComponentProps } from "react";
 import { useAppSelector } from "@/hooks";
 import type { Record } from "@shared/types";
 import { useAppDispatch } from "@/hooks";
 import { deleteFile } from "@/store/filesSlice";
 import supportedLanguages from "@shared/languages";
+import TextField from "@/components/ui/TextField";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Volume1 } from "lucide-react";
+import { cn } from "@/utils";
 
 const filenameToDate = (filename: string): string => {
   const year = filename.slice(0, 4);
@@ -25,7 +27,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const hasFile = Object.keys(filePreview).length;
 
   // using useLayoutEffect to make the content ready before component being rendered
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (currFilename === undefined) return;
     (async () => {
       const content = await window.context.getFileContent(currFilename);
@@ -72,12 +74,19 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
           </div>
           <div className="flex-1 grid grid-cols-2 gap-4">
             {/* Source text */}
-            <Textarea
+            <TextField
               disabled={true}
               value={fileContent.source}
               className="h-full resize-none disabled:cursor-text"
               style={{ fontSize: `${fontSize}px` }}
-            />
+            >
+              <Button
+                variant="ghost"
+                className={cn("icon-button", "w-8 -translate-x-1 translate-y-1")}
+              >
+                <Volume1 className="textfield-icon" />
+              </Button>
+            </TextField>
             {/* Translated contents displayed by ai source */}
             <Tabs
               defaultValue={fileContent.translations![0].aiSource}
@@ -92,7 +101,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
               </TabsList>
               {fileContent!.translations!.map(({ aiSource, text }) => (
                 <TabsContent key={`content-${aiSource}`} value={aiSource} className="mt-0 flex-1">
-                  <Textarea
+                  <TextField
                     disabled={true}
                     value={text}
                     className="h-full resize-none disabled:cursor-text"
