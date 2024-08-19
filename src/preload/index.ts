@@ -7,6 +7,7 @@ import {
   DeleteFileFn,
   GetDetectionTranslationResultFn,
   GetTranslationResultFn,
+  TextToSpeechFn,
 } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
@@ -24,6 +25,8 @@ try {
       ipcRenderer.invoke("getClaudeResult", ...args),
     getOpenAIResult: (...args: Parameters<GetTranslationResultFn>) =>
       ipcRenderer.invoke("getOpenAIResult", ...args),
+    textToSpeech: (...args: Parameters<TextToSpeechFn>) =>
+      ipcRenderer.invoke("textToSpeech", ...args),
     // file management
     readApis: (...args: Parameters<ReadAPIsFn>) => ipcRenderer.invoke("readApis", ...args),
     writeApis: (...args: Parameters<WriteAPIsFn>) => ipcRenderer.invoke("writeApis", ...args),

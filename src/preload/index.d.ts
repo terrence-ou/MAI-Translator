@@ -6,7 +6,8 @@ import {
   GetTranslationResultFn,
   ReadAPIsFn,
   WriteAPIsFn,
-  writeHistoryFn,
+  WriteHistoryFn,
+  TextToSpeechFn,
 } from "@shared/types";
 
 declare global {
@@ -18,8 +19,9 @@ declare global {
       getDeepLFreeResult: GetDetectionTranslationResultFn;
       getClaudeResult: GetTranslationResultFn;
       getOpenAIResult: GetTranslationResultFn;
+      textToSpeech: TextToSpeechFn;
       // fs
-      writeHistory: writeHistoryFn;
+      writeHistory: WriteHistoryFn;
       getHistories: GetHistoriesFn;
       getFileContent: GetFileContentFn;
       deleteFile: DeleteFileFn;

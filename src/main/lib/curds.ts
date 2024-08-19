@@ -5,6 +5,7 @@ import {
   GetDetectionTranslationResultFn,
   GetTranslationResultFn,
   DetectionTranslationOutput,
+  TextToSpeechFn,
 } from "@shared/types";
 import { API_FILENAME, MAX_TOKENS, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
 import { PROMPTS } from "@shared/prompts";
@@ -133,4 +134,30 @@ export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) =>
     console.error("Error calling OpenAI API", error);
   }
   return TRANSLATION_FAIL_MESSAGE;
+};
+
+// Get the audio of the given text
+export const textToSpeech: TextToSpeechFn = async (text) => {
+  const apis = await readApis();
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/audio/speech",
+      {
+        model: "tts-1",
+        input: text,
+        voice: "alloy",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apis.OpenAI}`,
+          "Content-Type": "application/json",
+        },
+        responseType: "arraybuffer",
+      }
+    );
+    return response.data.toString("base64");
+  } catch (error) {
+    console.error(error);
+  }
+  return undefined;
 };

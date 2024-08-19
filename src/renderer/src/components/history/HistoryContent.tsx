@@ -1,12 +1,14 @@
-import { useState, useLayoutEffect, ComponentProps } from "react";
+import { useState, useEffect, ComponentProps, useRef } from "react";
 import { useAppSelector } from "@/hooks";
 import type { Record } from "@shared/types";
 import { useAppDispatch } from "@/hooks";
 import { deleteFile } from "@/store/filesSlice";
 import supportedLanguages from "@shared/languages";
+import TextField from "@/components/ui/TextField";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { CircleStop, Loader2, Volume1 } from "lucide-react";
+import { cn } from "@/utils";
 
 const filenameToDate = (filename: string): string => {
   const year = filename.slice(0, 4);
@@ -18,14 +20,20 @@ const filenameToDate = (filename: string): string => {
 // The body of the HistoryContent component
 const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const [fileContent, setFileContent] = useState<Record | null>(null);
+  const [audioLoading, setAudioLoading] = useState<boolean>(false);
+  const [audioPlaying, setAudioPlaying] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const currFilename = useAppSelector((state) => state.settings.currentFilename);
   const fontSize = useAppSelector((state) => state.settings.editorFontSize);
   const filePreview = useAppSelector((state) => state.files.filePreview);
   const hasFile = Object.keys(filePreview).length;
+  const audioRef = useRef(new Audio());
+  audioRef.current.addEventListener("ended", () => {
+    setAudioPlaying(false);
+  });
 
-  // using useLayoutEffect to make the content ready before component being rendered
-  useLayoutEffect(() => {
+  // Load content from the local file
+  useEffect(() => {
     if (currFilename === undefined) return;
     (async () => {
       const content = await window.context.getFileContent(currFilename);
@@ -33,8 +41,30 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
     })();
   }, [currFilename]);
 
+  // This side effect helps stopping audio when switching tab
+  useEffect(() => {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    setAudioLoading(false);
+  }, [fileContent]);
+
   const handleDeleteFile = (filename: string) => {
     dispatch(deleteFile(filename));
+  };
+
+  const handlePlaySpeech = async (text: string) => {
+    if (audioPlaying) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setAudioPlaying(false);
+    } else {
+      setAudioLoading(true);
+      const res = await window.context.textToSpeech(text);
+      audioRef.current = new Audio(`data:audio/mp3;base64,${res}`);
+      audioRef.current.play();
+      setAudioLoading(false);
+      setAudioPlaying(true);
+    }
   };
 
   const fromLan = supportedLanguages.filter((language) => {
@@ -72,12 +102,26 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
           </div>
           <div className="flex-1 grid grid-cols-2 gap-4">
             {/* Source text */}
-            <Textarea
+            <TextField
               disabled={true}
               value={fileContent.source}
               className="h-full resize-none disabled:cursor-text"
               style={{ fontSize: `${fontSize}px` }}
-            />
+            >
+              <Button
+                variant="ghost"
+                className={cn("icon-button", "w-8 -translate-x-1 translate-y-1")}
+                onClick={() => handlePlaySpeech(fileContent.source!)}
+              >
+                {audioLoading ? (
+                  <Loader2 className="animate-spin" />
+                ) : audioPlaying ? (
+                  <CircleStop className="textfield-icon" />
+                ) : (
+                  <Volume1 className="textfield-icon" />
+                )}
+              </Button>
+            </TextField>
             {/* Translated contents displayed by ai source */}
             <Tabs
               defaultValue={fileContent.translations![0].aiSource}
@@ -92,7 +136,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
               </TabsList>
               {fileContent!.translations!.map(({ aiSource, text }) => (
                 <TabsContent key={`content-${aiSource}`} value={aiSource} className="mt-0 flex-1">
-                  <Textarea
+                  <TextField
                     disabled={true}
                     value={text}
                     className="h-full resize-none disabled:cursor-text"

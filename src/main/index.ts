@@ -12,6 +12,7 @@ import type {
   DeleteFileFn,
   GetDetectionTranslationResultFn,
   GetTranslationResultFn,
+  TextToSpeechFn,
 } from "@shared/types";
 import {
   readApis,
@@ -23,6 +24,7 @@ import {
   getFileContent,
   deleteFile,
   getOpenAIResult,
+  textToSpeech,
 } from "@/lib";
 
 function createWindow(): void {
@@ -100,6 +102,7 @@ app.whenReady().then(() => {
   ipcMain.handle("getOpenAIResult", (_, ...args: Parameters<GetTranslationResultFn>) =>
     getOpenAIResult(...args)
   );
+  ipcMain.handle("textToSpeech", (_, ...args: Parameters<TextToSpeechFn>) => textToSpeech(...args));
   // fs ipcs
   ipcMain.handle("writeHistory", (_, ...args: Parameters<WriteHistoryFn>) => writeHistory(...args));
   ipcMain.handle("getHistories", (_, ...args: Parameters<GetHistoriesFn>) => getHistories(...args));
