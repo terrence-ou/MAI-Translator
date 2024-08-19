@@ -137,14 +137,14 @@ export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) =>
 };
 
 // Get the audio of the given text
-export const textToSpeech: TextToSpeechFn = async () => {
+export const textToSpeech: TextToSpeechFn = async (text) => {
   const apis = await readApis();
   try {
     const response = await axios.post(
       "https://api.openai.com/v1/audio/speech",
       {
         model: "tts-1",
-        input: "Some test text",
+        input: text,
         voice: "alloy",
       },
       {
@@ -152,11 +152,12 @@ export const textToSpeech: TextToSpeechFn = async () => {
           Authorization: `Bearer ${apis.OpenAI}`,
           "Content-Type": "application/json",
         },
+        responseType: "arraybuffer",
       }
     );
-    // return response.data;
-    console.log(response.data);
+    return response.data.toString("base64");
   } catch (error) {
-    console.error("Error calling OpenAI Text-To-Speech API");
+    console.error(error);
   }
+  return undefined;
 };

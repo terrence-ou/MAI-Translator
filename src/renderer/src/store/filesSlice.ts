@@ -14,7 +14,8 @@ const saveRecord = createAsyncThunk("files/saveRecord", async (_, { getState }) 
     translations: results.outputs,
   } as Record;
   try {
-    const filename: string = await window.context.writeHistory(content);
+    const filename: string | undefined = await window.context.writeHistory(content);
+    if (filename === undefined) throw new Error("Failed to save the file");
     // create some mock delays to avoid saving files too quick
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return {
