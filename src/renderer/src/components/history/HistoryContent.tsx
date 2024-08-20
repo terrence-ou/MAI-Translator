@@ -7,8 +7,7 @@ import supportedLanguages from "@shared/languages";
 import TextField from "@/components/ui/TextField";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { CircleStop, Loader2, Volume1 } from "lucide-react";
-import { cn } from "@/utils";
+import AudioControl from "@/components/ui/AudioControl";
 
 const filenameToDate = (filename: string): string => {
   const year = filename.slice(0, 4);
@@ -20,8 +19,8 @@ const filenameToDate = (filename: string): string => {
 // The body of the HistoryContent component
 const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const [fileContent, setFileContent] = useState<Record | null>(null);
-  const [audioLoading, setAudioLoading] = useState<boolean>(false);
-  const [audioPlaying, setAudioPlaying] = useState<boolean>(false);
+  const [audioLoading, setAudioLoading] = useState<[boolean, boolean]>([false, false]);
+  const [audioPlaying, setAudioPlaying] = useState<[boolean, boolean]>([false, false]);
   const dispatch = useAppDispatch();
   const currFilename = useAppSelector((state) => state.settings.currentFilename);
   const fontSize = useAppSelector((state) => state.settings.editorFontSize);
@@ -29,7 +28,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const hasFile = Object.keys(filePreview).length;
   const audioRef = useRef(new Audio());
   audioRef.current.addEventListener("ended", () => {
-    setAudioPlaying(false);
+    setAudioPlaying([false, false]);
   });
 
   // Load content from the local file
@@ -41,32 +40,47 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
     })();
   }, [currFilename]);
 
-  // This side effect helps stopping audio when switching tab
+  // This side effects help stopping audio when switching content/tab
   useEffect(() => {
     audioRef.current.pause();
     audioRef.current.currentTime = 0;
-    setAudioLoading(false);
+    setAudioLoading([false, false]);
+    setAudioPlaying([false, false]);
   }, [fileContent]);
 
   const handleDeleteFile = (filename: string) => {
     dispatch(deleteFile(filename));
   };
 
-  const handlePlaySpeech = async (text: string) => {
-    if (audioPlaying) {
+  // Control play/stop for the source text
+  const handleAudioControl = async (text: string, index: 0 | 1) => {
+    if (audioLoading[index]) return;
+    if (audioPlaying[1 - index] || audioLoading[1 - index] || audioPlaying[index]) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
-      setAudioPlaying(false);
+      setAudioPlaying([false, false]);
     } else {
-      setAudioLoading(true);
+      setAudioLoading((prevAudioLoading) => {
+        const newAudioLoading = [...prevAudioLoading];
+        newAudioLoading[1 - index] = false;
+        newAudioLoading[index] = true;
+        return newAudioLoading as [boolean, boolean];
+      });
       const res = await window.context.textToSpeech(text);
       audioRef.current = new Audio(`data:audio/mp3;base64,${res}`);
+      audioRef.current.volume = 0.3;
       audioRef.current.play();
-      setAudioLoading(false);
-      setAudioPlaying(true);
+      setAudioLoading([false, false]);
+      setAudioPlaying((prevAudioPlaying) => {
+        const newAudioPlaying = [...prevAudioPlaying];
+        newAudioPlaying[1 - index] = false;
+        newAudioPlaying[index] = true;
+        return newAudioPlaying as [boolean, boolean];
+      });
     }
   };
 
+  // Parse from/to language
   const fromLan = supportedLanguages.filter((language) => {
     if (!fileContent) return undefined;
     return language.value === fileContent.from.toLowerCase();
@@ -108,19 +122,11 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
               className="h-full resize-none disabled:cursor-text"
               style={{ fontSize: `${fontSize}px` }}
             >
-              <Button
-                variant="ghost"
-                className={cn("icon-button", "w-8 -translate-x-1 translate-y-1")}
-                onClick={() => handlePlaySpeech(fileContent.source!)}
-              >
-                {audioLoading ? (
-                  <Loader2 className="animate-spin" />
-                ) : audioPlaying ? (
-                  <CircleStop className="textfield-icon" />
-                ) : (
-                  <Volume1 className="textfield-icon" />
-                )}
-              </Button>
+              <AudioControl
+                audioLoading={audioLoading[0]}
+                audioPlaying={audioPlaying[0]}
+                onClick={() => handleAudioControl(fileContent.source!, 0)}
+              />
             </TextField>
             {/* Translated contents displayed by ai source */}
             <Tabs
@@ -141,7 +147,13 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
                     value={text}
                     className="h-full resize-none disabled:cursor-text"
                     style={{ fontSize: `${fontSize}px` }}
-                  />
+                  >
+                    <AudioControl
+                      audioLoading={audioLoading[1]}
+                      audioPlaying={audioPlaying[1]}
+                      onClick={() => handleAudioControl(text, 1)}
+                    />
+                  </TextField>
                 </TabsContent>
               ))}
             </Tabs>
