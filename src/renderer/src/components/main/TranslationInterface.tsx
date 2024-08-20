@@ -82,7 +82,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
                 onClick={handleClear}
                 data-testid="button-erase"
               >
-                <Eraser className="textfield-icon" height={iconHeight} />
+                <Eraser className="textfield-icon stroke-[1.5px]" height={iconHeight} />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="left" sideOffset={4}>
@@ -115,9 +115,9 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
                 data-testid="button-copy"
               >
                 {copied ? (
-                  <Check className="textfield-icon" height={iconHeight} />
+                  <Check className="textfield-icon stroke-[1.5px]" height={iconHeight} />
                 ) : (
-                  <Copy className="textfield-icon" height={iconHeight} />
+                  <Copy className="textfield-icon stroke-[1.5px]" height={iconHeight} />
                 )}
               </Button>
             </TooltipTrigger>
@@ -132,7 +132,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             disabled={saving}
             data-testid="button-save-result"
           >
-            {saving && <Loader2 className="animate-spin" />}
+            {saving && <Loader2 className="animate-spin stroke-[1.5px]" height={20} />}
             {saving ? "Saving..." : "Save Result"}
           </Button>
         </TextField>
