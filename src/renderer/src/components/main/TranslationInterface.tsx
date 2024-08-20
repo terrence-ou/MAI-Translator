@@ -96,7 +96,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             disabled={loading}
             data-testid="button-translate"
           >
-            {loading && <Loader2 className="animate-spin" />}
+            {loading && <Loader2 className="animate-spin stroke-[1.5px]" height={18} />}
             {loading ? "Translating" : "Translate"}
           </Button>
         </TextField>
@@ -132,7 +132,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
             disabled={saving}
             data-testid="button-save-result"
           >
-            {saving && <Loader2 className="animate-spin stroke-[1.5px]" height={20} />}
+            {saving && <Loader2 className="animate-spin stroke-[1.5px]" height={18} />}
             {saving ? "Saving..." : "Save Result"}
           </Button>
         </TextField>

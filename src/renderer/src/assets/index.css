@@ -107,7 +107,7 @@ button {
 }
 
 .text-button {
-  @apply h-7 hover:bg-foreground hover:text-background;
+  @apply h-7 hover:bg-foreground hover:text-background dark:hover:bg-foreground;
 }
 
 .icon-button {
@@ -115,5 +115,5 @@ button {
 }
 
 .textfield-icon {
-  @apply text-slate-300 dark:text-slate-600 hover:text-primary dark:hover:text-primary transition duration-150;
+  @apply text-slate-300 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition duration-150;
 }

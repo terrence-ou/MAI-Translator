@@ -7,8 +7,7 @@ import supportedLanguages from "@shared/languages";
 import TextField from "@/components/ui/TextField";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { CircleStop, Loader2, Volume1 } from "lucide-react";
-import { cn } from "@/utils";
+import AudioControl from "@/components/ui/AudioControl";
 
 const filenameToDate = (filename: string): string => {
   const year = filename.slice(0, 4);
@@ -69,6 +68,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
       });
       const res = await window.context.textToSpeech(text);
       audioRef.current = new Audio(`data:audio/mp3;base64,${res}`);
+      audioRef.current.volume = 0.3;
       audioRef.current.play();
       setAudioLoading([false, false]);
       setAudioPlaying((prevAudioPlaying) => {
@@ -122,19 +122,11 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
               className="h-full resize-none disabled:cursor-text"
               style={{ fontSize: `${fontSize}px` }}
             >
-              <Button
-                variant="ghost"
-                className={cn("icon-button", "w-8 -translate-x-1 translate-y-1")}
+              <AudioControl
+                audioLoading={audioLoading[0]}
+                audioPlaying={audioPlaying[0]}
                 onClick={() => handleAudioControl(fileContent.source!, 0)}
-              >
-                {audioLoading[0] ? (
-                  <Loader2 className="animate-spin stroke-[1.5px]" height={20} />
-                ) : audioPlaying[0] ? (
-                  <CircleStop className="textfield-icon stroke-[1.3px]" height={22} />
-                ) : (
-                  <Volume1 className="textfield-icon stroke-[1.3px]" />
-                )}
-              </Button>
+              />
             </TextField>
             {/* Translated contents displayed by ai source */}
             <Tabs
@@ -156,19 +148,11 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
                     className="h-full resize-none disabled:cursor-text"
                     style={{ fontSize: `${fontSize}px` }}
                   >
-                    <Button
-                      variant="ghost"
-                      className={cn("icon-button", "w-8 -translate-x-1 translate-y-1")}
+                    <AudioControl
+                      audioLoading={audioLoading[1]}
+                      audioPlaying={audioPlaying[1]}
                       onClick={() => handleAudioControl(text, 1)}
-                    >
-                      {audioLoading[1] ? (
-                        <Loader2 className="animate-spin stroke-[1.5px]" height={20} />
-                      ) : audioPlaying[1] ? (
-                        <CircleStop className="textfield-icon stroke-[1.3px]" height={22} />
-                      ) : (
-                        <Volume1 className="textfield-icon stroke-[1.3px]" />
-                      )}
-                    </Button>
+                    />
                   </TextField>
                 </TabsContent>
               ))}
