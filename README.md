@@ -13,19 +13,22 @@
 
 ## A translator for users who pursuit translation quality
 
-The MAI Translator helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI (to be added). It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which cian be retrieved at any time as needed.
+The MAI Translator helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI. It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which cian be retrieved at any time as needed. Currently the translation histories supports text-to-speech reader.
 
 ## Features
 
-1. Fetching translation results from multiple language model providers:
-2. Manage translation records locally:
-3. Light / Dark theme:
+1. Fetching translation results from multiple language model providers;
+2. Manage translation records locally;
+3. Light / Dark theme;
+4. Text-to-Speech-supported text reader;
+
 <p align="center">
-  <image src="./public/demo.gif" width="500px"/>
+  <image src="./public/demo.gif" width="600px"/>
 </p>
 
 ## Updates
-
+- *v-0.3.0*
+  - Integrated OpenAI TTS model to text reading. (The reading quality is way better than the Chrome reader)
 - *v-0.2.1 & v-0.2.2*
   - Tooltips added.
   - Translation history becomes expandable by date
@@ -38,7 +41,7 @@ The MAI Translator helps to retrieve translation results from popular language m
 
 For this BETA version, the user needs to provide DeepL free API and Claude API in the Settings to make the translation work.
 
-## Disclaimer
+## Sorry, but...
 
 1. Limited language support due to the language model provider.
 2. Unexpected translation errors might occur.
