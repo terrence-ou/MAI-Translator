@@ -106,14 +106,10 @@ button {
   -webkit-app-region: no-drag;
 }
 
-.text-button {
-  @apply h-7 hover:bg-foreground hover:text-background dark:hover:bg-foreground;
-}
-
 .icon-button {
   @apply p-0 h-7 bg-background hover:bg-background;
 }
 
 .textfield-icon {
-  @apply text-slate-300 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition duration-150;
+  @apply text-slate-300 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition duration-150;
 }
