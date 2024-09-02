@@ -91,7 +91,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           </Tooltip>
           <Button
             variant="secondary"
-            className="text-button"
+            className="h-7 hover:text-background hover:bg-black dark:hover:text-background dark:hover:bg-foreground"
             onClick={handleTranslate}
             disabled={loading}
             data-testid="button-translate"
@@ -127,7 +127,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
           </Tooltip>
           <Button
             variant="secondary"
-            className="text-button"
+            className="h-7 hover:text-background hover:bg-black dark:hover:text-background dark:hover:bg-foreground"
             onClick={handleSave}
             disabled={saving}
             data-testid="button-save-result"
