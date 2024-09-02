@@ -27,22 +27,25 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
-- *v-0.3.0*
+- **v-0.4.0** *09/01/2024*
+  - Upgraded Electron to version 32, the latest stable version
+  - Traditional Chinese support (ZH-HANT) added;
+- **v-0.3.0**
   - Integrated OpenAI TTS model to text reading. (The reading quality is way better than the Chrome reader)
-- *v-0.2.1 & v-0.2.2*
+- **v-0.2.1 & v-0.2.2**
   - Tooltips added.
   - Translation history becomes expandable by date
-- *v-0.2.0*
+- **v-0.2.0**
   - Added a navigation menu.
   - Updated translation record interface, displaying the record on a whole page instead of a modal now.
   - Added OpenAI support.
 
 ## Preparation
 
-For this BETA version, the user needs to provide DeepL free API and Claude API in the Settings to make the translation work.
+For this BETA version, the user needs to provide DeepL free API, OpenAi, and/or Claude API in the Settings to make the translation work.
 
 ## Sorry, but...
 
 1. Limited language support due to the language model provider.
 2. Unexpected translation errors might occur.
-3. The software is still under heavy development; only MacOS version available for now.
+3. The software is still under heavy development; only MacOS ARM version available for now.
