@@ -6,7 +6,7 @@ const supportedLanguages: LanguageConfig[] = [
   { language: "Spanish", label: "Español", value: "es" },
   { language: "French", label: "Français", value: "fr" },
   { language: "German", label: "Deutsch", value: "de" },
-  { language: "Simplified Chinese", label: "简体中文", value: "zh-hans" },
+  { language: "Simplified Chinese", label: "简体中文", value: "zh" },
   { language: "Traditional Chinese", label: "繁体中文", value: "zh-hant" },
   { language: "Japanese", label: "日本語", value: "ja" },
   { language: "Korean", label: "한국어", value: "ko" },
