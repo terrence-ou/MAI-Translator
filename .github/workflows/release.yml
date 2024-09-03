@@ -21,10 +21,17 @@ jobs:
           node-version: 20
       - run: npm ci
       - name: Build app
+        env:
+          VITE_APPLE_ID: ${{ secrets.VITE_APPLE_ID }}
+          VITE_APPLE_PASSWORD: ${{ secrets.VITE_APPLE_PASSWORD }}
+          VITE_TEAM_ID: ${{ secrets.VITE_TEAM_ID }}
         run: npm run make
       - name: List out directory contents
         run: ls -la out
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          VITE_APPLE_ID: ${{ secrets.VITE_APPLE_ID }}
+          VITE_APPLE_PASSWORD: ${{ secrets.VITE_APPLE_PASSWORD }}
+          VITE_TEAM_ID: ${{ secrets.VITE_TEAM_ID }}
         run: npm run publish
