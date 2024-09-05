@@ -48,6 +48,11 @@ const getTranslations = createAsyncThunk(
 
 const initialState: TranslationConfigType = {
   apis: {},
+  models: {
+    DeepL: { key: "", model: "free" },
+    OpenAI: { key: "", model: "gpt-4o-mini" },
+    Claude: { key: "", model: "claude-3-haiku-20240307" },
+  },
   sourceText: "",
   loading: false,
   fromLanguage: "",

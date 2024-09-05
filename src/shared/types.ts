@@ -41,22 +41,18 @@ export type DeleteFileFn = (filename: string) => Promise<boolean>;
 export type TextToSpeechFn = (text: string) => Promise<string | undefined>;
 
 // Types for redux slices
-// export type APIType = { name: AISource; value: string };
 export type Routes = "main" | "history" | "upload";
 
 export type APIType = {
   [key in AISource]?: string;
 };
 
-export type DeepLConfig = { key: string; model: (typeof DEEPL_MODELS)[number] };
-export type ClaudeConfig = {
-  key: string;
-  model: (typeof CLAUDE_MODELS)[number];
-};
-export type OpenaiConfig = {
-  key: string;
-  model: (typeof OPENAI_MODELS)[number];
-};
+export type DeepLModels = (typeof DEEPL_MODELS)[number];
+export type DeepLConfig = { key: string; model: DeepLModels };
+export type CLaudeModels = (typeof CLAUDE_MODELS)[number];
+export type ClaudeConfig = { key: string; model: CLaudeModels };
+export type OpenaiModels = (typeof OPENAI_MODELS)[number];
+export type OpenaiConfig = { key: string; model: OpenaiModels };
 
 export type StoreTranslationResult = {
   detected_source_language: string;
@@ -72,7 +68,8 @@ export interface EditorSettingsType {
 }
 
 export interface TranslationConfigType {
-  apis: APIType;
+  apis?: APIType;
+  models: { DeepL: DeepLConfig; OpenAI: OpenaiConfig; Claude: ClaudeConfig };
   loading: boolean;
   sourceText: string;
   results: StoreTranslationResult;

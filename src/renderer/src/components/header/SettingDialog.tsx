@@ -36,7 +36,10 @@ const settingRowStyle = "flex justify-between items-center";
 */
 const SettingDialog = ({ className }: SettingDialogProps) => {
   const dispatch = useAppDispatch();
-  const apis = useAppSelector((state: RootState) => state.translationConfig.apis);
+  // --- DELETE ---
+  const apis = useAppSelector((state: RootState) => state.translationConfig.apis)!;
+  // ______________
+  const models = useAppSelector((state: RootState) => state.translationConfig.models);
 
   // Refs
   const aiInputRefs = AI_LIST.map((aiName) => {
@@ -104,9 +107,21 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           })}
             */}
           <Accordion type="single" collapsible>
-            <AISetting aiProvider="DeepL" />
-            <AISetting aiProvider="Claude" />
-            <AISetting aiProvider="OpenAI" />
+            <AISetting
+              aiProvider="DeepL"
+              apiKey={models.DeepL.key}
+              currModel={models.DeepL.model}
+            />
+            <AISetting
+              aiProvider="Claude"
+              apiKey={models.Claude.key}
+              currModel={models.Claude.model}
+            />
+            <AISetting
+              aiProvider="OpenAI"
+              apiKey={models.OpenAI.key}
+              currModel={models.OpenAI.model}
+            />
           </Accordion>
         </div>
         <DialogFooter>

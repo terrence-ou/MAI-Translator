@@ -15,7 +15,6 @@ describe("Testing dialoging interface", () => {
   test("check texts", () => {
     expect(screen.queryByText("Settings")).toBeVisible();
     expect(screen.queryByText("Interface")).toBeVisible();
-    expect(screen.queryByText("APIs")).toBeVisible();
     expect(screen.queryByText("Theme")).toBeVisible();
     expect(screen.queryByText("Editor Font Size")).toBeVisible();
     expect(screen.queryByText("px")).toBeVisible();
