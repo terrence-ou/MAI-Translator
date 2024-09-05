@@ -1,4 +1,4 @@
-import { AI_LIST } from "./consts";
+import { AI_LIST, DEEPL_MODELS, CLAUDE_MODELS, OPENAI_MODELS } from "./consts";
 
 export type Theme = "dark" | "light" | "system";
 export type AISource = (typeof AI_LIST)[number];
@@ -46,6 +46,16 @@ export type Routes = "main" | "history" | "upload";
 
 export type APIType = {
   [key in AISource]?: string;
+};
+
+export type DeepLConfig = { key: string; model: (typeof DEEPL_MODELS)[number] };
+export type ClaudeConfig = {
+  key: string;
+  model: (typeof CLAUDE_MODELS)[number];
+};
+export type OpenaiConfig = {
+  key: string;
+  model: (typeof OPENAI_MODELS)[number];
 };
 
 export type StoreTranslationResult = {

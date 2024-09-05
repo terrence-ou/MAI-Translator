@@ -1,3 +1,7 @@
+import axios from "axios";
+import { app } from "electron";
+import fs from "fs";
+import path from "path";
 import {
   ReadAPIsFn,
   WriteAPIsFn,
@@ -9,10 +13,6 @@ import {
 } from "@shared/types";
 import { API_FILENAME, MAX_TOKENS, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
 import { PROMPTS } from "@shared/prompts";
-import axios from "axios";
-import { app } from "electron";
-import fs from "fs";
-import path from "path";
 
 // read apis from the local file
 export const readApis: ReadAPIsFn = async () => {

@@ -18,8 +18,10 @@ import {
 
 import ThemeSelector from "@/components/settings/ThemeSelector";
 import FontSizeSelector from "@/components/settings/FontSizeSelector";
+import AISetting from "../settings/AISetting";
 import { Button } from "@/components/ui/button";
-import APIInput from "@/components/settings/APIInput";
+// import APIInput from "@/components/settings/APIInput";
+import { Accordion } from "@/components/ui/accordion";
 import { APIType } from "@shared/types";
 import { AI_LIST } from "@shared/consts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -86,8 +88,9 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <h3 className="font-semibold">Interface</h3>
           <ThemeSelector className={settingRowStyle} data-testid="dialog-theme" />
           <FontSizeSelector className={settingRowStyle} data-testid="dialog-font" />
-          <h3 className="font-semibold mt-3">APIs</h3>
-          {/* API Settings */}
+          <h3 className="font-semibold mt-3">AI Services</h3>
+          {/* AI Service Settings */}
+          {/*
           {aiInputRefs.map(({ source, defaultValue, ref }) => {
             return (
               <APIInput
@@ -99,6 +102,12 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
               />
             );
           })}
+            */}
+          <Accordion type="single" collapsible>
+            <AISetting aiProvider="DeepL" />
+            <AISetting aiProvider="Claude" />
+            <AISetting aiProvider="OpenAI" />
+          </Accordion>
         </div>
         <DialogFooter>
           <DialogClose asChild>
