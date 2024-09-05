@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { APIType, StoreTranslationResult, TranslationConfigType } from "@shared/types";
+import type {
+  APIType,
+  ClaudeConfig,
+  DeepLConfig,
+  OpenaiConfig,
+  StoreTranslationResult,
+  TranslationConfigType,
+} from "@shared/types";
 import { RootState } from ".";
 
 /* Async Thunks */
@@ -65,6 +72,7 @@ export const translationConfigSlice = createSlice({
   name: "translationConfig",
   initialState,
   reducers: {
+    // Updating translation configs
     setFromLanguage: (state, action: PayloadAction<string>) => {
       state.fromLanguage = action.payload;
     },
@@ -81,6 +89,16 @@ export const translationConfigSlice = createSlice({
     },
     resetResult: (state) => {
       state.results = { detected_source_language: "", outputs: [] };
+    },
+    // Updating model configs
+    updateDeepLConfig: (state, action: PayloadAction<DeepLConfig>) => {
+      state.models.DeepL = action.payload;
+    },
+    updateClaudeConfig: (state, action: PayloadAction<ClaudeConfig>) => {
+      state.models.Claude = action.payload;
+    },
+    updateOpenaiConfig: (state, action: PayloadAction<OpenaiConfig>) => {
+      state.models.OpenAI = action.payload;
     },
   },
   extraReducers: (builders) => {
@@ -109,6 +127,14 @@ export const translationConfigSlice = createSlice({
 });
 
 export { loadApis, setApis, getTranslations };
-export const { setFromLanguage, setToLanguage, switchLanguages, setSourceText, resetResult } =
-  translationConfigSlice.actions;
+export const {
+  setFromLanguage,
+  setToLanguage,
+  switchLanguages,
+  setSourceText,
+  resetResult,
+  updateDeepLConfig,
+  updateClaudeConfig,
+  updateOpenaiConfig,
+} = translationConfigSlice.actions;
 export default translationConfigSlice.reducer;

@@ -49,8 +49,8 @@ export type APIType = {
 
 export type DeepLModels = (typeof DEEPL_MODELS)[number];
 export type DeepLConfig = { key: string; model: DeepLModels };
-export type CLaudeModels = (typeof CLAUDE_MODELS)[number];
-export type ClaudeConfig = { key: string; model: CLaudeModels };
+export type ClaudeModels = (typeof CLAUDE_MODELS)[number];
+export type ClaudeConfig = { key: string; model: ClaudeModels };
 export type OpenaiModels = (typeof OPENAI_MODELS)[number];
 export type OpenaiConfig = { key: string; model: OpenaiModels };
 

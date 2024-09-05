@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { Settings } from "lucide-react";
-
 import { RootState } from "@/store";
 import { useAppSelector, useAppDispatch } from "@/hooks";
 import { setApis } from "@/store/translationConfigSlice";
@@ -40,6 +39,7 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
   const apis = useAppSelector((state: RootState) => state.translationConfig.apis)!;
   // ______________
   const models = useAppSelector((state: RootState) => state.translationConfig.models);
+  console.log(models);
 
   // Refs
   const aiInputRefs = AI_LIST.map((aiName) => {
