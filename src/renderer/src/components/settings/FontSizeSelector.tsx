@@ -1,4 +1,4 @@
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { ComponentProps } from "react";
 
 import { useAppSelector, useAppDispatch } from "@/hooks";

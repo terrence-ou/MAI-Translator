@@ -6,17 +6,15 @@ import iconPath from "../../resources/icon.png?asset";
 import type {
   GetHistoriesFn,
   GetFileContentFn,
-  ReadAPIsFn,
-  WriteAPIsFn,
   WriteHistoryFn,
   DeleteFileFn,
   GetDetectionTranslationResultFn,
   GetTranslationResultFn,
   TextToSpeechFn,
+  WriteModelConfigsFn,
+  ReadModelConfigsFn,
 } from "@shared/types";
 import {
-  readApis,
-  writeApis,
   getDeepLFreeResult,
   getClaudeResult,
   writeHistory,
@@ -25,6 +23,8 @@ import {
   deleteFile,
   getOpenAIResult,
   textToSpeech,
+  writeModelConfigs,
+  readModelConfigs,
 } from "@/lib";
 
 function createWindow(): void {
@@ -91,8 +91,6 @@ app.whenReady().then(() => {
 
   // IPCs
   // curd ipcs
-  ipcMain.handle("readApis", (_, ...args: Parameters<ReadAPIsFn>) => readApis(...args));
-  ipcMain.handle("writeApis", (_, ...args: Parameters<WriteAPIsFn>) => writeApis(...args));
   ipcMain.handle("getDeepLFreeResult", (_, ...args: Parameters<GetDetectionTranslationResultFn>) =>
     getDeepLFreeResult(...args)
   );
@@ -104,6 +102,12 @@ app.whenReady().then(() => {
   );
   ipcMain.handle("textToSpeech", (_, ...args: Parameters<TextToSpeechFn>) => textToSpeech(...args));
   // fs ipcs
+  ipcMain.handle("writeModelConfigs", (_, ...args: Parameters<WriteModelConfigsFn>) =>
+    writeModelConfigs(...args)
+  );
+  ipcMain.handle("readModelConfigs", (_, ...args: Parameters<ReadModelConfigsFn>) =>
+    readModelConfigs(...args)
+  );
   ipcMain.handle("writeHistory", (_, ...args: Parameters<WriteHistoryFn>) => writeHistory(...args));
   ipcMain.handle("getHistories", (_, ...args: Parameters<GetHistoriesFn>) => getHistories(...args));
   ipcMain.handle("getFileContent", (_, ...args: Parameters<GetFileContentFn>) =>

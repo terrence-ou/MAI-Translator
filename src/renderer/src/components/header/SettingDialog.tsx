@@ -1,9 +1,7 @@
-import { useRef } from "react";
 import { Settings } from "lucide-react";
-
 import { RootState } from "@/store";
 import { useAppSelector, useAppDispatch } from "@/hooks";
-import { setApis } from "@/store/translationConfigSlice";
+import { writeModelConfigs } from "@/store/translationConfigSlice";
 
 import {
   Dialog,
@@ -18,10 +16,9 @@ import {
 
 import ThemeSelector from "@/components/settings/ThemeSelector";
 import FontSizeSelector from "@/components/settings/FontSizeSelector";
+import AISetting from "../settings/AISetting";
 import { Button } from "@/components/ui/button";
-import APIInput from "@/components/settings/APIInput";
-import { APIType } from "@shared/types";
-import { AI_LIST } from "@shared/consts";
+import { Accordion } from "@/components/ui/accordion";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 type SettingDialogProps = { className: string };
@@ -34,24 +31,10 @@ const settingRowStyle = "flex justify-between items-center";
 */
 const SettingDialog = ({ className }: SettingDialogProps) => {
   const dispatch = useAppDispatch();
-  const apis = useAppSelector((state: RootState) => state.translationConfig.apis);
-
-  // Refs
-  const aiInputRefs = AI_LIST.map((aiName) => {
-    const currRef = useRef<InputHandle>(null);
-    return { source: aiName, ref: currRef, defaultValue: apis[aiName] };
-  });
-
+  const modelConfigs = useAppSelector((state: RootState) => state.translationConfig.models);
   // handle save apis
   const handleSaveApis = () => {
-    const newApis = {} as APIType;
-    aiInputRefs.forEach(({ source, ref }) => {
-      const currApi = ref.current?.getValue();
-      if (currApi !== undefined && currApi.length > 0) {
-        newApis[source] = currApi;
-      }
-    });
-    dispatch(setApis(newApis));
+    dispatch(writeModelConfigs(modelConfigs));
   };
 
   return (
@@ -86,8 +69,9 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <h3 className="font-semibold">Interface</h3>
           <ThemeSelector className={settingRowStyle} data-testid="dialog-theme" />
           <FontSizeSelector className={settingRowStyle} data-testid="dialog-font" />
-          <h3 className="font-semibold mt-3">APIs</h3>
-          {/* API Settings */}
+          <h3 className="font-semibold mt-3">AI Services</h3>
+          {/* AI Service Settings */}
+          {/*
           {aiInputRefs.map(({ source, defaultValue, ref }) => {
             return (
               <APIInput
@@ -99,6 +83,24 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
               />
             );
           })}
+            */}
+          <Accordion type="single" collapsible>
+            <AISetting
+              aiProvider="DeepL"
+              apiKey={modelConfigs.DeepL.key}
+              currModel={modelConfigs.DeepL.model}
+            />
+            <AISetting
+              aiProvider="Claude"
+              apiKey={modelConfigs.Claude.key}
+              currModel={modelConfigs.Claude.model}
+            />
+            <AISetting
+              aiProvider="OpenAI"
+              apiKey={modelConfigs.OpenAI.key}
+              currModel={modelConfigs.OpenAI.model}
+            />
+          </Accordion>
         </div>
         <DialogFooter>
           <DialogClose asChild>

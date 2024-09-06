@@ -1,4 +1,4 @@
-import { AI_LIST } from "./consts";
+import { AI_LIST, DEEPL_MODELS, CLAUDE_MODELS, OPENAI_MODELS } from "./consts";
 
 export type Theme = "dark" | "light" | "system";
 export type AISource = (typeof AI_LIST)[number];
@@ -7,8 +7,8 @@ export type LanguageConfig = { language: string; label: string; value: string };
 export type Result = { aiSource: AISource; text: string };
 
 // types for IPC
-export type ReadAPIsFn = () => Promise<APIType>;
-export type WriteAPIsFn = (apis: APIType) => void;
+export type ReadModelConfigsFn = () => ModelConfigs;
+export type WriteModelConfigsFn = (modelConfigs: ModelConfigs) => void;
 
 export type DetectionTranslationOutput = { detected_source_language: string; text: string };
 export type TranslationOutput = string;
@@ -41,12 +41,16 @@ export type DeleteFileFn = (filename: string) => Promise<boolean>;
 export type TextToSpeechFn = (text: string) => Promise<string | undefined>;
 
 // Types for redux slices
-// export type APIType = { name: AISource; value: string };
 export type Routes = "main" | "history" | "upload";
 
-export type APIType = {
-  [key in AISource]?: string;
-};
+export type DeepLModels = (typeof DEEPL_MODELS)[number];
+export type DeepLConfig = { key: string; model: DeepLModels };
+export type ClaudeModels = (typeof CLAUDE_MODELS)[number];
+export type ClaudeConfig = { key: string; model: ClaudeModels };
+export type OpenaiModels = (typeof OPENAI_MODELS)[number];
+export type OpenaiConfig = { key: string; model: OpenaiModels };
+
+export type ModelConfigs = { DeepL: DeepLConfig; OpenAI: OpenaiConfig; Claude: ClaudeConfig };
 
 export type StoreTranslationResult = {
   detected_source_language: string;
@@ -62,7 +66,7 @@ export interface EditorSettingsType {
 }
 
 export interface TranslationConfigType {
-  apis: APIType;
+  models: ModelConfigs;
   loading: boolean;
   sourceText: string;
   results: StoreTranslationResult;
