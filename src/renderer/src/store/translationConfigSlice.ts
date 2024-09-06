@@ -1,24 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type {
-  APIType,
   ClaudeConfig,
   DeepLConfig,
+  ModelConfigs,
   OpenaiConfig,
   StoreTranslationResult,
   TranslationConfigType,
 } from "@shared/types";
 import { RootState } from ".";
+import { INIT_MODEL_CONFIGS } from "@shared/consts";
 
 /* Async Thunks */
-const loadApis = createAsyncThunk("translationConfig/loadApis", async () => {
-  const apis = await window.context.readApis();
-  return apis;
+const loadModelConfigs = createAsyncThunk("translationConfig/loadModelConfigs", async () => {
+  const configs = window.context.readModelConfigs();
+  return configs;
 });
 
-const setApis = createAsyncThunk("translationConfig/saveApis", async (apis: APIType) => {
-  window.context.writeApis(apis);
-  return apis;
-});
+const writeModelConfigs = createAsyncThunk(
+  "translationConfig/writeModelConfigs",
+  async (configs: ModelConfigs) => {
+    window.context.writeModelConfigs(configs);
+    return configs;
+  }
+);
 
 const getTranslations = createAsyncThunk(
   "translationConfig/getTranslations",
@@ -54,12 +58,7 @@ const getTranslations = createAsyncThunk(
 );
 
 const initialState: TranslationConfigType = {
-  apis: {},
-  models: {
-    DeepL: { key: "", model: "free" },
-    OpenAI: { key: "", model: "gpt-4o-mini" },
-    Claude: { key: "", model: "claude-3-haiku-20240307" },
-  },
+  models: INIT_MODEL_CONFIGS as ModelConfigs,
   sourceText: "",
   loading: false,
   fromLanguage: "",
@@ -102,13 +101,11 @@ export const translationConfigSlice = createSlice({
     },
   },
   extraReducers: (builders) => {
-    builders.addCase(loadApis.fulfilled, (state, action: PayloadAction<APIType>) => {
-      state.apis = action.payload;
-      // return state;
+    builders.addCase(loadModelConfigs.fulfilled, (state, action: PayloadAction<ModelConfigs>) => {
+      state.models = action.payload;
     });
-    builders.addCase(setApis.fulfilled, (state, action: PayloadAction<APIType>) => {
-      state.apis = action.payload;
-      // return state;
+    builders.addCase(writeModelConfigs.fulfilled, (state, action: PayloadAction<ModelConfigs>) => {
+      state.models = action.payload;
     });
     builders.addCase(getTranslations.pending, (state) => {
       state.results.outputs = [];
@@ -126,7 +123,7 @@ export const translationConfigSlice = createSlice({
   },
 });
 
-export { loadApis, setApis, getTranslations };
+export { loadModelConfigs, writeModelConfigs, getTranslations };
 export const {
   setFromLanguage,
   setToLanguage,

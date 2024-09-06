@@ -1,49 +1,27 @@
 import axios from "axios";
-import { app } from "electron";
-import fs from "fs";
-import path from "path";
 import {
-  ReadAPIsFn,
-  WriteAPIsFn,
-  APIType,
   GetDetectionTranslationResultFn,
   GetTranslationResultFn,
   DetectionTranslationOutput,
   TextToSpeechFn,
 } from "@shared/types";
-import { API_FILENAME, MAX_TOKENS, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
+import { MAX_TOKENS, TRANSLATION_FAIL_MESSAGE } from "@shared/consts";
 import { PROMPTS } from "@shared/prompts";
-
-// read apis from the local file
-export const readApis: ReadAPIsFn = async () => {
-  // check if setting.json file exists
-  const filePath = path.join(app.getPath("userData"), API_FILENAME);
-  // if not, create one with the default values
-  if (!fs.existsSync(filePath)) {
-    writeApis({} as APIType);
-  }
-  const file = fs.readFileSync(filePath, { encoding: "utf8" });
-  const apis = JSON.parse(file) as APIType;
-  return apis;
-};
-
-// write apis to the local file
-export const writeApis: WriteAPIsFn = (apis) => {
-  const filePath = path.join(app.getPath("userData"), API_FILENAME);
-  try {
-    fs.writeFileSync(filePath, JSON.stringify(apis, null, 2));
-  } catch (error) {
-    console.error(error);
-  }
-};
+import { readModelConfigs } from "./files";
 
 // Get translation result from DeepL with free api
 export const getDeepLFreeResult: GetDetectionTranslationResultFn = async (from, to, text) => {
-  const apis = await readApis();
+  // const apis = await readApis();
+  const modelConfigs = readModelConfigs();
+  const { key, model } = modelConfigs["DeepL"];
+  const url =
+    model === "free"
+      ? "https://api-free.deepl.com/v2/translate"
+      : "https://api.deepl.com/v2/translate";
   try {
     // Send translation request
     const response = await axios.post(
-      "https://api-free.deepl.com/v2/translate",
+      url,
       {
         text: [text],
         target_lang: to.toUpperCase(),
@@ -51,7 +29,7 @@ export const getDeepLFreeResult: GetDetectionTranslationResultFn = async (from, 
       },
       {
         headers: {
-          Authorization: `DeepL-Auth-Key ${apis.DeepL}`,
+          Authorization: `DeepL-Auth-Key ${key}`,
           "Content-Type": "application/json",
         },
       }
@@ -65,12 +43,14 @@ export const getDeepLFreeResult: GetDetectionTranslationResultFn = async (from, 
 
 // Get translation result from claude api
 export const getClaudeResult: GetTranslationResultFn = async (from, to, text) => {
-  const apis = await readApis();
+  // const apis = await readApis();
+  const modelConfigs = readModelConfigs();
+  const { key, model } = modelConfigs["Claude"];
   try {
     const response = await axios.post(
       "https://api.anthropic.com/v1/messages",
       {
-        model: "claude-3-haiku-20240307",
+        model: model,
         max_tokens: MAX_TOKENS,
         temperature: 0,
         system: PROMPTS.system,
@@ -83,7 +63,7 @@ export const getClaudeResult: GetTranslationResultFn = async (from, to, text) =>
       },
       {
         headers: {
-          "x-api-key": `${apis.Claude}`,
+          "x-api-key": `${key}`,
           "anthropic-version": "2023-06-01",
           "Content-Type": "application/json",
         },
@@ -99,12 +79,14 @@ export const getClaudeResult: GetTranslationResultFn = async (from, to, text) =>
 
 // Get translation result from openai api
 export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) => {
-  const apis = await readApis();
+  // const apis = await readApis();
+  const modelConfigs = readModelConfigs();
+  const { key, model } = modelConfigs["OpenAI"];
   try {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-4o-mini",
+        model: model,
         max_tokens: 4096,
         temperature: 1,
         top_p: 1,
@@ -123,7 +105,7 @@ export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) =>
       },
       {
         headers: {
-          Authorization: `Bearer ${apis.OpenAI}`,
+          Authorization: `Bearer ${key}`,
           "Content-Type": "application/json",
         },
       }
@@ -138,7 +120,8 @@ export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) =>
 
 // Get the audio of the given text
 export const textToSpeech: TextToSpeechFn = async (text) => {
-  const apis = await readApis();
+  const modelConfigs = readModelConfigs();
+  const { key } = modelConfigs["OpenAI"];
   try {
     const response = await axios.post(
       "https://api.openai.com/v1/audio/speech",
@@ -149,7 +132,7 @@ export const textToSpeech: TextToSpeechFn = async (text) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${apis.OpenAI}`,
+          Authorization: `Bearer ${key}`,
           "Content-Type": "application/json",
         },
         responseType: "arraybuffer",

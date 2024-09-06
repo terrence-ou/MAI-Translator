@@ -4,8 +4,6 @@ import {
   GetFileContentFn,
   GetHistoriesFn,
   GetTranslationResultFn,
-  ReadAPIsFn,
-  WriteAPIsFn,
   WriteHistoryFn,
   TextToSpeechFn,
   WriteModelConfigsFn,
@@ -21,8 +19,6 @@ declare global {
       getOpenAIResult: GetTranslationResultFn;
       textToSpeech: TextToSpeechFn;
       // fs
-      readApis: ReadAPIsFn;
-      writeApis: WriteAPIsFn;
       writeModelConfigs: WriteModelConfigsFn;
       readModelConfigs: ReadModelConfigsFn;
       writeHistory: WriteHistoryFn;

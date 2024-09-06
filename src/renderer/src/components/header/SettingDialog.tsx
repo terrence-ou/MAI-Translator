@@ -1,8 +1,7 @@
-import { useRef } from "react";
 import { Settings } from "lucide-react";
 import { RootState } from "@/store";
 import { useAppSelector, useAppDispatch } from "@/hooks";
-import { setApis } from "@/store/translationConfigSlice";
+import { writeModelConfigs } from "@/store/translationConfigSlice";
 
 import {
   Dialog,
@@ -19,10 +18,7 @@ import ThemeSelector from "@/components/settings/ThemeSelector";
 import FontSizeSelector from "@/components/settings/FontSizeSelector";
 import AISetting from "../settings/AISetting";
 import { Button } from "@/components/ui/button";
-// import APIInput from "@/components/settings/APIInput";
 import { Accordion } from "@/components/ui/accordion";
-import { APIType } from "@shared/types";
-import { AI_LIST } from "@shared/consts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 type SettingDialogProps = { className: string };
@@ -35,27 +31,10 @@ const settingRowStyle = "flex justify-between items-center";
 */
 const SettingDialog = ({ className }: SettingDialogProps) => {
   const dispatch = useAppDispatch();
-  // --- DELETE ---
-  const apis = useAppSelector((state: RootState) => state.translationConfig.apis)!;
-  // ______________
-  const models = useAppSelector((state: RootState) => state.translationConfig.models);
-
-  // Refs
-  const aiInputRefs = AI_LIST.map((aiName) => {
-    const currRef = useRef<InputHandle>(null);
-    return { source: aiName, ref: currRef, defaultValue: apis[aiName] };
-  });
-
+  const modelConfigs = useAppSelector((state: RootState) => state.translationConfig.models);
   // handle save apis
   const handleSaveApis = () => {
-    const newApis = {} as APIType;
-    aiInputRefs.forEach(({ source, ref }) => {
-      const currApi = ref.current?.getValue();
-      if (currApi !== undefined && currApi.length > 0) {
-        newApis[source] = currApi;
-      }
-    });
-    dispatch(setApis(newApis));
+    dispatch(writeModelConfigs(modelConfigs));
   };
 
   return (
@@ -108,18 +87,18 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <Accordion type="single" collapsible>
             <AISetting
               aiProvider="DeepL"
-              apiKey={models.DeepL.key}
-              currModel={models.DeepL.model}
+              apiKey={modelConfigs.DeepL.key}
+              currModel={modelConfigs.DeepL.model}
             />
             <AISetting
               aiProvider="Claude"
-              apiKey={models.Claude.key}
-              currModel={models.Claude.model}
+              apiKey={modelConfigs.Claude.key}
+              currModel={modelConfigs.Claude.model}
             />
             <AISetting
               aiProvider="OpenAI"
-              apiKey={models.OpenAI.key}
-              currModel={models.OpenAI.model}
+              apiKey={modelConfigs.OpenAI.key}
+              currModel={modelConfigs.OpenAI.model}
             />
           </Accordion>
         </div>

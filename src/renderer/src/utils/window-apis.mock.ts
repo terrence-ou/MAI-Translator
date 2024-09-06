@@ -27,8 +27,8 @@ const context = Object.defineProperty(window, "context", {
   writable: true,
   value: {
     // translation config functions
-    readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
-    writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
+    // readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
+    // writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     writeHistory: jest.fn().mockImplementation(() => Promise.resolve("20240101.txt")),
     getDeepLFreeResult: jest
       .fn()

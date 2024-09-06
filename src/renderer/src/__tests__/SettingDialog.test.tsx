@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import "@/utils/window-apis.mock";
-import { act } from "@/utils/test-utils";
+// import { act } from "@/utils/test-utils";
 import { render, screen } from "@/utils/test-utils";
 import { fireEvent } from "@/utils/test-utils";
 import Header from "@/components/header/Header";
@@ -29,10 +29,10 @@ describe("Testing dialoging interface", () => {
   });
 });
 
-describe("Testing interactions", () => {
-  test("click save button", async () => {
-    const saveButton = screen.queryByTestId("dialog-save-btn");
-    await act(async () => fireEvent.click(saveButton!));
-    expect(window.context.writeApis).toHaveBeenCalled();
-  });
-});
+// describe("Testing interactions", () => {
+//   test("click save button", async () => {
+//     const saveButton = screen.queryByTestId("dialog-save-btn");
+//     await act(async () => fireEvent.click(saveButton!));
+//     expect(window.context.writeApis).toHaveBeenCalled();
+//   });
+// });

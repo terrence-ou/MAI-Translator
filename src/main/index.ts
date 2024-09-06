@@ -6,8 +6,6 @@ import iconPath from "../../resources/icon.png?asset";
 import type {
   GetHistoriesFn,
   GetFileContentFn,
-  ReadAPIsFn,
-  WriteAPIsFn,
   WriteHistoryFn,
   DeleteFileFn,
   GetDetectionTranslationResultFn,
@@ -17,8 +15,6 @@ import type {
   ReadModelConfigsFn,
 } from "@shared/types";
 import {
-  readApis,
-  writeApis,
   getDeepLFreeResult,
   getClaudeResult,
   writeHistory,
@@ -106,8 +102,6 @@ app.whenReady().then(() => {
   );
   ipcMain.handle("textToSpeech", (_, ...args: Parameters<TextToSpeechFn>) => textToSpeech(...args));
   // fs ipcs
-  ipcMain.handle("readApis", (_, ...args: Parameters<ReadAPIsFn>) => readApis(...args));
-  ipcMain.handle("writeApis", (_, ...args: Parameters<WriteAPIsFn>) => writeApis(...args));
   ipcMain.handle("writeModelConfigs", (_, ...args: Parameters<WriteModelConfigsFn>) =>
     writeModelConfigs(...args)
   );

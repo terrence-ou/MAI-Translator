@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "@/hooks";
-import { loadApis } from "@/store/translationConfigSlice";
+import { loadModelConfigs } from "@/store/translationConfigSlice";
 import { loadFiles } from "@/store/filesSlice";
 import Header from "@/components/header/Header";
 import Main from "@/components/main/Main";
@@ -10,7 +10,7 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
   // load api from the internal file
   useEffect(() => {
-    dispatch(loadApis());
+    dispatch(loadModelConfigs());
     dispatch(loadFiles());
   }, []);
 

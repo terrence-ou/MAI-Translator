@@ -1,6 +1,4 @@
 import {
-  ReadAPIsFn,
-  WriteAPIsFn,
   WriteHistoryFn,
   GetHistoriesFn,
   GetFileContentFn,
@@ -30,8 +28,6 @@ try {
     textToSpeech: (...args: Parameters<TextToSpeechFn>) =>
       ipcRenderer.invoke("textToSpeech", ...args),
     // file management
-    readApis: (...args: Parameters<ReadAPIsFn>) => ipcRenderer.invoke("readApis", ...args),
-    writeApis: (...args: Parameters<WriteAPIsFn>) => ipcRenderer.invoke("writeApis", ...args),
     readModelConfigs: (...args: Parameters<ReadModelConfigsFn>) =>
       ipcRenderer.invoke("readModelConfigs", ...args),
     writeModelConfigs: (...args: Parameters<WriteModelConfigsFn>) =>
