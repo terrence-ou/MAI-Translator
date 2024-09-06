@@ -27,8 +27,11 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
+- **v-0.4.1 & v-0.4.2**
+  - AI model configs updated, the user now can select specific models;
+  - Added Apple code sign and notary;
 - **v-0.4.0** *09/01/2024*
-  - Upgraded Electron to version 32, the latest stable version
+  - Upgraded Electron to version 32, the latest stable version;
   - Traditional Chinese support (ZH-HANT) added;
 - **v-0.3.0**
   - Integrated OpenAI TTS model to text reading. (The reading quality is way better than the Chrome reader)
