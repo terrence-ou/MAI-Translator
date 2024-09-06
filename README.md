@@ -27,7 +27,7 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
-- **v-0.4.1 & v-0.4.2**
+- **v-0.4.1 & v-0.4.2** *09/05/2024*
   - AI model configs updated, the user now can select specific models;
   - Added Apple code sign and notary;
 - **v-0.4.0** *09/01/2024*
