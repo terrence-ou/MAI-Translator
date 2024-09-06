@@ -8,6 +8,8 @@ import {
   GetDetectionTranslationResultFn,
   GetTranslationResultFn,
   TextToSpeechFn,
+  ReadModelConfigsFn,
+  WriteModelConfigsFn,
 } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
@@ -30,6 +32,10 @@ try {
     // file management
     readApis: (...args: Parameters<ReadAPIsFn>) => ipcRenderer.invoke("readApis", ...args),
     writeApis: (...args: Parameters<WriteAPIsFn>) => ipcRenderer.invoke("writeApis", ...args),
+    readModelConfigs: (...args: Parameters<ReadModelConfigsFn>) =>
+      ipcRenderer.invoke("readModelConfigs", ...args),
+    writeModelConfigs: (...args: Parameters<WriteModelConfigsFn>) =>
+      ipcRenderer.invoke("writeModelConfigs", ...args),
     writeHistory: (...args: Parameters<WriteHistoryFn>) =>
       ipcRenderer.invoke("writeHistory", ...args),
     getHistories: (...args: Parameters<GetHistoriesFn>) =>

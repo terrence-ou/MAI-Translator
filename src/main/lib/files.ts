@@ -1,7 +1,16 @@
 import { homedir } from "os";
+import { app } from "electron";
+import path from "path";
+import fs from "fs";
 import { dialog } from "electron";
 import { ensureDir, readdir, writeFile, readFile, remove } from "fs-extra";
-import { APP_HISTORY_DIR, BRIEF_DISPLAY_LENGTH, FILE_ENCODING } from "@shared/consts";
+import {
+  APP_HISTORY_DIR,
+  BRIEF_DISPLAY_LENGTH,
+  FILE_ENCODING,
+  MODEL_CONFIGS_FILENAME,
+  INIT_MODEL_CONFIGS,
+} from "@shared/consts";
 import {
   GetHistoriesFn,
   WriteHistoryFn,
@@ -9,10 +18,35 @@ import {
   FilePreview,
   GetFileContentFn,
   DeleteFileFn,
+  ModelConfigs,
+  WriteModelConfigsFn,
+  ReadModelConfigsFn,
 } from "@shared/types";
 
 export const getFolderDir = () => {
   return `${homedir()}/${APP_HISTORY_DIR}`;
+};
+
+// read model configs from the local file
+export const readModelConfigs: ReadModelConfigsFn = () => {
+  const filePath = path.join(app.getPath("userData"), MODEL_CONFIGS_FILENAME);
+  // if the model config file does not exist, create one with default value
+  if (!fs.existsSync(filePath)) {
+    writeModelConfigs(INIT_MODEL_CONFIGS as ModelConfigs);
+  }
+  const file = fs.readFileSync(filePath, { encoding: "utf8" });
+  const modelConfigs = JSON.parse(file) as ModelConfigs;
+  return modelConfigs;
+};
+
+// write model configs
+export const writeModelConfigs: WriteModelConfigsFn = (modelConfigs) => {
+  const filePath = path.join(app.getPath("userData"), MODEL_CONFIGS_FILENAME);
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(modelConfigs, null, 2));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // load local files

@@ -39,7 +39,6 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
   const apis = useAppSelector((state: RootState) => state.translationConfig.apis)!;
   // ______________
   const models = useAppSelector((state: RootState) => state.translationConfig.models);
-  console.log(models);
 
   // Refs
   const aiInputRefs = AI_LIST.map((aiName) => {

@@ -10,6 +10,9 @@ export type Result = { aiSource: AISource; text: string };
 export type ReadAPIsFn = () => Promise<APIType>;
 export type WriteAPIsFn = (apis: APIType) => void;
 
+export type ReadModelConfigsFn = () => ModelConfigs;
+export type WriteModelConfigsFn = (modelConfigs: ModelConfigs) => void;
+
 export type DetectionTranslationOutput = { detected_source_language: string; text: string };
 export type TranslationOutput = string;
 
@@ -54,6 +57,8 @@ export type ClaudeConfig = { key: string; model: ClaudeModels };
 export type OpenaiModels = (typeof OPENAI_MODELS)[number];
 export type OpenaiConfig = { key: string; model: OpenaiModels };
 
+export type ModelConfigs = { DeepL: DeepLConfig; OpenAI: OpenaiConfig; Claude: ClaudeConfig };
+
 export type StoreTranslationResult = {
   detected_source_language: string;
   outputs: Result[];
@@ -69,7 +74,7 @@ export interface EditorSettingsType {
 
 export interface TranslationConfigType {
   apis?: APIType;
-  models: { DeepL: DeepLConfig; OpenAI: OpenaiConfig; Claude: ClaudeConfig };
+  models: ModelConfigs;
   loading: boolean;
   sourceText: string;
   results: StoreTranslationResult;

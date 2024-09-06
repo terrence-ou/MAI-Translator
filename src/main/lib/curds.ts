@@ -28,7 +28,7 @@ export const readApis: ReadAPIsFn = async () => {
 };
 
 // write apis to the local file
-export const writeApis: WriteAPIsFn = async (apis) => {
+export const writeApis: WriteAPIsFn = (apis) => {
   const filePath = path.join(app.getPath("userData"), API_FILENAME);
   try {
     fs.writeFileSync(filePath, JSON.stringify(apis, null, 2));
