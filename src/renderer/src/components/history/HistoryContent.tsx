@@ -42,17 +42,24 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
 
   // This side effects help stopping audio when switching content/tab
   useEffect(() => {
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
-    setAudioLoading([false, false]);
-    setAudioPlaying([false, false]);
+    const stopAudio = () => {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setAudioLoading([false, false]);
+      setAudioPlaying([false, false]);
+    };
+    stopAudio();
+    return () => {
+      // also stop the audio on unmount
+      stopAudio();
+    };
   }, [fileContent]);
 
   const handleDeleteFile = (filename: string) => {
     dispatch(deleteFile(filename));
   };
 
-  // Control play/stop for the source text
+  // Control play/stop for the source text and result text
   const handleAudioControl = async (text: string, index: 0 | 1) => {
     if (audioLoading[index]) return;
     if (audioPlaying[1 - index] || audioLoading[1 - index] || audioPlaying[index]) {
