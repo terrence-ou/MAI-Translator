@@ -71,19 +71,6 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <FontSizeSelector className={settingRowStyle} data-testid="dialog-font" />
           <h3 className="font-semibold mt-3">AI Services</h3>
           {/* AI Service Settings */}
-          {/*
-          {aiInputRefs.map(({ source, defaultValue, ref }) => {
-            return (
-              <APIInput
-                key={source}
-                ref={ref}
-                className={settingRowStyle}
-                source={source}
-                defaultValue={defaultValue}
-              />
-            );
-          })}
-            */}
           <Accordion type="single" collapsible>
             <AISetting
               aiProvider="DeepL"
@@ -91,12 +78,12 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
               currModel={modelConfigs.DeepL.model}
             />
             <AISetting
-              aiProvider="Claude"
+              aiProvider="OpenAI"
               apiKey={modelConfigs.Claude.key}
               currModel={modelConfigs.Claude.model}
             />
             <AISetting
-              aiProvider="OpenAI"
+              aiProvider="Claude"
               apiKey={modelConfigs.OpenAI.key}
               currModel={modelConfigs.OpenAI.model}
             />
