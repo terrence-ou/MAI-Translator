@@ -79,13 +79,13 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
             />
             <AISetting
               aiProvider="OpenAI"
-              apiKey={modelConfigs.Claude.key}
-              currModel={modelConfigs.Claude.model}
+              apiKey={modelConfigs.OpenAI.key}
+              currModel={modelConfigs.OpenAI.model}
             />
             <AISetting
               aiProvider="Claude"
-              apiKey={modelConfigs.OpenAI.key}
-              currModel={modelConfigs.OpenAI.model}
+              apiKey={modelConfigs.Claude.key}
+              currModel={modelConfigs.Claude.model}
             />
           </Accordion>
         </div>
