@@ -1,5 +1,6 @@
 export const PROMPTS = {
-  system: "You are a professional translator capable of translating between multiple languages.",
+  system:
+    "You are a professional translator capable of translating between multiple languages precisely.",
   role: "user",
   content: (from: string, to: string, text?: string) => {
     return (
