@@ -8,6 +8,7 @@ import {
   TextToSpeechFn,
   ReadModelConfigsFn,
   WriteModelConfigsFn,
+  OnDragStartFn,
 } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
@@ -39,6 +40,7 @@ try {
     getFileContent: (...args: Parameters<GetFileContentFn>) =>
       ipcRenderer.invoke("getFileContent", ...args),
     deleteFile: (...args: Parameters<DeleteFileFn>) => ipcRenderer.invoke("deleteFile", ...args),
+    onDragStart: (...args: Parameters<OnDragStartFn>) => ipcRenderer.invoke("onDragStart", ...args),
   });
 } catch (error) {
   console.error(error);

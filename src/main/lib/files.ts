@@ -1,9 +1,10 @@
 import { homedir } from "os";
-import { app } from "electron";
+import { app, IpcMainInvokeEvent } from "electron";
 import path from "path";
 import fs from "fs";
 import { dialog } from "electron";
 import { ensureDir, readdir, writeFile, readFile, remove } from "fs-extra";
+import dragIcon from "../assets/empty_icon.png?asset";
 import {
   APP_HISTORY_DIR,
   BRIEF_DISPLAY_LENGTH,
@@ -124,6 +125,14 @@ export const deleteFile: DeleteFileFn = async (filename) => {
     }
   }
   return false;
+};
+
+// Native drag
+export const onDragStart = (event: IpcMainInvokeEvent, filename: string) => {
+  event.sender.startDrag({
+    file: `${homedir()}/${APP_HISTORY_DIR}/${filename}`,
+    icon: dragIcon,
+  });
 };
 
 // Helper functions

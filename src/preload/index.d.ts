@@ -8,6 +8,7 @@ import {
   TextToSpeechFn,
   WriteModelConfigsFn,
   ReadModelConfigsFn,
+  OnDragStartFn,
 } from "@shared/types";
 
 declare global {
@@ -25,6 +26,7 @@ declare global {
       getHistories: GetHistoriesFn;
       getFileContent: GetFileContentFn;
       deleteFile: DeleteFileFn;
+      onDragStart: OnDragStartFn;
     };
   }
 }

@@ -13,6 +13,7 @@ import type {
   TextToSpeechFn,
   WriteModelConfigsFn,
   ReadModelConfigsFn,
+  OnDragStartFn,
 } from "@shared/types";
 import {
   getDeepLFreeResult,
@@ -25,6 +26,7 @@ import {
   textToSpeech,
   writeModelConfigs,
   readModelConfigs,
+  onDragStart,
 } from "@/lib";
 
 function createWindow(): void {
@@ -114,6 +116,9 @@ app.whenReady().then(() => {
     getFileContent(...args)
   );
   ipcMain.handle("deleteFile", (_, ...args: Parameters<DeleteFileFn>) => deleteFile(...args));
+  ipcMain.handle("onDragStart", (event, ...args: Parameters<OnDragStartFn>) =>
+    onDragStart(event, ...args)
+  );
 
   createWindow();
 

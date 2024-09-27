@@ -37,6 +37,11 @@ const HistoryCards = ({ records }: HistoryCardProps) => {
               selectedFilename === filename ? "bg-slate-200 dark:bg-primary-foreground/50" : ""
             )}
             onClick={() => handleSetCurrFilename(filename)}
+            draggable={true}
+            onDragStart={(event) => {
+              event.preventDefault();
+              window.context.onDragStart(filename!);
+            }}
           >
             <span className="w-full text-left text-xs font-normal">
               from <span className="font-semibold">{from}</span> to{" "}

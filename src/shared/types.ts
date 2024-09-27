@@ -9,6 +9,7 @@ export type Result = { aiSource: AISource; text: string };
 // types for IPC
 export type ReadModelConfigsFn = () => ModelConfigs;
 export type WriteModelConfigsFn = (modelConfigs: ModelConfigs) => void;
+export type OnDragStartFn = (filename: string) => void;
 
 export type DetectionTranslationOutput = { detected_source_language: string; text: string };
 export type TranslationOutput = string;
