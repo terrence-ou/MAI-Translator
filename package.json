@@ -1,7 +1,7 @@
 {
   "name": "multiai_translator",
   "productName": "MAI Translator",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A Multiai-supported Translator",
   "main": "./dist/main/index.js",
   "author": "Terrence Ou",
@@ -41,6 +41,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
     "lucide-react": "^0.396.0",
     "react-redux": "^9.1.2",
     "react-resizable-panels": "^2.0.19",

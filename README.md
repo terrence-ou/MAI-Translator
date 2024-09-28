@@ -27,6 +27,9 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
+- **v-0.5.1 & v0.5.2** *09/28/2024*
+  - Introduced `ai-fetcher` to simplify the data-fetching process;
+  - Native drag and drop added, enabling drag translation history as a markdown file to local directory.
 - **v-0.4.1 & v-0.4.2** *09/05/2024*
   - AI model configs updated, the user now can select specific models;
   - Added Apple code sign and notary;

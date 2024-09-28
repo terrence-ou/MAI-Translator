@@ -1,9 +1,10 @@
 import { homedir } from "os";
-import { app } from "electron";
+import { app, IpcMainInvokeEvent } from "electron";
 import path from "path";
 import fs from "fs";
 import { dialog } from "electron";
 import { ensureDir, readdir, writeFile, readFile, remove } from "fs-extra";
+import dragIcon from "../assets/empty_icon.png?asset";
 import {
   APP_HISTORY_DIR,
   BRIEF_DISPLAY_LENGTH,
@@ -126,6 +127,23 @@ export const deleteFile: DeleteFileFn = async (filename) => {
   return false;
 };
 
+// Native drag and drop; drag the translation history to local folder
+export const onDragStart = (event: IpcMainInvokeEvent, filename: string) => {
+  const historyPath = `${homedir()}/${APP_HISTORY_DIR}`; // the dir stores the translation history
+  const markdownFile = `${filename.split(".txt")[0]}.md`; // new markdown file
+
+  const txtFilePath = `${historyPath}/${filename}`; // the txt file (JSON)
+  const mdfilePath = `${historyPath}/${markdownFile}`; // the md file (Markdown for drag and drop)
+
+  const markdownContent = convertToMarkdown(txtFilePath);
+  fs.writeFileSync(mdfilePath, markdownContent);
+
+  event.sender.startDrag({
+    file: mdfilePath,
+    icon: dragIcon,
+  });
+};
+
 // Helper functions
 const getTimeString = (): string => {
   const now = new Date();
@@ -136,4 +154,18 @@ const getTimeString = (): string => {
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
   return `${year}${month}${day}${hour}${minutes}${seconds}`;
+};
+
+const convertToMarkdown = (filepath: string) => {
+  const content = fs.readFileSync(filepath, { encoding: "utf8" });
+  const jsonContent = JSON.parse(content) as Record;
+  // extract translations and join them into a single string
+  const translations = jsonContent
+    .translations!.map(
+      ({ aiSource, text }) => "\n" + "*AI Service: " + aiSource + "*" + "\n\n" + text + "\n"
+    )
+    .join("");
+  // create markdown content
+  const mdContent = `## From: ${jsonContent.from}\n## To: ${jsonContent.to}\n\n## Source Text:\n\n${jsonContent.source}\n\n## Translations: \n${translations}`;
+  return mdContent;
 };
