@@ -11,10 +11,11 @@ export const CLAUDE_MODELS = [
   "claude-3-5-sonnet-20240620",
 ] as const;
 export const OPENAI_MODELS = ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4"] as const;
+export const OPENAI_TTS_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"] as const;
 export const MAX_TOKENS = 2048;
 export const INIT_MODEL_CONFIGS = {
   DeepL: { key: "", model: "free" },
-  OpenAI: { key: "", model: "gpt-4o-mini" },
+  OpenAI: { key: "", model: "gpt-4o-mini", voice: "alloy" },
   Claude: { key: "", model: "claude-3-haiku-20240307" },
 };
 
