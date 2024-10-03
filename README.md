@@ -1,5 +1,4 @@
 <h1 align="center"> MAI Translator - a multi-ai supported translator </h1>
-<a align="center" target="_blank" href="https://terrence-ou.github.io/MAI-Translator-Website/">https://terrence-ou.github.io/MAI-Translator-Website/</a>
 <image src="./public/cover.png" width="100%"/>
 <p align="center">A multi-ai-supported translator helps getting and managing translations with confidence.</p>
 <div align="center">
@@ -13,6 +12,8 @@
 </div>
 
 ## A translator for users who pursuit translation quality
+
+https://terrence-ou.github.io/MAI-Translator-Website/
 
 The MAI Translator helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI. It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which cian be retrieved at any time as needed. Currently the translation histories supports text-to-speech reader.
 
