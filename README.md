@@ -1,4 +1,5 @@
 <h1 align="center"> MAI Translator - a multi-ai supported translator </h1>
+<a align="center" target="_blank" href="https://terrence-ou.github.io/MAI-Translator-Website/">https://terrence-ou.github.io/MAI-Translator-Website/</a>
 <image src="./public/cover.png" width="100%"/>
 <p align="center">A multi-ai-supported translator helps getting and managing translations with confidence.</p>
 <div align="center">
