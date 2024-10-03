@@ -4,8 +4,8 @@ import {
   updateOpenaiConfig,
 } from "@/store/translationConfigSlice";
 import { useAppDispatch } from "@/hooks";
-import { DEEPL_MODELS, OPENAI_MODELS, CLAUDE_MODELS } from "@shared/consts";
-import type { DeepLModels, ClaudeModels, OpenaiModels } from "@shared/types";
+import { DEEPL_MODELS, OPENAI_MODELS, CLAUDE_MODELS, OPENAI_TTS_VOICES } from "@shared/consts";
+import type { DeepLModels, ClaudeModels, OpenaiModels, OpenaiTTSVoices } from "@shared/types";
 import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   Select,
@@ -20,11 +20,12 @@ type AISettingProps = {
   aiProvider: "DeepL" | "Claude" | "OpenAI";
   apiKey: string;
   currModel: DeepLModels | ClaudeModels | OpenaiModels;
+  currVoice?: OpenaiTTSVoices;
 };
 
 const modelCollection = { DeepL: DEEPL_MODELS, Claude: CLAUDE_MODELS, OpenAI: OPENAI_MODELS };
 
-const AISetting = ({ aiProvider, apiKey, currModel }: AISettingProps) => {
+const AISetting = ({ aiProvider, apiKey, currModel, currVoice }: AISettingProps) => {
   const models = modelCollection[aiProvider];
   const dispatch = useAppDispatch();
 
@@ -38,7 +39,13 @@ const AISetting = ({ aiProvider, apiKey, currModel }: AISettingProps) => {
         dispatch(updateClaudeConfig({ key, model: currModel as ClaudeModels }));
         break;
       case "OpenAI":
-        dispatch(updateOpenaiConfig({ key, model: currModel as OpenaiModels }));
+        dispatch(
+          updateOpenaiConfig({
+            key,
+            model: currModel as OpenaiModels,
+            voice: currVoice as OpenaiTTSVoices,
+          })
+        );
     }
   };
 
@@ -55,8 +62,21 @@ const AISetting = ({ aiProvider, apiKey, currModel }: AISettingProps) => {
     }
   };
 
+  const handleChangeVoice = (voice: string) => {
+    dispatch(
+      updateOpenaiConfig({
+        key: apiKey,
+        model: currModel as OpenaiModels,
+        voice: voice as OpenaiTTSVoices,
+      })
+    );
+  };
+
   return (
-    <AccordionItem value={aiProvider} className="border-b border-dashed border-slate-200">
+    <AccordionItem
+      value={aiProvider}
+      className="border-b border-dashed border-slate-200 dark:border-slate-700"
+    >
       <AccordionTrigger className="text-sm py-2">{aiProvider}</AccordionTrigger>
       <AccordionContent className="flex flex-col pl-2 text-sm">
         <div className="flex items-center justify-between h-9 pr-1">
@@ -65,7 +85,7 @@ const AISetting = ({ aiProvider, apiKey, currModel }: AISettingProps) => {
             className="w-[250px] h-[30px] focus-visible:ring-offset-0 text-xs"
             type="text"
             placeholder={`Paste your ${aiProvider} API here`}
-            defaultValue={apiKey}
+            defaultValue={"*".repeat(apiKey.length)}
             onBlur={(event) => handleChangeKey(event)}
           />
         </div>
@@ -91,6 +111,31 @@ const AISetting = ({ aiProvider, apiKey, currModel }: AISettingProps) => {
             </SelectContent>
           </Select>
         </div>
+        {/* Voice Selection, only available for OpenAI TTS */}
+        {aiProvider === "OpenAI" && (
+          <div className="flex items-center justify-between h-10 pr-1">
+            <p>voice</p>
+            {/* Model selections */}
+            <Select
+              onValueChange={(value) => {
+                handleChangeVoice(value);
+              }}
+            >
+              <SelectTrigger className="w-[250px] h-[30px] text-xs focus:ring-offset-0">
+                <SelectValue placeholder={currVoice ? currVoice : "alloy"} />
+              </SelectTrigger>
+              <SelectContent className="focus-visible:ring-offset-0">
+                {OPENAI_TTS_VOICES.map((voice) => {
+                  return (
+                    <SelectItem key={`model-setting-${voice}`} value={voice} className="text-xs">
+                      {voice}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </AccordionContent>
     </AccordionItem>
   );

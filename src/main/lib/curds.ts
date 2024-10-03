@@ -68,12 +68,12 @@ export const getOpenAIResult: GetTranslationResultFn = async (from, to, text) =>
 };
 
 // Get the audio of the given text
-export const textToSpeech: TextToSpeechFn = async (text) => {
+export const textToSpeech: TextToSpeechFn = async (text, voice) => {
   const modelConfigs = readModelConfigs();
   const { key } = modelConfigs["OpenAI"];
   const openAIAgent = OpenAI.textToSpeech(key);
   try {
-    const openAIResult = await openAIAgent.convert(text, "base64");
+    const openAIResult = await openAIAgent.convert(text, "base64", undefined, voice);
     return openAIResult as string;
   } catch (error) {
     console.error(error);

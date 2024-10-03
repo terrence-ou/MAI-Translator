@@ -21,10 +21,14 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
   const [fileContent, setFileContent] = useState<Record | null>(null);
   const [audioLoading, setAudioLoading] = useState<[boolean, boolean]>([false, false]);
   const [audioPlaying, setAudioPlaying] = useState<[boolean, boolean]>([false, false]);
+
   const dispatch = useAppDispatch();
   const currFilename = useAppSelector((state) => state.settings.currentFilename);
   const fontSize = useAppSelector((state) => state.settings.editorFontSize);
   const filePreview = useAppSelector((state) => state.files.filePreview);
+  const { key, voice } = useAppSelector((state) => state.translationConfig.models.OpenAI);
+
+  const audioValid = key !== undefined && key.length > 0;
   const hasFile = Object.keys(filePreview).length;
   const audioRef = useRef(new Audio());
   audioRef.current.addEventListener("ended", () => {
@@ -73,7 +77,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
         newAudioLoading[index] = true;
         return newAudioLoading as [boolean, boolean];
       });
-      const res = await window.context.textToSpeech(text);
+      const res = await window.context.textToSpeech(text, voice ? voice : "alloy");
       audioRef.current = new Audio(`data:audio/mp3;base64,${res}`);
       audioRef.current.volume = 0.3;
       audioRef.current.play();
@@ -130,6 +134,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
               style={{ fontSize: `${fontSize}px` }}
             >
               <AudioControl
+                valid={audioValid}
                 audioLoading={audioLoading[0]}
                 audioPlaying={audioPlaying[0]}
                 onClick={() => handleAudioControl(fileContent.source!, 0)}
@@ -156,6 +161,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
                     style={{ fontSize: `${fontSize}px` }}
                   >
                     <AudioControl
+                      valid={audioValid}
                       audioLoading={audioLoading[1]}
                       audioPlaying={audioPlaying[1]}
                       onClick={() => handleAudioControl(text, 1)}
