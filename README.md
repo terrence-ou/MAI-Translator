@@ -54,7 +54,7 @@ The MAI Translator helps to retrieve translation results from popular language m
 
 For this BETA version, the user needs to provide DeepL free API, OpenAi, and Claude API in the Settings to make the translation and text reader work.
 
-## Still more work ahead, but...
+## Still in progress
 
 1. Limited language support due to the language model provider.
 2. Unexpected translation errors might occur.
