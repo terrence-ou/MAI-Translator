@@ -13,7 +13,7 @@
 
 ## A translator for users who pursuit translation quality
 
-https://terrence-ou.github.io/MAI-Translator-Website/
+**Website**: https://terrence-ou.github.io/MAI-Translator-Website/
 
 The MAI Translator helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI. It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which cian be retrieved at any time as needed. Currently the translation histories supports text-to-speech reader.
 
@@ -29,6 +29,8 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
+- **v-0.5.3** *10/03/2024*
+  - Text-to-speech voice selection added.
 - **v-0.5.1 & v0.5.2** *09/28/2024*
   - Introduced `ai-fetcher` to simplify the data-fetching process;
   - Native drag and drop added, enabling drag translation history as a markdown file to local directory.
@@ -50,10 +52,10 @@ The MAI Translator helps to retrieve translation results from popular language m
 
 ## Preparation
 
-For this BETA version, the user needs to provide DeepL free API, OpenAi, and/or Claude API in the Settings to make the translation work.
+For this BETA version, the user needs to provide DeepL free API, OpenAi, and Claude API in the Settings to make the translation and text reader work.
 
-## Sorry, but...
+## Still more work ahead, but...
 
 1. Limited language support due to the language model provider.
 2. Unexpected translation errors might occur.
-3. The software is still under heavy development; only MacOS ARM version available for now.
+3. The software is still under heavy development; only Apple Silicon build available for now.
