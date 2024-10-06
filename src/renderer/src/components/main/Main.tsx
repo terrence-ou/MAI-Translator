@@ -14,7 +14,7 @@ import HistoryContent from "../history/HistoryContent";
 const panelConfig = {
   defaultSize: 25,
   maxSize: 25,
-  minSize: 15,
+  minSize: 18,
   collapible: true,
 };
 const Main = ({ ...props }: ComponentProps<"div">) => {
