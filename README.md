@@ -29,6 +29,8 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
+- **v-0.5.4** *10/06/2024*
+  - Sidebar display bug fixed.
 - **v-0.5.3** *10/03/2024*
   - Text-to-speech voice selection added.
 - **v-0.5.1 & v0.5.2** *09/28/2024*

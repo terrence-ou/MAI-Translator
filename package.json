@@ -1,11 +1,11 @@
 {
   "name": "multiai_translator",
   "productName": "MAI Translator",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "A Multiai-supported Translator",
   "main": "./dist/main/index.js",
   "author": "Terrence Ou",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://terrence-ou.github.io/MAI-Translator-Website/",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
