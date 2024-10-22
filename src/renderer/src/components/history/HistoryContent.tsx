@@ -130,7 +130,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
             <TextField
               disabled={true}
               value={fileContent.source}
-              className="h-full resize-none disabled:cursor-text"
+              className="h-full resize-none disabled:cursor-text disabled:opacity-60"
               style={{ fontSize: `${fontSize}px` }}
             >
               <AudioControl
@@ -157,7 +157,7 @@ const HistoryContent = ({ ...props }: ComponentProps<"div">) => {
                   <TextField
                     disabled={true}
                     value={text}
-                    className="h-full resize-none disabled:cursor-text"
+                    className="h-full resize-none disabled:cursor-text disabled:opacity-60"
                     style={{ fontSize: `${fontSize}px` }}
                   >
                     <AudioControl

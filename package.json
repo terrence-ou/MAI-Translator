@@ -28,6 +28,7 @@
     "@electron/packager": "^18.3.5",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-collapsible": "^1.1.0",
+    "@radix-ui/react-context-menu": "^2.2.2",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.1.1",
