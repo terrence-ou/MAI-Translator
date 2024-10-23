@@ -3,13 +3,13 @@ import { AI_LIST } from "@shared/consts";
 import { AISource } from "@shared/types";
 import { cn } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setSourceText, getTranslations } from "@/store/translationConfigSlice";
+import { setSourceText, getTranslations, resetResult } from "@/store/translationConfigSlice";
 import { saveRecord } from "@/store/filesSlice";
 import TextField from "@/components/ui/TextField";
 import AiIconTab from "@/components/main/AiIconTab";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Copy, Eraser, Check, Loader2 } from "lucide-react";
+import { Copy, Eraser, Check, Loader2, OctagonX } from "lucide-react";
 
 // icon height constant
 const iconHeight = 18;
@@ -43,10 +43,13 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
     navigator.clipboard.writeText(displayResult ? displayResult.text : "");
     setCopied(true);
   };
-  const handleClear = () => {
+  const handleClearSource = () => {
     if (sourceRef.current !== null) {
       sourceRef.current!.value = "";
     }
+  };
+  const handleClearResults = () => {
+    dispatch(resetResult());
   };
   // handles file management
   const handleSave = () => {
@@ -79,7 +82,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
                 variant="ghost"
                 disabled={loading}
                 className="icon-button"
-                onClick={handleClear}
+                onClick={handleClearSource}
                 data-testid="button-erase"
               >
                 <Eraser className="textfield-icon stroke-[1.5px]" height={iconHeight} />
@@ -111,6 +114,21 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
               <Button
                 variant="ghost"
                 className="icon-button"
+                onClick={handleClearResults}
+                data-testid="button-result-erase"
+              >
+                <OctagonX className="textfield-icon stroke-[1.5px]" height={iconHeight} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left" sideOffset={4}>
+              <p className="text-xs">Clear</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="icon-button"
                 onClick={handleCopy}
                 data-testid="button-copy"
               >
@@ -121,7 +139,7 @@ const TranslationInterface = ({ className }: ComponentProps<"div">) => {
                 )}
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="left" sideOffset={4}>
+            <TooltipContent side="top" sideOffset={4}>
               <p className="text-xs">{copied ? "Copied" : "Copy"}</p>
             </TooltipContent>
           </Tooltip>

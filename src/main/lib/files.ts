@@ -1,8 +1,7 @@
 import { homedir } from "os";
-import { app, IpcMainInvokeEvent } from "electron";
+import { app, dialog, IpcMainInvokeEvent } from "electron";
 import path from "path";
 import fs from "fs";
-import { dialog } from "electron";
 import { ensureDir, readdir, writeFile, readFile, remove } from "fs-extra";
 import dragIcon from "../assets/empty_icon.png?asset";
 import {
@@ -22,6 +21,7 @@ import {
   ModelConfigs,
   WriteModelConfigsFn,
   ReadModelConfigsFn,
+  SaveAsFileFn,
 } from "@shared/types";
 
 export const getFolderDir = () => {
@@ -144,6 +144,23 @@ export const onDragStart = (event: IpcMainInvokeEvent, filename: string) => {
   });
 };
 
+// Save file with a save dialog open
+export const saveAsFile: SaveAsFileFn = (filename) => {
+  const historyPath = `${homedir()}/${APP_HISTORY_DIR}`; // the dir stores the translation history
+  const markdownFilename = `${filename.split(".txt")[0]}.md`; // new markdown file
+
+  const sourcePath = `${historyPath}/${filename}`; // the txt file (JSON)
+  let savePath = dialog.showSaveDialogSync({
+    properties: ["createDirectory"],
+    defaultPath: `~/${markdownFilename}`,
+    title: `${markdownFilename}`,
+  });
+  if (savePath === undefined) return;
+  if (!savePath.endsWith(".md")) savePath += ".md";
+  const markdownContent = convertToMarkdown(sourcePath);
+  fs.writeFileSync(savePath, markdownContent);
+};
+
 // Helper functions
 const getTimeString = (): string => {
   const now = new Date();
@@ -166,6 +183,6 @@ const convertToMarkdown = (filepath: string) => {
     )
     .join("");
   // create markdown content
-  const mdContent = `## From: ${jsonContent.from}\n## To: ${jsonContent.to}\n\n## Source Text:\n\n${jsonContent.source}\n\n## Translations: \n${translations}`;
+  const mdContent = `## From: ${jsonContent.from.toUpperCase()}\n## To: ${jsonContent.to.toUpperCase()}\n\n## Source Text:\n\n${jsonContent.source}\n\n## Translations: \n${translations}`;
   return mdContent;
 };

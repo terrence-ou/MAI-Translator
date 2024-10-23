@@ -88,6 +88,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        "menu-light": "0 0 30px -15px hsl(var(--primary))",
+        "menu-dark": "0 0 30px -5px hsl(var(--background))",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

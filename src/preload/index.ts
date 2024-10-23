@@ -9,6 +9,7 @@ import {
   ReadModelConfigsFn,
   WriteModelConfigsFn,
   OnDragStartFn,
+  SaveAsFileFn,
 } from "@shared/types";
 import { contextBridge } from "electron";
 import { ipcRenderer } from "electron/renderer";
@@ -41,6 +42,7 @@ try {
       ipcRenderer.invoke("getFileContent", ...args),
     deleteFile: (...args: Parameters<DeleteFileFn>) => ipcRenderer.invoke("deleteFile", ...args),
     onDragStart: (...args: Parameters<OnDragStartFn>) => ipcRenderer.invoke("onDragStart", ...args),
+    saveAsFile: (...args: Parameters<SaveAsFileFn>) => ipcRenderer.invoke("saveAsFile", ...args),
   });
 } catch (error) {
   console.error(error);
