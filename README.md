@@ -29,6 +29,10 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
+- **v-0.6.0** *10/22/2024*
+  - Added a right-click menu for the side bar history card, with "save as" and "delete" actions available;
+  - Added "clear" button to the result text area;
+---
 - **v-0.5.4** *10/06/2024*
   - Sidebar display bug fixed.
 - **v-0.5.3** *10/03/2024*
@@ -36,14 +40,17 @@ The MAI Translator helps to retrieve translation results from popular language m
 - **v-0.5.1 & v0.5.2** *09/28/2024*
   - Introduced `ai-fetcher` to simplify the data-fetching process;
   - Native drag and drop added, enabling drag translation history as a markdown file to local directory.
+---
 - **v-0.4.1 & v-0.4.2** *09/05/2024*
   - AI model configs updated, the user now can select specific models;
   - Added Apple code sign and notary;
 - **v-0.4.0** *09/01/2024*
   - Upgraded Electron to version 32, the latest stable version;
   - Traditional Chinese support (ZH-HANT) added;
+---
 - **v-0.3.0**
   - Integrated OpenAI TTS model to text reading. (The reading quality is way better than the Chrome reader)
+---
 - **v-0.2.1 & v-0.2.2**
   - Tooltips added.
   - Translation history becomes expandable by date
