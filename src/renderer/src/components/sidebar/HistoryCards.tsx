@@ -66,7 +66,10 @@ const HistoryCards = ({ records }: HistoryCardProps) => {
                 </span>
               </Button>
               <ContextMenuContent className="flex flex-col gap-1 dark:bg-muted shadow-menu-light dark:shadow-menu-dark">
-                <ContextMenuItem className="py-1 hover:cursor-pointer dark:hover:bg-background/50 duration-150">
+                <ContextMenuItem
+                  className="py-1 hover:cursor-pointer dark:hover:bg-background/50 duration-150"
+                  onClick={() => window.context.saveAsFile(filename!)}
+                >
                   Save as...
                 </ContextMenuItem>
                 <ContextMenuItem

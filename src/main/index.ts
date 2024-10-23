@@ -14,6 +14,7 @@ import type {
   WriteModelConfigsFn,
   ReadModelConfigsFn,
   OnDragStartFn,
+  SaveAsFileFn,
 } from "@shared/types";
 import {
   getDeepLFreeResult,
@@ -27,6 +28,7 @@ import {
   writeModelConfigs,
   readModelConfigs,
   onDragStart,
+  saveAsFile,
 } from "@/lib";
 
 function createWindow(): void {
@@ -119,6 +121,7 @@ app.whenReady().then(() => {
   ipcMain.handle("onDragStart", (event, ...args: Parameters<OnDragStartFn>) =>
     onDragStart(event, ...args)
   );
+  ipcMain.handle("saveAsFile", (_, ...args: Parameters<SaveAsFileFn>) => saveAsFile(...args));
 
   createWindow();
 

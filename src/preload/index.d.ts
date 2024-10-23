@@ -9,6 +9,7 @@ import {
   WriteModelConfigsFn,
   ReadModelConfigsFn,
   OnDragStartFn,
+  SaveAsFileFn,
 } from "@shared/types";
 
 declare global {
@@ -27,6 +28,7 @@ declare global {
       getFileContent: GetFileContentFn;
       deleteFile: DeleteFileFn;
       onDragStart: OnDragStartFn;
+      saveAsFile: SaveAsFileFn;
     };
   }
 }
