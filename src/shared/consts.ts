@@ -5,10 +5,10 @@ export const MODEL_CONFIGS_FILENAME = "multi_models.json";
 export const AI_LIST = ["DeepL", "OpenAI", "Claude"] as const;
 export const DEEPL_MODELS = ["pro", "free"] as const;
 export const CLAUDE_MODELS = [
-  "claude-3-haiku-20240307",
+  "claude-3-5-sonnet-20241022",
   "claude-3-sonnet-20240229",
   "claude-3-opus-20240229",
-  "claude-3-5-sonnet-20240620",
+  "claude-3-haiku-20240307",
 ] as const;
 export const OPENAI_MODELS = ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4"] as const;
 export const OPENAI_TTS_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"] as const;
