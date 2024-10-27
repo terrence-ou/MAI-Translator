@@ -29,6 +29,9 @@ The MAI Translator helps to retrieve translation results from popular language m
 </p>
 
 ## Updates
+- **v-0.6.1** *10/26/2024*
+  - Latest Claude Sonnet 3.5 model enabled;
+---
 - **v-0.6.0** *10/22/2024*
   - Added a right-click menu for the side bar history card, with "save as" and "delete" actions available;
   - Added "clear" button to the result text area;
