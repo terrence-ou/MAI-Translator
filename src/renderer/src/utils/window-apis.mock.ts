@@ -26,9 +26,8 @@ const themedMatchMedia = (maches: boolean) =>
 const context = Object.defineProperty(window, "context", {
   writable: true,
   value: {
+    writeModelConfigs: jest.fn().mockImplementation(),
     // translation config functions
-    // readApis: jest.fn().mockImplementation(() => Promise.resolve({})),
-    // writeApis: jest.fn().mockImplementation(() => Promise.resolve({})),
     writeHistory: jest.fn().mockImplementation(() => Promise.resolve("20240101.txt")),
     getDeepLFreeResult: jest
       .fn()
