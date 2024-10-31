@@ -68,4 +68,9 @@ const clipboard = Object.defineProperty(navigator, "clipboard", {
   },
 });
 
-export { matchMedia, themedMatchMedia, context, clipboard };
+const audioMedia = Object.defineProperty(HTMLMediaElement.prototype, "pause", {
+  configurable: true,
+  value: jest.fn(),
+});
+
+export { matchMedia, audioMedia, themedMatchMedia, context, clipboard };
