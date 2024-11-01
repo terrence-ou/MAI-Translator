@@ -2,6 +2,7 @@
 <p align="center">A multi-ai-supported translator helps getting and managing translations with confidence.</p>
 <image src="./public/cover.png" width="100%"/>
 <div align="center">
+
   **Website**: https://terrence-ou.github.io/MAI-Translator-Website/
   <br />
   <br />
@@ -13,12 +14,12 @@
 ## A translator for users who pursuit translation quality
 
 
-The MAI Translator helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI. It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which cian be retrieved at any time as needed. Currently the translation histories supports text-to-speech reader.
+The **MAI Translator** helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI. It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which can be retrieved at any time as needed. The app also supports text-to-speech readers with enriched voice selections that help get a better sense of the contents.
 
 ## Features
 
 1. Fetching translation results from multiple LLM providers with rich model selections;
-2. Manage translation records locally, with easy drag-n-drop features;
+2. Manage translation records locally with easy file drag-n-drop features;
 3. Light / Dark theme;
 4. Text-to-Speech-supported text reader with multiple voices enabled;
 
@@ -28,7 +29,10 @@ The MAI Translator helps to retrieve translation results from popular language m
 
 ## Get Started
 
-You'll need APIs from OpenAI, DeepL, and Claude to ensure translations working porperly; OpenAI api is required for the Text-to-Speech functionalities.
+You'll need API keys from OpenAI, DeepL, and Claude to ensure translations work properly. The app can still work when one or two keys are missing. However,  the OpenAI API key is required for the Text-to-Speech functionalities if the text reader is important to you.
+- Get OpenAI API key: https://platform.openai.com/docs/overview
+- Get Claude API key: https://console.anthropic.com/dashboard
+- Get DeepL Api Key: https://www.deepl.com/en/pro-api (Free version api key is good enough)
 
 ## Tech Stack
 
