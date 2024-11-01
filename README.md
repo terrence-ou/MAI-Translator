@@ -36,13 +36,15 @@ You'll need API keys from OpenAI, DeepL, and Claude to ensure translations work 
 
 ## Tech Stack
 
-- **Software Framework**: \t     [Electron](https://www.electronjs.org/)
-- **Frontend Library**: \t       [React](https://react.dev/)
-- **Build Tool**: \t             [Vite](https://vite.dev/)
-- **State Management**: \t       [Redux Toolkit](https://redux-toolkit.js.org/)
-- **UI and Styling**: \t         [shadcn](https://ui.shadcn.com/), [tailwind](https://tailwindcss.com/)
-- **Testing**: \t                [Jest](https://jestjs.io/), [Testing Library](https://testing-library.com/)
-- **Code Sign and Notarize**: \t [Electron-forge](https://www.electronforge.io/)
+| Category                  | Technology                                                                                  |
+|---------------------------|---------------------------------------------------------------------------------------------|
+| **Software Framework**    | [Electron](https://www.electronjs.org/)                                                     |
+| **Frontend Library**      | [React](https://react.dev/)                                                                 |
+| **Build Tool**            | [Vite](https://vite.dev/)                                                                   |
+| **State Management**      | [Redux Toolkit](https://redux-toolkit.js.org/)                                              |
+| **UI and Styling**        | [shadcn](https://ui.shadcn.com/), [Tailwind](https://tailwindcss.com/)                      |
+| **Testing**               | [Jest](https://jestjs.io/), [Testing Library](https://testing-library.com/)                 |
+| **Code Sign and Notarize**| [Electron-forge](https://www.electronforge.io/)                                             |
 
 
 ## File Structure
