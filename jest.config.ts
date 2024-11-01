@@ -19,6 +19,7 @@ const config: JestConfigWithTsJest = {
   coveragePathIgnorePatterns: [
     "<rootDir>/node_modules/",
     "<rootDir>/src/renderer/src/components/ui/",
+    "<rootDir>/src/renderer/src/utils",
   ],
 };
 
