@@ -87,6 +87,7 @@ export const filesSlice = createSlice({
           );
           if (state.filePreview[fileDate].length === 0) delete state.filePreview[fileDate];
         }
+        return state;
       }
     );
   },
