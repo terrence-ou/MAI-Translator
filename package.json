@@ -1,14 +1,12 @@
 {
   "name": "multiai_translator",
   "productName": "MAI Translator",
-  "version": "0.6.1",
-  "description": "A Multiai-supported Translator",
+  "version": "0.7.0",
+  "description": "A multi-ai-supported translator helps getting and managing translations with confidence.",
   "main": "./dist/main/index.js",
   "author": "Terrence Ou",
   "homepage": "https://terrence-ou.github.io/MAI-Translator-Website/",
   "scripts": {
-    "format": "prettier --write .",
-    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
