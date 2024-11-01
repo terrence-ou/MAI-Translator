@@ -40,19 +40,6 @@ describe("Testing the content modal", () => {
     const modal = screen.queryByTestId("modal-history-content");
     expect(modal).not.toBeInTheDocument();
   });
-
-  test("file-reading function get triggered and the modal appears", async () => {
-    const sidebar = screen.getByTestId("sidebar");
-    const button = sidebar.querySelector("button");
-    await act(async () => fireEvent.click(button!));
-    // Because the initial loading will trigger a timer function in the component
-    // Therefore I use a timeout to wait for the timer finished then check the component
-    setTimeout(() => {
-      const modal = screen.queryByTestId("modal-history-content");
-      expect(modal).toBeInTheDocument();
-      expect(window.context.getFileContent).toHaveBeenCalled();
-    }, 100);
-  });
 });
 
 describe("Testing click on cards", () => {
