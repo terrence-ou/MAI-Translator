@@ -3,30 +3,75 @@
 <p align="center">A multi-ai-supported translator helps getting and managing translations with confidence.</p>
 <div align="center">
 
+  **Website**: https://terrence-ou.github.io/MAI-Translator-Website/
   [![Release app](https://github.com/terrence-ou/MAI-Translator/actions/workflows/release.yml/badge.svg)](https://github.com/terrence-ou/MAI-Translator/actions/workflows/release.yml) [![Test](https://github.com/terrence-ou/MAI-Translator/actions/workflows/unit_test.yml/badge.svg)](https://github.com/terrence-ou/MAI-Translator/actions/workflows/unit_test.yml)
   <img height="20px" src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="LICENSE"/>
   <br/>
-  <img height="20px" src="https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=Electron&logoColor=white" alt="react"/>
-  <img height="20px" src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="typescript"/>
-  <img height="20px" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="react"/>
 </div>
 
 ## A translator for users who pursuit translation quality
 
-**Website**: https://terrence-ou.github.io/MAI-Translator-Website/
 
 The MAI Translator helps to retrieve translation results from popular language model providers such as DeepL, Claude, and OpenAI. It allows users to compare different versions of translations and select the words, sentences, or paragraphs that best fit the context. Additionally, the MAI Translator enables users to store translation results locally, which cian be retrieved at any time as needed. Currently the translation histories supports text-to-speech reader.
 
 ## Features
 
-1. Fetching translation results from multiple language model providers;
-2. Manage translation records locally;
+1. Fetching translation results from multiple LLM providers with rich model selections;
+2. Manage translation records locally, with easy drag-n-drop features;
 3. Light / Dark theme;
-4. Text-to-Speech-supported text reader;
+4. Text-to-Speech-supported text reader with multiple voices enabled;
 
 <p align="center">
   <image src="./public/demo.gif" width="600px"/>
 </p>
+
+## Get Started
+
+You'll need APIs from OpenAI, DeepL, and Claude to ensure translations working porperly; OpenAI api is required for the Text-to-Speech functionalities.
+
+## File Structure
+
+```
+├── .github/
+│   └── workflows/                  # GitHub Actions for CI/CD
+├── public/                         # Static assets (images, icons, HTML)
+├── resources/                      # Additional resources for the app
+├── src/                            # Main source code
+│   ├── main/                       # Main process code
+│   │   ├── assets/                 # Assets for the main process
+│   │   ├── lib/                    # Libraries for main process logic
+│   │   └── index.ts                # Entry point for the main process
+│   ├── preload/                    # Preload scripts
+│   │   ├── index.ts                # Preload script entry point
+│   │   └── index.d.ts              # TypeScript declarations for preload
+│   ├── renderer/                   # Renderer process code (front-end)
+│   │   ├── src/                    # Source for renderer
+│   │   │   ├── __tests__/          # Tests for renderer components
+│   │   │   ├── assets/             # Assets for the renderer
+│   │   │   ├── components/         # React components
+│   │   │   ├── hooks/              # Custom React hooks
+│   │   │   ├── store/              # Redux State management
+│   │   │   └── utils/              # Utility functions
+│   │   ├── App.tsx                 # Main application component
+│   │   ├── env.d.ts                # TypeScript environment declarations
+│   │   ├── main.tsx                # Main entry point for the renderer
+│   │   └── index.html              # HTML template for the renderer
+│   └── shared/                     # Shared code between main and renderer
+├── .gitignore                      # Git ignore patterns
+├── components.json                 # Component manifest/configuration
+├── electron.vite.config.ts         # Vite configuration for Electron
+├── forge.config.cjs                # Electron Forge configuration
+├── jest.config.ts                  # Jest testing configuration
+├── LICENSE                         # Project license
+├── package.json                    # Project metadata and dependencies
+├── package-lock.json               # Dependency lock file
+├── postcss.config.js               # PostCSS configuration
+├── README.md                       # Project documentation
+├── tailwind.config.js              # Tailwind CSS configuration
+├── tsconfig.json                   # TypeScript configuration (general)
+├── tsconfig.node.json              # TypeScript configuration for Node.js
+└── tsconfig.web.json               # TypeScript configuration for web
+```
 
 ## Updates
 - **v-0.6.1** *10/26/2024*
@@ -61,13 +106,3 @@ The MAI Translator helps to retrieve translation results from popular language m
   - Added a navigation menu.
   - Updated translation record interface, displaying the record on a whole page instead of a modal now.
   - Added OpenAI support.
-
-## Preparation
-
-For this BETA version, the user needs to provide DeepL free API, OpenAi, and Claude API in the Settings to make the translation and text reader work.
-
-## Still in progress
-
-1. Limited language support due to the language model provider.
-2. Unexpected translation errors might occur.
-3. The software is still under heavy development; only Apple Silicon build available for now.
