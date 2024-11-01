@@ -39,12 +39,26 @@ const context = Object.defineProperty(window, "context", {
     // file management functions
     getHistories: jest.fn().mockImplementation(() =>
       Promise.resolve({
-        "20240729": [{ from: "EN", to: "ZH", brief: "hello world", filename: "202407290000.txt" }],
-        "20240730": [{ from: "ZH", to: "EN", brief: "测试边栏", filename: "202407300000.txt" }],
+        "20240819": [
+          {
+            filename: "20240819222854.txt",
+            from: "JA",
+            to: "ZH",
+            brief: "test1",
+          },
+        ],
+        "20240921": [
+          {
+            filename: "20240921182814.txt",
+            from: "ZH",
+            to: "EN",
+            brief: "test2",
+          },
+        ],
       })
     ),
     getFileContent: jest.fn().mockImplementation((filename: string) => {
-      if (filename === "202407290000.txt" || filename === "202407300000.txt") {
+      if (filename === "20240819222854.txt" || filename === "0240921182814.txt") {
         return Promise.resolve({
           from: "EN",
           to: "ZH",
