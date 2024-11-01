@@ -1,55 +1,55 @@
-// import "@testing-library/jest-dom";
-// import "@/utils/window-apis.mock";
-// import { storeRender as render, act, screen, fireEvent } from "@/utils/test-utils";
-// import HistoryContent from "@/components/history/HistoryContent";
+import "@testing-library/jest-dom";
+import "@/utils/window-apis.mock";
+import { useAppDispatch } from "@/hooks";
+import { setCurrFilename, route } from "@/store/settingsSlice";
+import { fireEvent, render, screen } from "@/utils/test-utils";
+import HistoryContent from "@/components/history/HistoryContent";
+import { act, useEffect } from "react";
 // import { Dialog } from "@/components/ui/dialog";
-// import { useAppDispatch } from "@/hooks";
 // import { loadFiles } from "@/store/filesSlice";
-// import { useEffect } from "react";
 
-// const HelperComponent = ({ children }) => {
-//   const dispatch = useAppDispatch();
-//   useEffect(() => {
-//     dispatch(loadFiles());
-//   }, []);
-//   return <div>{children}</div>;
-// };
+const HelperComponent = ({ children }) => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setCurrFilename("20240819222854.txt"));
+    dispatch(route("history"));
+  }, []);
+  return <div>{children}</div>;
+};
 
-// const renderComponent = async (filename: string) =>
-//   await act(async () =>
-//     render(
-//       <HelperComponent>
-//         <Dialog open={true}>
-//           <HistoryContent filename={filename} />
-//         </Dialog>
-//       </HelperComponent>
-//     )
-//   );
+beforeEach(async () => {
+  await act(async () =>
+    render(
+      <HelperComponent>
+        <HistoryContent />
+      </HelperComponent>
+    )
+  );
+});
 
-// describe("Testing component display with valid/invalid filename", () => {
-//   test("invalid filename provided", async () => {
-//     await renderComponent("");
-//     expect(screen.queryByTestId("modal-history-invalid")).toBeInTheDocument();
-//     expect(await screen.findByText(/Failed to load the file/i)).toBeVisible();
-//   });
+describe("Testing component UI", () => {
+  test("check item display", () => {
+    expect(screen.getByText("DeepL")).toBeVisible();
+    expect(screen.getByText("OpenAI")).toBeVisible();
+    expect(screen.getByText("Claude")).toBeVisible();
+    expect(screen.getByText("Delete")).toBeVisible();
+    expect(screen.getByText("Date:")).toBeVisible();
+    expect(screen.getByText("From:")).toBeVisible();
+    expect(screen.getByText("To:")).toBeVisible();
+    expect(screen.getByText(/source text/i)).toBeVisible();
+    expect(screen.getByText(/mock result/i)).toBeVisible();
+  });
 
-//   test("valid filename provided", async () => {
-//     await renderComponent("202407290000.txt");
-//     expect(screen.queryByTestId("modal-history-invalid")).not.toBeInTheDocument();
-//     expect(screen.queryByTestId("modal-history-content")).toBeInTheDocument();
-//     expect(screen.queryByRole("button", { name: /Delete/i })).toBeInTheDocument();
-//   });
-// });
+  test("check tabs", async () => {
+    const tabs = screen.getAllByRole("tab");
+    expect(tabs.length).toBeGreaterThanOrEqual(3);
+  });
+});
 
-// describe("Testing delete button", () => {
-//   test("valid filename provided", async () => {
-//     await renderComponent("202407290000.txt");
-//     const deleteButton = screen.queryByRole("button", { name: /Delete/i });
-//     await act(() => fireEvent.click(deleteButton!));
-//     expect(window.context.deleteFile).toHaveBeenCalled();
-//   });
-// });
-
-test("planceholder", () => {
-  expect(1).toBe(1);
+describe("Testing delete button", () => {
+  test("ensure delete button triggers backend function", () => {
+    const deleteBtn = screen.getByText("Delete");
+    fireEvent.click(deleteBtn);
+    expect(window.context.deleteFile).toHaveBeenCalled();
+  });
 });

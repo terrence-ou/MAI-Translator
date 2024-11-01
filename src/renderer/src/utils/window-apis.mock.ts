@@ -62,7 +62,12 @@ const context = Object.defineProperty(window, "context", {
         return Promise.resolve({
           from: "EN",
           to: "ZH",
-          translations: [{ aiSource: "DeepL", text: "hello world" }],
+          source: "source text",
+          translations: [
+            { aiSource: "DeepL", text: "mock result from deepl" },
+            { aiSource: "OpenAI", text: "mock result from openai" },
+            { aiSource: "Claude", text: "mock result from claude" },
+          ],
           filename: filename,
         });
       } else return null;
