@@ -71,7 +71,7 @@ const SettingDialog = ({ className }: SettingDialogProps) => {
           <FontSizeSelector className={settingRowStyle} data-testid="dialog-font" />
           <h3 className="font-semibold mt-3">AI Services</h3>
           {/* AI Service Settings */}
-          <Accordion type="single" collapsible>
+          <Accordion type="single" data-testid="ai-settings-accordion" collapsible>
             <AISetting
               aiProvider="DeepL"
               apiKey={modelConfigs.DeepL.key}

@@ -115,9 +115,12 @@ export const deleteFile: DeleteFileFn = async (filename) => {
     cancelId: 1,
   });
 
+  const dateString = filename.split(".")[0];
+
   if (response === 0) {
     try {
-      await remove(`${getFolderDir()}/${filename}`);
+      await remove(`${getFolderDir()}/${dateString}.txt`);
+      await remove(`${getFolderDir()}/${dateString}.md`); // also remove the drag-n-drop file
       return true;
     } catch (error) {
       console.error(error);

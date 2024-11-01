@@ -32,8 +32,7 @@ const HistoryCards = ({ records }: HistoryCardProps) => {
   const selectedFilename = useAppSelector((state) => state.settings.currentFilename);
 
   const handleDeleteFile = async (filename: string) => {
-    await dispatch(deleteFile(filename));
-    dispatch(setCurrFilename(undefined)); // only reset the current file name when the file is been removed
+    dispatch(deleteFile(filename));
   };
 
   return (

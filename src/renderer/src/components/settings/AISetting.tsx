@@ -76,6 +76,7 @@ const AISetting = ({ aiProvider, apiKey, currModel, currVoice }: AISettingProps)
     <AccordionItem
       value={aiProvider}
       className="border-b border-dashed border-slate-200 dark:border-slate-700"
+      data-testid={`ai-settings-${aiProvider.toLowerCase()}`}
     >
       <AccordionTrigger className="text-sm py-2">{aiProvider}</AccordionTrigger>
       <AccordionContent className="flex flex-col pl-2 text-sm">
