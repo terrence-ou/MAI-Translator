@@ -20,6 +20,7 @@ const config: JestConfigWithTsJest = {
     "<rootDir>/node_modules/",
     "<rootDir>/src/renderer/src/components/ui/",
     "<rootDir>/src/renderer/src/utils",
+    "<rootDir>/src/renderer/src/hooks",
   ],
 };
 
