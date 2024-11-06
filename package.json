@@ -1,7 +1,7 @@
 {
   "name": "multiai_translator",
   "productName": "MAI Translator",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A multi-ai-supported translator helps getting and managing translations with confidence.",
   "main": "./dist/main/index.js",
   "author": "Terrence Ou",
