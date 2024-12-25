@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain, nativeImage } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import iconPath from "../../resources/icon.png?asset";
+import { updateElectronApp } from "update-electron-app";
 
 import type {
   GetHistoriesFn,
@@ -30,6 +31,8 @@ import {
   onDragStart,
   saveAsFile,
 } from "@/lib";
+
+updateElectronApp();
 
 function createWindow(): void {
   // Create the browser window.
