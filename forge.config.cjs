@@ -29,10 +29,6 @@ module.exports = {
     },
   ],
   makers: [
-    // {
-    //   name: "@electron-forge/maker-squirrel",
-    //   config: {},
-    // },
     {
       name: "@electron-forge/maker-zip",
       config: {
@@ -40,13 +36,11 @@ module.exports = {
       },
       platforms: ["darwin"],
     },
-    // {
-    //   name: "@electron-forge/maker-deb",
-    //   config: {},
-    // },
-    // {
-    //   name: "@electron-forge/maker-rpm",
-    //   config: {},
-    // },
+    {
+      name: "@electron-forge/maker-dmg",
+      config: {
+        icon: "resources/icon.icns",
+      },
+    },
   ],
 };
