@@ -18,7 +18,7 @@
     "dev": "electron-vite dev --outDir=dist",
     "package": "electron-vite build --outDir=dist && electron-forge package",
     "make": "electron-vite build --outDir=dist && electron-forge make",
-    "publish": "electron-forge publish",
+    "publish": "electron-vite build --outDir=dist && electron-forge publish",
     "test": "npm run test:unit",
     "coverage": "npm run coverage:unit",
     "test:unit": "jest",
